@@ -1,0 +1,33 @@
+# Dependencies and generated publication output.
+# Generated lyric variants, indexes and bundles are never committed.
+# These directory names are conventions, not design decisions.
+node_modules/
+dist/
+build/
+.cache/
+tmp/
+*.tsbuildinfo
+
+# Test and tool output
+coverage/
+test-results/
+
+# Secrets and local configuration; example files stay tracked
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.jks
+*.keystore
+*service-account*.json
+
+# Logs and OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.iml
