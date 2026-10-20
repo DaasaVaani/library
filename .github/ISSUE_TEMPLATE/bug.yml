@@ -1,0 +1,20 @@
+name: Bug report
+description: Report a reproducible, non-sensitive repository problem
+body:
+  - type: markdown
+    attributes:
+      value: "Never post secrets, private data or vulnerabilities here. Follow SECURITY.md for private reporting. Distinguish existing defects from unimplemented plans."
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and expected behavior
+      description: Include the affected commit and component.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and sanitized evidence
+      description: Provide steps, actual results and relevant environment details.
+    validations:
+      required: true

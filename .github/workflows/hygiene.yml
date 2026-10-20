@@ -1,0 +1,26 @@
+name: Repository hygiene
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  hygiene:
+    name: Bootstrap files and YAML syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source without fetching submodules
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check repository files
+        run: python3 tools/check_repository.py
+      - name: Parse YAML configuration and issue forms
+        run: ruby -e 'require "yaml"; Dir.glob(".github/**/*.{yml,yaml}").each { |path| YAML.load_file(path); puts "Parsed #{path}" }'
+      - name: Check committed whitespace including the initial commit
+        run: git show --format= --check HEAD

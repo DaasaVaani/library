@@ -1,0 +1,22 @@
+name: Feature or design proposal
+description: Propose a scoped improvement without deciding open architecture unilaterally
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Problem, intended users and proposed outcome
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Alternatives, compatibility and design approval
+      description: Identify open decisions and accessibility, offline, language or privacy implications.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and validation
+    validations:
+      required: true
