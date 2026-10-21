@@ -4,13 +4,36 @@ lyricId: 9d29d9bf-fd6d-4af6-bf0f-24efbd2f1259
 public:
   title: ರಾಮನಾಮ ಭಜಿಸಿದವಗೆ ಉಂಟೆ ಭವದ ಬಂಧನ ||ಪ||
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Ramanama Bhajisidavage.txt
   sha256: 4fbf2667790b1d34b490f7d70509b6ce768c6808db2b922331ef7797c8c8e07e
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

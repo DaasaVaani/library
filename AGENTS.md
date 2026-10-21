@@ -10,7 +10,8 @@ production design closure. Only the separately authorized owner-supplied draft
 import in [the source guide](docs/source-import.md) may assign new lyric/line IDs,
 preserving originals and holding exceptions. The owner-authorized
 [prelaunch publication](docs/lyric-publication.md) may release only approved
-prepared records' import-review hold; offline review remains a public-launch gate.
+prepared records' import-review hold. Owner text review is complete for approved
+records; separate language/rights/implementation/release gates remain.
 Other source/personal migration and unapproved source publication remain
 unauthorized. First YouTube API
 ingestion is blocked pending provider clarification.

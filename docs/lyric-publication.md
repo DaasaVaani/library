@@ -2,8 +2,8 @@
 
 ## Authority and limits
 
-The owner permits publishing the successfully prepared owner-supplied lyrics now,
-with offline text review before the public launch. This releases only the
+The owner has reviewed and approved the prepared owner-supplied text and permits
+prelaunch publication. This releases only the
 `source-import-review` hold on explicitly authorized prepared records. Preserve
 all other holds and extraction exceptions; never interpret this as a blanket
 approval of future sources, rights metadata, linguistic correctness or launch.
@@ -18,7 +18,8 @@ stays literal source evidence, not generated or certified reading text.
 Source changes go through normal PRs. Full tests/validation on a source PR use
 synthetic publication tests plus source validation, never actual generated real
 variants/previews. Actual canonical artifact generation is post-merge only.
-The owner has deferred offline linguistic review, not the remaining launch gates.
+Owner text review does not waive remaining implementation/release gates or
+separate Source Latin eligibility/alignment assessment.
 
 ## Commands and settings
 
@@ -59,6 +60,15 @@ and lifecycle families beyond this preview still need their owning production
 schemas and acceptance evidence. No persistent offline/search/personal migration
 support is implied by this feed.
 
+All approved source metadata fields are exposed for later completion using
+[the Shared inventory](https://github.com/DaasaVaani/shared/blob/main/docs/lyric-identity.md#author-editable-fields).
+Empty optional fields do not change public object bytes or identities. Source-only
+rights/provenance remains excluded. Populated classification, context, verse,
+media or positively eligible Source Latin requires its owning public adapter;
+this canonical-only publisher fails explicitly rather than silently dropping it.
+Registry resolution, asset existence/rights and public metadata consumers are
+not implemented by accepting empty authoring fields.
+
 All source/role/descriptor limits and schemas validate before activation.
 Content-addressed objects are written without replacing existing bytes; damaged
 existing objects fail explicitly. One exclusive publication lock prevents
@@ -85,7 +95,7 @@ item-summary checks remain mandatory. A successful deployment needs actual live
 HTTPS validation, not merely a push or workflow preflight.
 
 This is a publicly accessible **prelaunch preview**, not the public product launch.
-Offline human text review remains a launch gate. Production ledger/receipts,
+Owner review of prepared text is complete. Production ledger/receipts,
 semantic dates, transliteration, ZIP/planner, persistent offline lifecycle,
 complete reference migration/native parity, signing/platform and release gates
 remain open. API ingestion remains independently blocked.

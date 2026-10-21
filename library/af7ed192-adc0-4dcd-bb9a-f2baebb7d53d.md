@@ -4,13 +4,36 @@ lyricId: af7ed192-adc0-4dcd-bb9a-f2baebb7d53d
 public:
   title: ಬಂದೆವಯ್ಯ ಗೋವಿಂದಶೆಟ್ಟಿ- ನಿನ್ನ
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Bandevayya Govinda Shetti.txt
   sha256: 3852082d6021b4b9f14abd77f1a0b472f69e144819ce3da068e449b0929346f5
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

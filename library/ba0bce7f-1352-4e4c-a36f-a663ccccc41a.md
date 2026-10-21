@@ -4,13 +4,36 @@ lyricId: ba0bce7f-1352-4e4c-a36f-a663ccccc41a
 public:
   title: ಭೀಮರಾಯನ ನಂಬಿ ಭೀಮಸೇನನ
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Bhimarayana nambi.txt
   sha256: 70ebf1707683d97e47f3fdd9df38bf6ffe3afe3c987b1b5843a5bb9276dbc57d
   encoding: utf-16be
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

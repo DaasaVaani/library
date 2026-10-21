@@ -4,13 +4,36 @@ lyricId: baed5fd5-7528-4def-8178-bceeb33f4b6c
 public:
   title: ಜಯ ವಾಯು ಹನುಮಂತ ಜಯ ಭೀಮ ಬಲವಂತ | ಪ |
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Jaya Vayu Hanumantha Jaya Bhima.txt
   sha256: 2d07f2619c7b0257dd5fd6a05dfcea4eda540f47ad0a72c951dcd6c5ccfa7df1
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

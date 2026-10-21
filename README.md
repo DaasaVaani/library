@@ -1,22 +1,25 @@
 # DaasaVaani Library
 
 Reviewed flat Markdown sources, registries/assets/settings, local ingestion and
-Node/TypeScript publisher. **Current implementation is fixture-only.**
-Strict synthetic Markdown/settings validation produces deterministic hash-addressed
+Node/TypeScript publisher. The synthetic fixture pipeline and owner-authorized
+canonical prelaunch lyric pipeline remain distinct. Strict synthetic
+Markdown/settings validation produces deterministic hash-addressed
 gzip artifacts, metadata catalog, counted-gram index and policy-bound descriptor.
 Staged coding is authorized; production schemas/ledger/ZIP deployment, reviewed
 transliteration, general production source migration and live ingestion remain incomplete.
 The separate [owner-supplied draft importer](docs/source-import.md) creates held
 lyric-UUID sources without images/videos, preserving original text files and
 literal supplied Latin. It is authorized only for conservative draft authoring;
-the fixture publisher cannot publish these production sources.
+the fixture publisher cannot publish these production sources. The importer
+adapts approved explicit credit footers into verbatim source-only provenance,
+without changing existing identities or the public artifact format.
 
 The distinct [prelaunch lyric publisher](docs/lyric-publication.md) accepts
 explicitly authorized unheld sourceFormat2 lyrics with permanent lyric/line UUIDs
 and no images/videos. `npm run publish:lyrics` generates only canonical Kannada
 public artifacts after merge. It is not the fixture publisher, production
-ledger/transliterator or public-launch approval; offline review remains required
-before launch. All other holds and extraction exceptions remain excluded.
+ledger/transliterator or public-launch approval. Owner text review is complete;
+remaining production/release gates, other holds and extraction exceptions stay open.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -59,9 +62,12 @@ git --no-pager diff --cached --check
 ```
 
 `npm run check` runs strict TypeScript and all fixture-publisher tests.
-It also runs source-import tests and validates any imported draft set/receipt.
+It also runs source/import metadata and canonical-publication tests and validates
+the imported source set/receipt.
 Use `npm run sources:import` only under the authorized
 [draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
+`npm run sources:retry-footers` narrowly retries unchanged eligible held inputs
+under the separately approved format rule; it never rewrites existing sources.
 `npm run publish:demo` generates only the synthetic records in tests/fixtures/sources,
 using settings/publication.yml. These are not real sources, generated source-PR
 variants or reviewed sahitya. The Website demo tooling invokes this owning publisher;
