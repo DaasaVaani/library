@@ -9,6 +9,8 @@ Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
 and [current specification](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md).
 Shared is independently pinned at shared/; clone recursively or initialize it.
+Authorized pin updates follow the [Shared-first publication order](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/testing-and-release.md#shared-submodule-updates):
+publish and validate Shared before committing tested consumer pins.
 Planned roots: library, registries, settings, assets, tools, shared, docs and .github.
 Generated-only Pages target: https://daasavaani.github.io/library/, independent
 from Website. Clients consume artifacts, not Library sources.

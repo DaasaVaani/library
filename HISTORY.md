@@ -40,6 +40,26 @@ migration, live API access, generated variants, publisher or Shared-pin update.
 Rerun all available documentation/bootstrap checks before publication; provider
 hold remains and absent publisher tests are not passes.
 
+## 2026-10-21: coordinated Shared pin correction
+
+- The owner authorized correcting the stale Shared pin from
+  `5a2446c31ffb97c9899a7ba3a287e58b2b2eb490` to
+  `dbaac0d4c5d255a0c6663d9c21fa2b918761e027`. That target was already published
+  and passed Shared Repository hygiene run39576588515 before the consumer
+  update. Intervening upstream changes are documentation only.
+- Updated the gitlink and linked the Shared-first publication procedure; the
+  detached exact-target checkout has no local modifications.
+- `python tools\check_repository.py`: passed17 consumer files.
+  `python shared\tools\check_repository.py`: passed15 pinned Shared files.
+  `git --no-pager diff --check`: passed.
+- `python <session-folder>\files\validate-shared-pins.py`: passed58 Markdown files
+  including actual pinned checkouts, links/anchors/fences/encoding/whitespace,
+  exact clean Shared revisions and153 unchanged Website requirement IDs.
+- No publisher/build/source/conformance runner exists; no such success claimed.
+  No workflow YAML changed; local YAML tooling is unavailable. Documentation/
+  gitlink metadata uses the bootstrap exception, not a code-test waiver.
+  Provider hold, source migration and generated-variant restrictions unchanged.
+
 ## Snapshot: README.md
 
 # DaasaVaani Library
