@@ -4,14 +4,9 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkFrontmatter from "remark-frontmatter";
 import { strictYaml } from "../shared/tools/generate-catalog.mjs";
+import type { LyricSourceHeader } from "../shared/types/lyrics.js";
 
-export interface DraftHeader {
-  sourceFormat: 2;
-  lyricId: string;
-  public: { title: string; tags: string[] };
-  provenance: { kind: "owner-supplied"; sourceFile: string; sha256: string; encoding: SourceEncoding };
-  review: { holdReasons: string[] };
-}
+export type DraftHeader = LyricSourceHeader;
 export type SourceEncoding = "utf-8" | "utf-16le" | "utf-16be";
 export interface DraftSource {
   header: DraftHeader;
@@ -20,9 +15,12 @@ export interface DraftSource {
 }
 export const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const schema = JSON.parse(await readFile(new URL("../shared/schemas/lyric-source-draft.schema.json", import.meta.url), "utf8"));
-const validateHeader = new Ajv2020.default({ strict: true }).compile<DraftHeader>(schema);
+const sourceSchema = JSON.parse(await readFile(new URL("../shared/schemas/lyric-source.schema.json", import.meta.url), "utf8"));
+const ajv = new Ajv2020.default({ strict: true }).addSchema(sourceSchema, "lyric-source.schema.json");
+const validateHeader = ajv.compile<DraftHeader>(sourceSchema);
+const validateDraft = ajv.compile<DraftHeader>(schema);
 const parser = unified().use(remarkParse).use(remarkFrontmatter, ["yaml"]);
-export function parseDraft(text: string): DraftSource {
+export function parseLyricSource(text: string, requireHold = false): DraftSource {
   if (!text.isWellFormed() || /\r(?!\n)|[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f\u2028\u2029]/u.test(text)) {
     throw new Error("Draft contains unsupported controls or malformed Unicode");
   }
@@ -35,7 +33,8 @@ export function parseDraft(text: string): DraftSource {
     throw new Error("Draft requires grouped frontmatter, one Kannada fence and optional literal source-latin fence only");
   }
   const header: unknown = strictYaml(frontmatter.value);
-  if (!validateHeader(header)) throw new Error("Invalid draft header: " + JSON.stringify(validateHeader.errors));
+  const validate = requireHold ? validateDraft : validateHeader;
+  if (!validate(header)) throw new Error("Invalid draft header: " + JSON.stringify(validate.errors));
   const seen = new Set<string>([header.lyricId]);
   let lyricLines = 0;
   const lines = canonical.value.split("\n").map(line => {
@@ -49,3 +48,4 @@ export function parseDraft(text: string): DraftSource {
   if (!lyricLines || !lines.some(line => /\p{Script=Kannada}/u.test(line.text))) throw new Error("Draft has no canonical Kannada lyric lines");
   return { header, canonical: lines, ...(latin?.type === "code" ? { sourceLatin: latin.value } : {}) };
 }
+export const parseDraft = (text: string) => parseLyricSource(text, true);

@@ -1,0 +1,7 @@
+formatVersion: 1
+sourceDirectory: library
+outputDirectory: dist/site/lyrics
+stage: prelaunch
+requiredCapability: lyric-preview-v1
+maxSourceFileBytes: 8388608
+maxTotalSourceBytes: 67108864

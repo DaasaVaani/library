@@ -11,6 +11,10 @@ requires actual provenance and applicable rights evidence, without fabricated
 owner/license/attribution. Exact production evidence fields and any public notice
 format remain open; no new rights-status enum is invented by the draft importer.
 A source-import review hold is not legal permission or publication approval.
+The owner has separately authorized prelaunch publication of prepared sources,
+with offline text review before public launch. This is actual publication
+authorization, not a manufactured license/attribution claim or approval of
+ambiguous extraction. See the [publication guide](lyric-publication.md).
 
 Current obligations:
 
@@ -22,18 +26,19 @@ Current obligations:
   exemption or provider approval is claimed.
 - Raw YouTube descriptions and internal evidence are excluded from public
   artifacts; do not store private correspondence in public repository files.
-- Supplied Source Latin is published with its suitability flags even when
-  unsuitable for reading; that exception does not authorize publishing private
-  material.
+- The production target publishes supplied Source Latin with suitability flags
+  even when unsuitable for reading; that exception never authorizes private
+  material. The initial canonical-only prelaunch feed does not expose Source
+  Latin before the corresponding eligibility/alignment contract is implemented.
 - Do not infer legal permission from this policy or public availability.
 
-Source/provenance metadata belongs in reviewed Library content, never Website
+Source/provenance metadata belongs in Library source content, never Website
 runtime sources. The separately authorized [owner-supplied draft workflow](source-import.md)
 does not require YouTube or images and preserves its raw originals. Other
 unreviewed reference sources are not automatically migrated; uncertain items
 stay held drafts. Content, ingestion and publisher changes belong in
 Library source PRs; Shared contract/catalog changes use Shared PRs, with consumer
-pin updates made separately. The separate Library publication is planned at
+pin updates made separately. The separate Library publication belongs at
 [daasavaani.github.io/library/](https://daasavaani.github.io/library/), distinct
 from the Website root.
 

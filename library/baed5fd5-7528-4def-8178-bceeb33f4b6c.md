@@ -10,8 +10,7 @@ provenance:
   sha256: 2d07f2619c7b0257dd5fd6a05dfcea4eda540f47ad0a72c951dcd6c5ccfa7df1
   encoding: utf-8
 review:
-  holdReasons:
-    - source-import-review
+  holdReasons: []
 ---
 
 ```kannada

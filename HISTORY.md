@@ -1,5 +1,47 @@
 # Documentation history
 
+## 2026-10-21: owner-authorized canonical prelaunch publication
+
+- The owner authorized publishing the prepared lyrics now and undertaking
+  offline review before public launch. This supersedes this batch's earlier
+  no-auto-merge/source-import-review publication gate, not the public launch
+  review gate, other holds, provider hold or the instruction never to commit
+  originals. All767 extraction exceptions remain held for manual preparation.
+- Released only `source-import-review` from229 prepared source headers. Verified
+  unchanged public/provenance fields, canonical text/layout, supplied Latin and
+  all5450 assigned line UUIDs; no lyric UUID/title was replaced. Original text
+  files and the global receipt were not rewritten.
+- Independently adopted published Shared
+  `26a02b3423060d8efa7897cd92844a79ffdacc9c` after exact preflight39672246397
+  and main39672859078 passed the required named job. Shared contains common
+  source headers, strict draft specialization and separate canonical-text
+  prelaunch publication schemas/types; no consumer pin is updated in lockstep.
+- Added a distinct bounded canonical publisher and post-merge-only Pages workflow.
+  Reused existing canonical JSON/deterministic gzip helpers; fixture behavior
+  remains separate. Source review tests generate only synthetic artifacts.
+- Archived replaced AGENTS wording: all automatic source publication was
+  unauthorized. Also archived the policy implication that supplied Latin was
+  already published with flags: that remains the production target, while this
+  prelaunch canonical-only family excludes unreviewed Latin. No owner identity,
+  license, rights status, attribution mapping, media or verse was invented.
+- Initial `npm run check` after independent pin adoption passed strict TypeScript,
+  all19 publisher/import tests with zero failures/skips, and source validation.
+  Additional mixed-held-source coverage and final source release followed.
+- Final `npm run check` passed strict TypeScript, all19 tests with zero
+  failures/skips and actual229-source/767-exception validation.
+  `python tools\check_repository.py` passed268 tracked files; strict YAML parsed9
+  workflow/form/settings files; actionlint1.7.12/ShellCheck0.11.0 and staged
+  whitespace passed. Actual import rerun preserved all230 source/receipt hashes,
+  write times and explicitly released holds. All996 originals again matched
+  the pre-import length/SHA256 snapshot and remained ignored/uncommitted.
+- GitHub initially rejected Library Pages creation because organization Pages
+  creation was disabled. After explaining that creation permission cannot be
+  scoped to two repositories, the owner explicitly approved permanent public
+  Pages creation across the organization, retaining disabled private creation.
+  Verified the persisted documented overall/public/private settings, provisioned
+  Library's public Actions site, and confirmed Website's existing Actions site
+  was unchanged. Site provisioning is not evidence of successful feed deployment.
+
 ## 2026-10-21: retain import exceptions for manual preparation
 
 - Presented the explicit credit-footer alternative after local extraction:

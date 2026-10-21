@@ -1,0 +1,75 @@
+name: Publish prelaunch lyrics
+
+on:
+  workflow_run:
+    workflows: [Repository hygiene]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prelaunch-lyrics-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate and generate prelaunch lyrics
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact validated main and contracts
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+          submodules: recursive
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.15.0
+          cache: npm
+      - name: Validate sources and tooling
+        run: |
+          npm ci
+          npm run check
+          python3 tools/check_repository.py
+          git show --format= --check HEAD
+      - name: Generate real canonical text only after merge
+        run: npm run publish:lyrics
+      - name: Upload validated prelaunch artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: dist/site
+
+  deploy:
+    name: Deploy prelaunch lyric feed
+    needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse deployment from superseded main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PUBLISHED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          current="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
+          test "$current" = "$PUBLISHED_SHA" || {
+            echo "::error::Main advanced; refusing superseded publication. Use the latest validated main run."
+            exit 1
+          }
+      - name: Setup Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Deploy validated prelaunch output
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

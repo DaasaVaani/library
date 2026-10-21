@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { stringify } from "yaml";
 import Ajv2020 from "ajv/dist/2020.js";
 import { strictYaml } from "../shared/tools/generate-catalog.mjs";
-import { parseDraft, uuidPattern, type DraftHeader, type SourceEncoding } from "./lyric-source.js";
+import { parseDraft, parseLyricSource, uuidPattern, type DraftHeader, type SourceEncoding } from "./lyric-source.js";
 
 interface ImportSettings {
   formatVersion: 1; sourceDirectory: string; outputDirectory: string;
@@ -138,7 +138,7 @@ async function verify(directory: string, value: Receipt) {
   for (const entry of value.entries) {
     if (entry.status !== "imported") continue;
     const file = join(directory, `${entry.lyricId}.md`);
-    const parsed = parseDraft(await readUtf8File(file));
+    const parsed = parseLyricSource(await readUtf8File(file));
     if (parsed.header.lyricId !== entry.lyricId || parsed.header.provenance.sourceFile !== entry.sourceFile ||
         parsed.header.provenance.sha256 !== entry.sha256 || parsed.header.provenance.encoding !== entry.encoding) {
       throw new Error("Existing draft identity/provenance disagrees with its import receipt; nothing was overwritten");
@@ -227,7 +227,7 @@ async function main() {
   }
   const result = await importSources(source, output, settings);
   console.log(JSON.stringify(result, null, 2));
-  console.log("Drafts remain held; no production publication, inferred verses or media matching occurred.");
+  console.log("Review decisions and identities are preserved; no publication, inferred verses or media matching occurred.");
   if (result.held) process.exitCode = 2;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
