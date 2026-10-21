@@ -83,6 +83,12 @@ export async function publishLyrics(outputDirectory: string, sourceDirectory: st
     if (name !== `${parsed.header.lyricId}.md` || ids.has(parsed.header.lyricId)) throw new Error("Invalid or duplicate lyric identity");
     ids.add(parsed.header.lyricId);
     if (parsed.header.review.holdReasons.length) { held++; continue; }
+    const metadata = parsed.header.public;
+    if (metadata.contextDescription || metadata.verses?.length || metadata.youtube?.length || metadata.images?.length ||
+        (metadata.classification && Object.values(metadata.classification).some(values => values.length)) ||
+        parsed.header.review.sourceLatin?.readable === true || parsed.header.review.sourceLatin?.searchable === true) {
+      throw new Error(`Lyric ${parsed.header.lyricId} needs registry/media/verse/Source Latin publication adapters; canonical preview must not silently discard populated public metadata`);
+    }
     const item: LyricItem = { format: "daasavaani-lyric", formatVersion: 1, lyricId: parsed.header.lyricId,
       canonicalScript: "kn", title: parsed.header.public.title, tags: parsed.header.public.tags,
       lines: parsed.canonical.map(line => "id" in line ? { kind: "line", lineId: line.id, text: line.text }

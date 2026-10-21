@@ -1,5 +1,55 @@
 # Documentation history
 
+## Owner-reviewed source metadata and explicit footer adaptation
+
+- The owner confirmed text review and selected all approved author-editable
+  source metadata fields, with unknown text/collections empty and review booleans
+  unassessed/null. No generated dates, fake media, inferred classifications or
+  new existing-record identities are permitted.
+- Archived replaced current wording: prepared lyrics could be published while
+  offline linguistic review remained a public-launch gate. That review is now
+  confirmed complete; other production/release/rights/language gates remain.
+  README previously called the entire implementation fixture-only, despite the
+  separately implemented canonical prelaunch pipeline.
+- The owner explicitly superseded the earlier keep-all-exceptions-for-manual-
+  preparation policy for structured labelled credit footers. The old source guide
+  required holding returning Kannada even for labelled footer text and prohibited
+  automatic provenance separation. The new narrow grammar preserves recognized
+  terminal credit/keyword/range blocks verbatim without interpreting authorship.
+  Unknown sections and encoding/control exceptions remain held.
+- Independently adopted Shared8bd8793afb9f2fd43d52b62bc5436bbd4da1b0ce after exact
+  preflight39679248387 and main39679540067 passed the required named job. Shared
+  metadata/labels and official Unicode16 resources passed the integrated25 tests.
+  Library does not use Unicode data to infer labels or correct lyric text.
+- Completed empty metadata on229 prepared records, proving unchanged known header
+  values, all5450 existing line IDs, literal bodies/Source Latin and receipt bytes.
+  Verified every996 original basename/length/SHA256 against the pre-import snapshot.
+- Actual approved footer retry converted642 additional records:871 imported and125
+  still held (122 returning-Kannada ambiguity, one malformed/unsupported encoding,
+  one unsupported control, one missing initial Kannada section). Every new record
+  reconstructed the complete LF-normalized original using canonical/Latin/footer
+  segments, with no text deletion, attribution or media inference.
+- Existing229 records retained all text/layout, titles, known provenance and
+  review decisions. Released only the import-review hold on the642 newly prepared,
+  owner-approved records after preservation checks. No source variants/previews
+  were generated. Original text files remain ignored and never committed.
+- During a verified no-change retry, Windows briefly retained an empty staging
+  directory handle and cleanup raised EBUSY. Active sources stayed intact.
+  Changed no-op retry to create no staging tree and added bounded owned-directory
+  cleanup retries; recovery/failure remains explicit and backups are preserved
+  when activation rollback fails.
+- Final corpus proof:871 records with16406 canonical line IDs and5164 layout
+  records; all229 earlier records' known values/identities/text preserved and all
+  642 new records exactly reconstructed their normalized raw inputs. Identical
+  retry preserved every source/receipt byte and write timestamp. All996 originals
+  again matched the saved basename/length/SHA256 inventory.
+- `npm run check` passed strict TypeScript, all29 tests with zero failures/
+  cancellations/skips and actual871-source/125-exception validation.
+  `python tools\check_repository.py` passed911 staged tracked files.
+  Strict YAML parsed all9 files; actionlint1.7.12/ShellCheck0.11.0 and both
+  whitespace checks passed. All872 staged source/receipt Git blobs matched working
+  bytes exactly; tracked/staged original text files remained zero.
+
 ## 2026-10-21: owner-authorized canonical prelaunch publication
 
 - The owner authorized publishing the prepared lyrics now and undertaking

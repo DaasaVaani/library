@@ -4,13 +4,36 @@ lyricId: ea1cd9a1-f52f-4a8c-ab22-cfe5be14b6eb
 public:
   title: ಶೇಷದೇವನೆ ಪೋಷಿಸೆನ್ನನು
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Sheshadevane Poshisennanu.txt
   sha256: d7705a1c1ec2bdc38ad529c547a1b3ddab89dd2811dfcf353a0e6367680c134f
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

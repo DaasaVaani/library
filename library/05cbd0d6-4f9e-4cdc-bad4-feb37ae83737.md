@@ -4,13 +4,36 @@ lyricId: 05cbd0d6-4f9e-4cdc-bad4-feb37ae83737
 public:
   title: ನಾರಾಯಣ ನಾರಾಯಣ ನಾರಾಯಣ ನಾರಾಯಣ ನಾರಾಯಣ ನರಹರಿಯೆ ||ಪ||
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: ನಾರಾಯಣ ನರಹರಿಯೆ.txt
   sha256: 00ab986115a1f01a2bea74f0bcde2dcdb4d0796aeff02c377925e4eea2293d42
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

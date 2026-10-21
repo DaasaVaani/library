@@ -4,13 +4,36 @@ lyricId: ed5ed5ad-dbe2-4a1a-a7f9-885d99eca183
 public:
   title: ವೃಷಭ ಏರಿದ ವಿಷಧರನ್ಯಾರೆ ಪೇಳಮ್ಮಯ್ಯ ||ಪ||
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Vrushabhanerida Vishadharanyaare.txt
   sha256: 5f1de5cf376083ca1e0491056eb55e499dee15525269df0aed05757b6eccc41a
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

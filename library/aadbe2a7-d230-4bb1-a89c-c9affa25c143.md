@@ -4,13 +4,36 @@ lyricId: aadbe2a7-d230-4bb1-a89c-c9affa25c143
 public:
   title: "ಜಯಪ್ರದನು ಜಗಕೆ ಶ್ರೀ ಹಯವದನ "
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Jayapradanu Jagake Sri Hayavadanana.txt
   sha256: fcf262202dc7a2c1108c76fca6c5bd5b8ba7ef659556ab07db5f6c15064629aa
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

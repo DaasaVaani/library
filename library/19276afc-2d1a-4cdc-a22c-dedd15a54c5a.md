@@ -4,13 +4,36 @@ lyricId: 19276afc-2d1a-4cdc-a22c-dedd15a54c5a
 public:
   title: ಆನಂದ ತೀರ್ಥರೆಂಬೋ ಅರ್ಥಿಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ ||ಪ||
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Ananda Tirtharembo.txt
   sha256: 60effd88e1155c207f66a72e5abbb68da5cb0ab1c4a079b23d24189a57134d3d
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

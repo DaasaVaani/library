@@ -8,11 +8,13 @@ descriptions, images, recordings, or trademarks.
 
 The approved [lyric identity contract](https://github.com/DaasaVaani/shared/blob/main/docs/lyric-identity.md)
 requires actual provenance and applicable rights evidence, without fabricated
-owner/license/attribution. Exact production evidence fields and any public notice
-format remain open; no new rights-status enum is invented by the draft importer.
+owner/license/attribution. Source authoring exposes empty license/attribution and
+public evidence references; this is not rights evaluation or a permission waiver.
+Exact production evidence validation and any public notice format remain open;
+no new rights-status enum is invented by the importer.
 A source-import review hold is not legal permission or publication approval.
 The owner has separately authorized prelaunch publication of prepared sources,
-with offline text review before public launch. This is actual publication
+and confirmed text review. This is actual publication
 authorization, not a manufactured license/attribution claim or approval of
 ambiguous extraction. See the [publication guide](lyric-publication.md).
 

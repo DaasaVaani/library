@@ -4,13 +4,36 @@ lyricId: fffaab04-ce8a-4b7b-bf82-4c8a842aee83
 public:
   title: ಉಬ್ಬದಿರು ಉಬ್ಬದಿರು ಎಲೆ ಮಾನವ ||ಪ||
   tags: []
+  classification:
+    composerIds: []
+    ankitaIds: []
+    deityIds: []
+    formIds: []
+    categoryIds: []
+    contextIds: []
+  contextDescription: ""
+  verses: []
+  youtube: []
+  images: []
 provenance:
   kind: owner-supplied
   sourceFile: Ubbadiru Ubbadiru Ele Manava.txt
   sha256: f3036a1730bd8e7e1ea20a0e4658e268e8c9decadea51ec9c8ed3962ce0af969
   encoding: utf-8
+  sourceUrls: []
+  description: ""
+  rights:
+    license: ""
+    attribution: ""
+    evidenceUrls: []
+  videos: []
+  images: []
 review:
   holdReasons: []
+  sourceLatin:
+    readable: null
+    searchable: null
+    alignment: []
 ---
 
 ```kannada

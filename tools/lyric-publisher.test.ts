@@ -83,6 +83,18 @@ test("identical publication is byte stable/no-write and every failed validation 
     assert.deepEqual(await readFile(pointer), before);
   });
 });
+  test("populated unsupported public authoring fields fail explicitly rather than silently disappearing from canonical preview", async () => {
+    await setup(async (_root, sources, output) => {
+      const { path } = await release(sources), bounds = await lyricPublicationBounds();
+      await publishLyrics(output, sources, bounds, safety);
+      const pointer = join(output, "latest.json"), previous = await readFile(pointer), valid = await readFile(path, "utf8");
+      await writeFile(path, valid.replace('contextDescription: ""', "contextDescription: Synthetic narrative"));
+      await assert.rejects(publishLyrics(output, sources, bounds, safety), /must not silently discard/);
+      assert.deepEqual(await readFile(pointer), previous);
+      await writeFile(path, valid);
+      assert.equal((await publishLyrics(output, sources, bounds, safety)).unchanged, true);
+    });
+  });
 test("exact artifact byte ceilings accept the boundary and reject one byte below before activation", async () => {
   await setup(async (_root, sources, output) => {
     await release(sources); const bounds = await lyricPublicationBounds();
