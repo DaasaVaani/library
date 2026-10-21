@@ -87,13 +87,15 @@ test("no-Latin Kannada remains valid; unknown encodings, unsupported controls an
     assert.equal((await importSources(input, output, options)).unchanged, true);
   });
 });
-test("manual source/title corrections are preserved; changed originals and existing unidentified destinations cannot be overwritten", async () => {
+test("manual title corrections and explicit hold release are preserved; originals and existing destinations cannot be overwritten", async () => {
   await setup(async (root, input, output) => {
     await writeFile(join(input, "permitted.txt"), permitted);
     await importSources(input, output, options);
     const file = await onlyDraft(output), initial = await readFile(file, "utf8");
-    const corrected = initial.replace(/^  title: .*$/m, "  title: Manually reviewed title");
+    const corrected = initial.replace(/^  title: .*$/m, "  title: Manually reviewed title")
+      .replace("holdReasons:\n    - source-import-review", "holdReasons: []");
     assert.notEqual(corrected, initial);
+    assert.ok(corrected.includes("holdReasons: []"));
     await writeFile(file, corrected);
     assert.equal((await importSources(input, output, options)).unchanged, true);
     assert.equal(await readFile(file, "utf8"), corrected);

@@ -12,6 +12,9 @@ The owner approved the first Kannada lyric line as the public title and will
 correct titles manually. The initial Kannada section is canonical; following
 Latin is literal supplied Source Latin. Hold exceptions, never guess another
 script boundary or infer verse divisions, authorship, classification or media.
+Separately authorized [prelaunch publication](lyric-publication.md) may release
+the import-review hold of prepared sources through review PRs. That does not
+change this importer's conservative section rules or its hold-on-creation rule.
 The [portable identity contract](https://github.com/DaasaVaani/shared/blob/main/docs/lyric-identity.md)
 and pinned draft-header schema own the stable identity/header rules.
 
@@ -61,6 +64,9 @@ the source review workflow.
   review. A Kannada-only file is valid; a file without an initial Kannada section
   is held. These are the owner's approved conservative section rules, not a
   linguistic extraction or transliteration algorithm.
+- Returning Kannada remains held even when it resembles a labelled credit
+  footer. Do not automatically separate credits, add provenance-note fields or
+  reinterpret mixed-script content; exceptions require manual preparation/review.
 - Allocate random cryptographic UUIDv4 lyric and nonblank line IDs once.
   Whitespace-only layout lines receive no UUID; no verse IDs are invented.
   File basename is lyric UUID only. Optional `source-latin` fence contains the
@@ -82,7 +88,8 @@ It never replaces an existing source tree. Failures clean only that run's owned
 staging directory; inputs and unrelated destinations remain intact.
 
 An identical rerun validates the existing receipt/drafts and returns unchanged.
-It never reallocates IDs or overwrites manual title/text corrections. Changed,
+It never reallocates IDs, restores an explicitly released hold or overwrites
+manual title/text corrections. Changed,
 added or removed input files require a separately reviewed incremental import;
 this initial-batch tool refuses rather than guessing identity correspondence.
 Malformed/future receipts, missing drafts and conflicting provenance fail closed.

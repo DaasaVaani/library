@@ -14,7 +14,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const hash = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 const object = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === "object" && !Array.isArray(value);
-function deterministicGzip(bytes: Uint8Array): Buffer {
+export function deterministicGzip(bytes: Uint8Array): Buffer {
   const encoded = gzipSync(bytes, { level: 9 });
   // The gzip OS byte must not make identical publications platform-dependent.
   encoded[9] = 255;

@@ -11,6 +11,13 @@ lyric-UUID sources without images/videos, preserving original text files and
 literal supplied Latin. It is authorized only for conservative draft authoring;
 the fixture publisher cannot publish these production sources.
 
+The distinct [prelaunch lyric publisher](docs/lyric-publication.md) accepts
+explicitly authorized unheld sourceFormat2 lyrics with permanent lyric/line UUIDs
+and no images/videos. `npm run publish:lyrics` generates only canonical Kannada
+public artifacts after merge. It is not the fixture publisher, production
+ledger/transliterator or public-launch approval; offline review remains required
+before launch. All other holds and extraction exceptions remain excluded.
+
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
 and [current specification](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md).

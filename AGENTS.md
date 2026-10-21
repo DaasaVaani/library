@@ -8,8 +8,11 @@ and [requirements/testing guidance](https://github.com/DaasaVaani/DaasaVaani.git
 Staged implementation is authorized; the fixture publisher is not complete
 production design closure. Only the separately authorized owner-supplied draft
 import in [the source guide](docs/source-import.md) may assign new lyric/line IDs,
-preserving originals and holding exceptions. Other source/personal migration and
-automatic source publication remain unauthorized. First YouTube API
+preserving originals and holding exceptions. The owner-authorized
+[prelaunch publication](docs/lyric-publication.md) may release only approved
+prepared records' import-review hold; offline review remains a public-launch gate.
+Other source/personal migration and unapproved source publication remain
+unauthorized. First YouTube API
 ingestion is blocked pending provider clarification.
 Never treat documentation, candidate pins or public availability as compliance.
 

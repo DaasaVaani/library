@@ -1,5 +1,65 @@
 # Documentation history
 
+## 2026-10-21: owner-authorized canonical prelaunch publication
+
+- The owner authorized publishing the prepared lyrics now and undertaking
+  offline review before public launch. This supersedes this batch's earlier
+  no-auto-merge/source-import-review publication gate, not the public launch
+  review gate, other holds, provider hold or the instruction never to commit
+  originals. All767 extraction exceptions remain held for manual preparation.
+- Released only `source-import-review` from229 prepared source headers. Verified
+  unchanged public/provenance fields, canonical text/layout, supplied Latin and
+  all5450 assigned line UUIDs; no lyric UUID/title was replaced. Original text
+  files and the global receipt were not rewritten.
+- Independently adopted published Shared
+  `26a02b3423060d8efa7897cd92844a79ffdacc9c` after exact preflight39672246397
+  and main39672859078 passed the required named job. Shared contains common
+  source headers, strict draft specialization and separate canonical-text
+  prelaunch publication schemas/types; no consumer pin is updated in lockstep.
+- Added a distinct bounded canonical publisher and post-merge-only Pages workflow.
+  Reused existing canonical JSON/deterministic gzip helpers; fixture behavior
+  remains separate. Source review tests generate only synthetic artifacts.
+- Archived replaced AGENTS wording: all automatic source publication was
+  unauthorized. Also archived the policy implication that supplied Latin was
+  already published with flags: that remains the production target, while this
+  prelaunch canonical-only family excludes unreviewed Latin. No owner identity,
+  license, rights status, attribution mapping, media or verse was invented.
+- Initial `npm run check` after independent pin adoption passed strict TypeScript,
+  all19 publisher/import tests with zero failures/skips, and source validation.
+  Additional mixed-held-source coverage and final source release followed.
+- Final `npm run check` passed strict TypeScript, all19 tests with zero
+  failures/skips and actual229-source/767-exception validation.
+  `python tools\check_repository.py` passed268 tracked files; strict YAML parsed9
+  workflow/form/settings files; actionlint1.7.12/ShellCheck0.11.0 and staged
+  whitespace passed. Actual import rerun preserved all230 source/receipt hashes,
+  write times and explicitly released holds. All996 originals again matched
+  the pre-import length/SHA256 snapshot and remained ignored/uncommitted.
+- GitHub initially rejected Library Pages creation because organization Pages
+  creation was disabled. After explaining that creation permission cannot be
+  scoped to two repositories, the owner explicitly approved permanent public
+  Pages creation across the organization, retaining disabled private creation.
+  Verified the persisted documented overall/public/private settings, provisioned
+  Library's public Actions site, and confirmed Website's existing Actions site
+  was unchanged. Site provisioning is not evidence of successful feed deployment.
+
+## 2026-10-21: retain import exceptions for manual preparation
+
+- Presented the explicit credit-footer alternative after local extraction:
+  preserve clear trailing credit blocks as provenance notes versus retain all
+  exceptions. The owner selected keeping all767 exceptions held for manual
+  preparation, with no contract change. No supplied credit was reclassified or
+  dropped and no new provenance-note field was added.
+- Prepared separate source review for the229 successfully extracted drafts,
+  every one still carrying `source-import-review`. The global receipt accounts
+  for all996 inputs and767 held exceptions. Original text files remain ignored,
+  untracked and absent from source commits; no real variants/previews/media or
+  inferred verses were generated.
+- Original-input protection commit `d18a7dc437135ce0ff8626ae0b87d46e24dbd0f1`
+  passed exact required preflight39669498167 and main39669637524, including
+  `Bootstrap files and YAML syntax`. Its three-file change contains no source
+  payloads. The completed validation branch was removed only after confirming
+  its unchanged tip was contained in main and no open PR referenced it.
+
 ## 2026-10-21: keep owner originals local
 
 - The owner explicitly reiterated that original text files must not be committed.
@@ -25,6 +85,27 @@
   passed exact required preflight39668533933 and main39668729205, including the
   named `Bootstrap files and YAML syntax` job in both. The existing authorized
   main exception was used without changing rules; no original payload was pushed.
+
+## 2026-10-21: held source-review batch validation
+
+- Source branch contains229 held canonical draft Markdown files with5450
+  once-assigned line UUIDs,1488 preserved layout lines and228 literal supplied
+  Latin blocks. One draft is Kannada-only. The global batch receipt is not a
+  per-item companion source file. No original text files, media associations or
+  generated variants/previews are staged.
+- `npm run check`: passed strict TypeScript, all15 publisher/import tests with
+  zero failures/skips, and actual source validation reporting229 imported/767
+  held exceptions. `npm run sources:import` deliberately returned exit2 for
+  those exceptions; it is not a successful full-corpus conversion or linguistic
+  review. No holds were cleared.
+- `python tools\check_repository.py`: passed262 staged tracked files.
+  Working/staged `git diff --check` passed with only literal source-file
+  whitespace exempted. Existing Shared `strictYaml` parsed7 configuration YAML
+  files; actionlint1.7.12/ShellCheck0.11.0 passed.
+- This authoring-only batch does not update consumer pins, public artifacts or
+  runtime code. Website/Android suites were not run for it and no new consumer
+  compatibility, publication or release-ready claim is made. Source review and
+  production gates remain open; the branch must not be auto-merged.
 
 ## 2026-10-21: authorized owner-supplied draft authoring
 
