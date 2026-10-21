@@ -1,5 +1,31 @@
 # Documentation history
 
+## 2026-10-21: keep owner originals local
+
+- The owner explicitly reiterated that original text files must not be committed.
+  Verified zero tracked/staged files under `text_files_from_source/`; the importer
+  tooling commit contains no original inputs or real drafts. Added a root-scoped
+  Git ignore rule for the entire original-input directory and made its local-only
+  status explicit in the operating guide. Separate draft review remains distinct
+  from committing originals.
+- `git check-ignore text_files_from_source`: passed; tracked/staged original
+  count remained zero. All996 files matched the pre-import byte lengths/SHA256,
+  with no missing/added originals. Local extraction accounted for every file:
+  229 held drafts and767 explicit exceptions. Of764 returning-Kannada cases,
+  661 begin with an explicit supplied Kannada credit label; no footer was
+  silently discarded/reclassified. Other exceptions need review.
+- `npm run check`: passed strict TypeScript, all15 tests with zero failures/skips,
+  and actual validation of229 drafts/767 receipt exceptions.
+  An actual import rerun explicitly returned unchanged/exit2 for retained
+  exceptions; all230 draft/receipt files preserved byte hashes and write
+  timestamps, including every assigned UUID.
+  `python tools\check_repository.py`: passed32 tracked files; `git diff --check`
+  passed. All real drafts/receipt remain uncommitted pending source review.
+- Importer tooling commit `4c7a8bb50e1a76b8f221c73b7859c17612b2e634`
+  passed exact required preflight39668533933 and main39668729205, including the
+  named `Bootstrap files and YAML syntax` job in both. The existing authorized
+  main exception was used without changing rules; no original payload was pushed.
+
 ## 2026-10-21: authorized owner-supplied draft authoring
 
 - The owner explicitly authorized separate held Markdown drafts from the supplied

@@ -8,6 +8,9 @@ build/
 tmp/
 *.tsbuildinfo
 
+# Owner-supplied originals stay local; only separately reviewed drafts are sources.
+/text_files_from_source/
+
 # Test and tool output
 coverage/
 test-results/

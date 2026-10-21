@@ -43,7 +43,9 @@ body grammar, cross-source identities and exact source inventory. Before the
 first import an absent draft directory is reported explicitly as no records
 validated; unit tests still exercise the parser/importer. Full `npm run check`
 includes typecheck, all publisher/import tests and this source validation.
-Raw input files are local material and are not automatically staged or uploaded.
+Raw input files are local-only material, ignored by Git and never committed or
+uploaded. Only separately reviewed draft Markdown and its batch receipt may enter
+the source review workflow.
 
 ## Exact conversion and preservation
 
