@@ -17,6 +17,10 @@ Remaining guidance that still applies:
 - Respect YouTube API and embedding terms. The product scope does not include
   downloading video media. The provider-terms check for retaining stored YouTube
   metadata is still pending before the first ingestion.
+- The user explicitly retained a provisional API design and blocked first
+  ingestion pending clarification of retention/refresh applicability to committed
+  descriptions, derived text, images and frozen offline snapshots. No compliant
+  exemption or provider approval is claimed.
 - Raw YouTube descriptions and internal evidence are excluded from public
   artifacts; do not store private correspondence in public repository files.
 - Supplied Source Latin is published with its suitability flags even when
@@ -31,7 +35,7 @@ sibling path is an unreviewed reference; items are re-ingested from YouTube and
 unresolved items stay drafts. Content, ingestion and publisher changes belong in
 Library source PRs; Shared contract/catalog changes use Shared PRs, with consumer
 pin updates made separately. The separate Library publication is planned at
-[daasavaani.github.io/library/((https://daasavaani.github.io/library/), distinct
+[daasavaani.github.io/library/](https://daasavaani.github.io/library/), distinct
 from the Website root.
 
 ## Corrections and concerns
