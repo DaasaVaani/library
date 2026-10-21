@@ -1,0 +1,6 @@
+formatVersion: 1
+sourceDirectory: text_files_from_source
+outputDirectory: library
+maxSourceFileBytes: 8388608
+maxTotalSourceBytes: 67108864
+reviewHoldReason: source-import-review

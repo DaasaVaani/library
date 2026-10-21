@@ -6,10 +6,11 @@ descriptions, images, recordings, or trademarks.
 
 ## Policy
 
-There is **no project-specific per-item rights and attribution gate**
-([current design](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/design-decisions.md)). There is no per-item rights
-status, no publication prerequisite for rights review and no public
-attribution-notice contract. This is not a conclusion about legal permission.
+The approved [lyric identity contract](https://github.com/DaasaVaani/shared/blob/main/docs/lyric-identity.md)
+requires actual provenance and applicable rights evidence, without fabricated
+owner/license/attribution. Exact production evidence fields and any public notice
+format remain open; no new rights-status enum is invented by the draft importer.
+A source-import review hold is not legal permission or publication approval.
 
 Current obligations:
 
@@ -26,10 +27,11 @@ Current obligations:
   material.
 - Do not infer legal permission from this policy or public availability.
 
-Source/provenance metadata belongs in reviewed Library content. `library/` is
-absent and `settings/` is empty in Website. Legacy-looking Markdown in a separate
-sibling path is an unreviewed reference; items are re-ingested from YouTube and
-unresolved items stay drafts. Content, ingestion and publisher changes belong in
+Source/provenance metadata belongs in reviewed Library content, never Website
+runtime sources. The separately authorized [owner-supplied draft workflow](source-import.md)
+does not require YouTube or images and preserves its raw originals. Other
+unreviewed reference sources are not automatically migrated; uncertain items
+stay held drafts. Content, ingestion and publisher changes belong in
 Library source PRs; Shared contract/catalog changes use Shared PRs, with consumer
 pin updates made separately. The separate Library publication is planned at
 [daasavaani.github.io/library/](https://daasavaani.github.io/library/), distinct
@@ -38,7 +40,7 @@ from the Website root.
 ## Corrections and concerns
 
 For attribution, ownership or correction concerns, open a repository issue with
-the affected item/video ID, source, requested correction/removal, and information
+the affected lyric ID (or applicable legacy/video reference), source, requested correction/removal, and information
 you are permitted to share. Do not attach confidential evidence publicly. No
 dedicated private contact address is currently published.
 

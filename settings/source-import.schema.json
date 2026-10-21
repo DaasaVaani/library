@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["formatVersion", "sourceDirectory", "outputDirectory", "maxSourceFileBytes", "maxTotalSourceBytes", "reviewHoldReason"],
+  "properties": {
+    "formatVersion": { "const": 1 },
+    "sourceDirectory": { "type": "string", "minLength": 1 },
+    "outputDirectory": { "type": "string", "minLength": 1 },
+    "maxSourceFileBytes": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+    "maxTotalSourceBytes": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+    "reviewHoldReason": { "type": "string", "minLength": 1 }
+  }
+}

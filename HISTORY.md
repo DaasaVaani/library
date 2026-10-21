@@ -1,5 +1,43 @@
 # Documentation history
 
+## 2026-10-21: authorized owner-supplied draft authoring
+
+- The owner explicitly authorized separate held Markdown drafts from the supplied
+  text files, preserving all originals. Initial Kannada is canonical, following
+  Latin is literal supplied Source Latin. The first Kannada lyric line is the
+  approved initial title; manual title corrections must survive reruns.
+- Superseded blanket AGENTS text: "Source migration is not authorized." The new
+  permission is only this bounded draft workflow, not other migration,
+  automatic publication, media matching or provider access.
+- Archived superseded content-rights guidance: no per-item rights/attribution
+  gate or publication prerequisite had been selected; sibling source Markdown
+  was unreviewed and items were to be re-ingested from YouTube. It also described
+  Website settings as empty and its Library directory as absent. Current approved
+  lyric identity permits owner-supplied provenance and optional media; precise
+  production rights-evidence/notice fields remain open. No legal permission,
+  identity/license declaration or public attribution was manufactured.
+- Independently advanced Library's Shared pin to published
+  `1d588c3e0b314e3ccbfa4bd15702020a2ba83fbf`, after Shared main CI39667134097
+  passed. It supplies the draft-header schema, not completed public item/list-v2
+  contracts or consumer adapters.
+- Initial focused validation found two test-only defects: YAML title quote-style
+  assumption and indexed-value callback narrowing. Corrected those tests.
+  `npm run check` then passed strict TypeScript and all15 publisher/import tests;
+  no draft directory existed, explicitly no actual source records validated.
+  Further fail-closed UTF8/receipt/inventory hardening followed; final-tree
+  validation is recorded separately below. Originals were not changed by tests.
+- Final importer hardening rejects malformed UTF8 records, future/empty receipts,
+  extra/missing drafts, conflicting provenance and concurrent import locks.
+  `npm run check`: passed strict TypeScript, all15 tests, zero failures/skips;
+  absent real source directory was explicitly reported, not claimed validated.
+  `python tools\check_repository.py`: passed32 staged tracked files.
+  Existing Shared `strictYaml` parsed all7 workflow/form/settings YAML files.
+  actionlint1.7.12 with ShellCheck0.11.0 passed; working/staged `git diff --check`
+  passed. Generic whitespace/link exemptions are restricted to literal
+  `library/*.md`, backed by mandatory strict source validation.
+  No real source conversion, provider access or runtime consumer update was
+  included in this tooling validation.
+
 ## 2026-10-21: authorized fixture-publisher milestone
 
 - The owner authorized the recommended staged implementation and real desktop,

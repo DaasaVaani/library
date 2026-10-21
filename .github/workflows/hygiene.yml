@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 22.15.0
           cache: npm
-      - name: Validate fixture publisher
+      - name: Validate publisher and source drafts
         run: |
           npm ci
           npm run check

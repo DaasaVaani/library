@@ -6,7 +6,10 @@ Read [README](README.md), [content/provider policy](docs/content-rights.md),
 [current contracts](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md)
 and [requirements/testing guidance](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/README.md).
 Staged implementation is authorized; the fixture publisher is not complete
-production design closure. Source migration is not authorized. First YouTube API
+production design closure. Only the separately authorized owner-supplied draft
+import in [the source guide](docs/source-import.md) may assign new lyric/line IDs,
+preserving originals and holding exceptions. Other source/personal migration and
+automatic source publication remain unauthorized. First YouTube API
 ingestion is blocked pending provider clarification.
 Never treat documentation, candidate pins or public availability as compliance.
 

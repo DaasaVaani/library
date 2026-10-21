@@ -5,7 +5,11 @@ Node/TypeScript publisher. **Current implementation is fixture-only.**
 Strict synthetic Markdown/settings validation produces deterministic hash-addressed
 gzip artifacts, metadata catalog, counted-gram index and policy-bound descriptor.
 Staged coding is authorized; production schemas/ledger/ZIP deployment, reviewed
-transliteration, source migration and live ingestion are not implemented.
+transliteration, general production source migration and live ingestion remain incomplete.
+The separate [owner-supplied draft importer](docs/source-import.md) creates held
+lyric-UUID sources without images/videos, preserving original text files and
+literal supplied Latin. It is authorized only for conservative draft authoring;
+the fixture publisher cannot publish these production sources.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -48,6 +52,9 @@ git --no-pager diff --cached --check
 ```
 
 `npm run check` runs strict TypeScript and all fixture-publisher tests.
+It also runs source-import tests and validates any imported draft set/receipt.
+Use `npm run sources:import` only under the authorized
+[draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
 `npm run publish:demo` generates only the synthetic records in tests/fixtures/sources,
 using settings/publication.yml. These are not real sources, generated source-PR
 variants or reviewed sahitya. The Website demo tooling invokes this owning publisher;

@@ -32,6 +32,9 @@ def main():
             continue
         if text and not text.endswith("\n"):
             errors.append(f"{name}: missing final newline")
+        if name.startswith("library/") and path.suffix == ".md":
+            # Literal lyric/layout whitespace is validated by the source parser.
+            continue
         for number, line in enumerate(text.splitlines(), 1):
             if line.rstrip() != line:
                 errors.append(f"{name}:{number}: trailing whitespace")

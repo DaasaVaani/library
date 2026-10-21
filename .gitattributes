@@ -10,3 +10,6 @@
 *.otf binary
 *.zip binary
 *.gz binary
+
+# Literal source layout is checked by sources:validate, not prose whitespace rules.
+library/*.md -whitespace
