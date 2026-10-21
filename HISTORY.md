@@ -1,5 +1,29 @@
 # Documentation history
 
+## 2026-10-21: authorized fixture-publisher milestone
+
+- The owner authorized the recommended staged implementation and real desktop,
+  mobile and native simulator demos without further choice questions. This
+  milestone intentionally used synthetic words/alphabet records, not reviewed
+  sahitya, migrated sources or verified video metadata.
+- Implemented strict fixture Markdown/YAML parsing, stable line identities,
+  held-record exclusion, safe-integer canonical JSON, deterministic gzip with
+  platform-independent OS metadata, role bounds, SHA256 object paths, metadata
+  catalog and a policy-bound counted-gram index. The descriptor is activated only
+  after object writes. Production ledger/receipts/ZIP/deploy and reviewed language
+  conversion remain incomplete; live provider ingestion stayed blocked.
+- Adopted Shared `b0950e2f01823c471b18fff8abb49ce176d8f26e` only after upstream
+  publication and successful exact-revision CI run39585091134.
+- `npm run check`: passed TypeScript and all5 publisher tests, including LF/CRLF,
+  malformed/duplicate IDs, strict settings, repeated grams, deterministic metadata
+  and complete encoded/decoded/hash verification of fixture objects and manifest.
+- Expanded hygiene CI to check out pinned Shared and execute the actual publisher
+  suite. Local actionlint1.7.12 with ShellCheck0.11.0: passed. Neither fixture tests
+  nor this record assert complete product/release readiness.
+- Repository checker passed26 staged tracked files; working/staged whitespace
+  passed. The four-owner documentation audit passed40 Markdown files, local/
+  cross-repository links/anchors/fences and all153 unchanged requirement IDs.
+
 ## Archive policy
 
 This is the sole archive for past decisions, superseded guidance, dated

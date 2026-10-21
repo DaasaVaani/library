@@ -5,8 +5,9 @@
 Read [README](README.md), [content/provider policy](docs/content-rights.md),
 [current contracts](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md)
 and [requirements/testing guidance](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/README.md).
-Final design approval and separate coding/source-migration authorization remain
-pending. First YouTube API ingestion is blocked pending provider clarification.
+Staged implementation is authorized; the fixture publisher is not complete
+production design closure. Source migration is not authorized. First YouTube API
+ingestion is blocked pending provider clarification.
 Never treat documentation, candidate pins or public availability as compliance.
 
 ## Library boundaries
@@ -14,6 +15,9 @@ Never treat documentation, candidate pins or public availability as compliance.
 - Own flat reviewed source Markdown, assets, registries/catalog settings, local
   ingestion and Node/TypeScript publisher. Clients consume validated artifacts,
   not source Markdown or reconstructed taxonomy.
+- Keep synthetic fixture sources and `fixture-catalog-v1` distinct from reviewed
+  production content. Never claim fixture publication implements the production
+  ledger, transliteration, ZIP planner, receipts or deployment.
 - Kannada is canonical: transliterate, never translate. Preserve reviewed words,
   layout and stable line/verse identities. Uncertain lyrics remain held drafts.
 - Source PRs contain no actual generated variants/previews; generate after merge.
@@ -45,12 +49,12 @@ traceability; history never overrides present rules or proves current success.
 - Use focused checks incrementally. Finalization/confirmation and every push
   require full applicable builds and all configured checks/test suites for the
   final change set, including dependent compatibility evidence when relevant.
-- Available now: `python tools/check_repository.py`, workflow YAML syntax and
-  whitespace checks in [README](README.md#validation). No publisher build,
-  source-schema validator or app test runner currently exists.
-- Documentation-only work may finalize/push after all available documentation/
-  bootstrap checks pass while app tooling is absent. Explicitly report absent
-  builds/tests, not passed results. For code, missing/failing/skipped required
+- Available now: `npm run check` (TypeScript and all fixture-publisher tests),
+  `python tools/check_repository.py`, workflow YAML syntax and whitespace checks
+  in [README](README.md#validation). Full production conformance remains incomplete.
+- Documentation-only work is not automatically exempt from full validation now
+  that tooling exists. Explicitly report absent suites, not passed results.
+  For code, missing/failing/skipped required
   checks block completion/push; request guidance, never silently narrow tests.
 - Source validation/tooling fixtures belong on source PRs; actual full generation
   and artifact validation remain post-merge. Full-check policy does not authorize

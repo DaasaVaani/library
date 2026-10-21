@@ -1,9 +1,11 @@
 # DaasaVaani Library
 
 Reviewed flat Markdown sources, registries/assets/settings, local ingestion and
-Node/TypeScript publisher. **Bootstrap only:** no source migration, publisher,
-package manifests, app tests or Library Pages deployment is implemented.
-Final design/coding authorization remains pending.
+Node/TypeScript publisher. **Current implementation is fixture-only.**
+Strict synthetic Markdown/settings validation produces deterministic hash-addressed
+gzip artifacts, metadata catalog, counted-gram index and policy-bound descriptor.
+Staged coding is authorized; production schemas/ledger/ZIP deployment, reviewed
+transliteration, source migration and live ingestion are not implemented.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -38,15 +40,23 @@ from Website. Clients consume artifacts, not Library sources.
 ## Validation
 
 ```powershell
+npm ci
+npm run check
 python tools\check_repository.py
 git --no-pager diff --check
 git --no-pager diff --cached --check
 ```
 
-CI also parses .github YAML. Include new docs and links/fences. These are hygiene
-checks, not source/publisher tests. Incremental tests may be focused; finalization/
+`npm run check` runs strict TypeScript and all fixture-publisher tests.
+`npm run publish:demo` generates only the synthetic records in tests/fixtures/sources,
+using settings/publication.yml. These are not real sources, generated source-PR
+variants or reviewed sahitya. The Website demo tooling invokes this owning publisher;
+clients read its artifacts, never its source Markdown.
+
+CI also parses .github YAML. Include new docs and links/fences. Python/whitespace
+checks are repository hygiene, not publisher tests. Incremental tests may be focused; finalization/
 confirmation and every push require full applicable builds/all suites. Documentation-
-only work has the all-available-checks exception while app tooling is absent.
+only work is not automatically exempt now that executable tooling exists.
 Missing required code checks block completion/push; do not fabricate commands.
 Full-check policy does not authorize prohibited source-PR variants or live ingestion.
 

@@ -14,10 +14,20 @@ jobs:
     name: Bootstrap files and YAML syntax
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source without fetching submodules
+      - name: Checkout source and pinned contracts
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          submodules: recursive
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.15.0
+          cache: npm
+      - name: Validate fixture publisher
+        run: |
+          npm ci
+          npm run check
       - name: Check repository files
         run: python3 tools/check_repository.py
       - name: Parse YAML configuration and issue forms

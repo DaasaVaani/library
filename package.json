@@ -1,0 +1,19 @@
+{
+  "name": "@daasavaani/library",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tools/publisher.test.ts",
+    "build": "npm run typecheck",
+    "check": "npm run build && npm test",
+    "publish:demo": "tsx tools/publisher.ts --fixtures"
+  },
+  "dependencies": {
+    "ajv": "8.20.0", "yaml": "2.9.1", "unified": "11.0.5",
+    "remark-parse": "11.0.0", "remark-frontmatter": "5.0.0"
+  },
+  "devDependencies": { "@types/node": "22.20.4", "tsx": "4.20.6", "typescript": "5.9.3" }
+}

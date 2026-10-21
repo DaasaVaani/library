@@ -1,0 +1,6 @@
+formatVersion: 1
+fixtureOnly: true
+sourceDirectory: tests/fixtures/sources
+outputDirectory: dist/publication
+requiredCapabilities:
+  - fixture-catalog-v1
