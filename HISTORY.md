@@ -1,5 +1,23 @@
 # Documentation history
 
+## 2026-10-21: retain import exceptions for manual preparation
+
+- Presented the explicit credit-footer alternative after local extraction:
+  preserve clear trailing credit blocks as provenance notes versus retain all
+  exceptions. The owner selected keeping all767 exceptions held for manual
+  preparation, with no contract change. No supplied credit was reclassified or
+  dropped and no new provenance-note field was added.
+- Prepared separate source review for the229 successfully extracted drafts,
+  every one still carrying `source-import-review`. The global receipt accounts
+  for all996 inputs and767 held exceptions. Original text files remain ignored,
+  untracked and absent from source commits; no real variants/previews/media or
+  inferred verses were generated.
+- Original-input protection commit `d18a7dc437135ce0ff8626ae0b87d46e24dbd0f1`
+  passed exact required preflight39669498167 and main39669637524, including
+  `Bootstrap files and YAML syntax`. Its three-file change contains no source
+  payloads. The completed validation branch was removed only after confirming
+  its unchanged tip was contained in main and no open PR referenced it.
+
 ## 2026-10-21: keep owner originals local
 
 - The owner explicitly reiterated that original text files must not be committed.
@@ -25,6 +43,27 @@
   passed exact required preflight39668533933 and main39668729205, including the
   named `Bootstrap files and YAML syntax` job in both. The existing authorized
   main exception was used without changing rules; no original payload was pushed.
+
+## 2026-10-21: held source-review batch validation
+
+- Source branch contains229 held canonical draft Markdown files with5450
+  once-assigned line UUIDs,1488 preserved layout lines and228 literal supplied
+  Latin blocks. One draft is Kannada-only. The global batch receipt is not a
+  per-item companion source file. No original text files, media associations or
+  generated variants/previews are staged.
+- `npm run check`: passed strict TypeScript, all15 publisher/import tests with
+  zero failures/skips, and actual source validation reporting229 imported/767
+  held exceptions. `npm run sources:import` deliberately returned exit2 for
+  those exceptions; it is not a successful full-corpus conversion or linguistic
+  review. No holds were cleared.
+- `python tools\check_repository.py`: passed262 staged tracked files.
+  Working/staged `git diff --check` passed with only literal source-file
+  whitespace exempted. Existing Shared `strictYaml` parsed7 configuration YAML
+  files; actionlint1.7.12/ShellCheck0.11.0 passed.
+- This authoring-only batch does not update consumer pins, public artifacts or
+  runtime code. Website/Android suites were not run for it and no new consumer
+  compatibility, publication or release-ready claim is made. Source review and
+  production gates remain open; the branch must not be auto-merged.
 
 ## 2026-10-21: authorized owner-supplied draft authoring
 

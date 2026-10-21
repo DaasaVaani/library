@@ -61,6 +61,9 @@ the source review workflow.
   review. A Kannada-only file is valid; a file without an initial Kannada section
   is held. These are the owner's approved conservative section rules, not a
   linguistic extraction or transliteration algorithm.
+- Returning Kannada remains held even when it resembles a labelled credit
+  footer. Do not automatically separate credits, add provenance-note fields or
+  reinterpret mixed-script content; exceptions require manual preparation/review.
 - Allocate random cryptographic UUIDv4 lyric and nonblank line IDs once.
   Whitespace-only layout lines receive no UUID; no verse IDs are invented.
   File basename is lyric UUID only. Optional `source-latin` fence contains the
