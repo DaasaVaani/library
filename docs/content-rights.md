@@ -6,19 +6,17 @@ descriptions, images, recordings, or trademarks.
 
 ## Policy
 
-The project owner decided that **no rights and attribution gate is required**
-([`rights-attribution-gate`](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/design-decisions.md)). There is no per-item rights
+There is **no project-specific per-item rights and attribution gate**
+([current design](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/design-decisions.md)). There is no per-item rights
 status, no publication prerequisite for rights review and no public
-attribution-notice contract. This replaces earlier text that required a lawful
-basis, recorded permissions and a publish hold for unclear rights.
+attribution-notice contract. This is not a conclusion about legal permission.
 
-Remaining guidance that still applies:
+Current obligations:
 
 - Respect YouTube API and embedding terms. The product scope does not include
   downloading video media. The provider-terms check for retaining stored YouTube
   metadata is still pending before the first ingestion.
-- The user explicitly retained a provisional API design and blocked first
-  ingestion pending clarification of retention/refresh applicability to committed
+- First ingestion is blocked pending clarification of retention/refresh applicability to committed
   descriptions, derived text, images and frozen offline snapshots. No compliant
   exemption or provider approval is claimed.
 - Raw YouTube descriptions and internal evidence are excluded from public
@@ -26,8 +24,7 @@ Remaining guidance that still applies:
 - Supplied Source Latin is published with its suitability flags even when
   unsuitable for reading; that exception does not authorize publishing private
   material.
-- Do not infer legal permission from this policy; the absence of a gate is a
-  project decision, not a legal conclusion.
+- Do not infer legal permission from this policy or public availability.
 
 Source/provenance metadata belongs in reviewed Library content. `library/` is
 absent and `settings/` is empty in Website. Legacy-looking Markdown in a separate
