@@ -1,0 +1,7 @@
+formatVersion: 1
+sourceDirectory: library
+outputFile: reviews/verse-proposals.json
+maxSourceFileBytes: 8388608
+maxTotalSourceBytes: 67108864
+excludedLyricIds:
+  - 2a9c9cd3-5ade-40cd-b6eb-b8538c35f34c

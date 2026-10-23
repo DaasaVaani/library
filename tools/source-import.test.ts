@@ -17,7 +17,7 @@ async function setup(run: (root: string, input: string, output: string) => Promi
   const root = await mkdtemp(join(tmpdir(), "daasavaani-source-import-"));
   const input = join(root, "originals"), output = join(root, "drafts");
   try { await mkdir(input); await run(root, input, output); }
-  finally { await rm(root, { recursive: true }); }
+  finally { await rm(root, { recursive: true, maxRetries: 5, retryDelay: 100 }); }
 }
 async function onlyDraft(output: string) {
   const file = (await readdir(output)).find(name => name.endsWith(".md"));

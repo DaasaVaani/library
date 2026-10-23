@@ -1,5 +1,51 @@
 # Documentation history
 
+## Owner-authorized provisional verse proposals (2026-10-23)
+
+- Starting Library HEAD was `c2837ccf383b976a1e2d20928ff018256270551c`,
+  with no staged/unstaged changes. The owner explicitly permitted best-guess
+  verse boundaries for later inspection/modification, not fabricated review or
+  canonical/public source changes. Only Library changed; no push was authorized.
+- Added the separate `reviews/verse-proposals.json` review ledger, strict owned
+  settings, deterministic proposal tool, eight synthetic tests and operating
+  guide. Commands create once/validate unchanged; manual edits survive reruns.
+  Whole-source hashes reject stale reviews. Existing source schema/line endpoints
+  are reused without changing source bytes or publication eligibility.
+- Actual inventory:871 imported sources and125 held raw-input exceptions.
+  Proposals cover870 unheld, undeclared sources and16,392 canonical line IDs.
+  The protected tagged source
+  `2a9c9cd3-5ade-40cd-b6eb-b8538c35f34c.md` is explicitly excluded before
+  proposal reading. No held inputs were retried, interpreted or modified.
+  All5,108 candidate verses remain provisional/uncertain:4,238 ends have existing
+  blank-separator evidence and870 are final coverage closures. No owner-edited
+  endpoints or single-span fallback sources occurred in this batch. No markers,
+  linguistic truth, media/classification, variants or approvals were inferred.
+- `npm run verses:propose` created1,090,422 bytes with SHA256
+  `c6f624966cf8beed11c213f352edb8f1beabaef55edb88cf65b2ce05d8ca2eea`.
+  A rerun passed unchanged with identical bytes and write time. A separate
+  in-memory fresh-generation comparison matched the persisted bytes exactly.
+  `git diff c2837ccf383b976a1e2d20928ff018256270551c --exit-code -- library text_files_from_source shared`
+  passed, confirming no tracked source/protected-file/receipt/pin changes.
+- Initial focused typecheck found literal-type/narrowing errors; corrected.
+  Initial focused tests found two test-construction/assertion mistakes; corrected.
+  The final focused command
+  `node --import tsx --test tools\verse-proposals.test.ts` passed8/8.
+  Full checks initially hit transient Windows `EBUSY` during existing synthetic
+  fixture teardown (34/37 twice; serial diagnostic35/37). Added bounded retry
+  only to importer/publisher fixture-root cleanup, matching existing production
+  cleanup policy; no assertions or suites were removed/skipped. Subsequent
+  `npm run check` passed strict build/typecheck,37/37 tests, source validation
+  (871 imported/125 held) and persisted proposal validation (870/5,108).
+  Test TEMP/TMP were redirected to repository-local `.cache\validation`, not
+  the operating-system temporary directory.
+- `python tools\check_repository.py`, workflow/issue-form/settings YAML parsing
+  using the documented installed-Node/YAML fallback, `git diff --check` and
+  `git diff --cached --check` passed. Ruby was unavailable; the installed YAML
+  parser checked all ten YAML files instead. No dependencies/toolchains were
+  installed. No HTTP/provider/browser/server/device slots or real generated
+  artifacts were used. Public verse adapters, human verse review and remaining
+  production/release gates remain unproven and blocked as documented.
+
 ## Owner-reviewed source metadata and explicit footer adaptation
 
 - The owner confirmed text review and selected all approved author-editable

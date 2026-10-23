@@ -68,6 +68,9 @@ media or positively eligible Source Latin requires its owning public adapter;
 this canonical-only publisher fails explicitly rather than silently dropping it.
 Registry resolution, asset existence/rights and public metadata consumers are
 not implemented by accepting empty authoring fields.
+The [provisional verse review ledger](verse-proposals.md) is source-only tooling
+outside `library/`; this publisher does not consume it. Candidate generation or
+owner edits never approve public verse metadata or bypass this adapter gate.
 
 All source/role/descriptor limits and schemas validate before activation.
 Content-addressed objects are written without replacing existing bytes; damaged

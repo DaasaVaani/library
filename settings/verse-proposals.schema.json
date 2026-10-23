@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["formatVersion", "sourceDirectory", "outputFile", "maxSourceFileBytes", "maxTotalSourceBytes", "excludedLyricIds"],
+  "properties": {
+    "formatVersion": { "const": 1 },
+    "sourceDirectory": { "type": "string", "minLength": 1 },
+    "outputFile": { "type": "string", "pattern": "\\.json$" },
+    "maxSourceFileBytes": { "type": "integer", "minimum": 1 },
+    "maxTotalSourceBytes": { "type": "integer", "minimum": 1 },
+    "excludedLyricIds": {
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" }
+    }
+  }
+}

@@ -6,9 +6,11 @@
   "engines": { "node": ">=22.12.0" },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts",
+    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts tools/verse-proposals.test.ts",
     "build": "npm run typecheck",
-    "check": "npm run build && npm test && npm run sources:validate",
+    "check": "npm run build && npm test && npm run sources:validate && npm run verses:validate",
+    "verses:propose": "tsx tools/verse-proposals.ts --generate",
+    "verses:validate": "tsx tools/verse-proposals.ts --validate",
     "sources:import": "tsx tools/source-import.ts --import",
     "sources:retry-footers": "tsx tools/source-import.ts --retry-credit-footers",
     "sources:validate": "tsx tools/source-import.ts --validate",

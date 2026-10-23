@@ -13,6 +13,9 @@ correct titles manually. The initial Kannada section is canonical; following
 Latin is literal supplied Source Latin. An explicitly approved structured credit
 footer may be preserved verbatim in source-only provenance. Hold other ambiguous
 boundaries; never infer verse divisions, authorship, classification or media.
+The separately owner-authorized [verse proposal tool](verse-proposals.md) may
+suggest uncertain boundaries outside source Markdown; it does not change this
+importer's conservative behavior or supply reviewed public verse declarations.
 Separately authorized [prelaunch publication](lyric-publication.md) may release
 the import-review hold of prepared sources through review PRs. That does not
 waive this importer's hold-on-creation rule. Kannada review alone does not assess

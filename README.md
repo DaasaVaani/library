@@ -21,6 +21,12 @@ public artifacts after merge. It is not the fixture publisher, production
 ledger/transliterator or public-launch approval. Owner text review is complete;
 remaining production/release gates, other holds and extraction exceptions stay open.
 
+The owner-authorized [provisional verse proposal workflow](docs/verse-proposals.md)
+persists uncertain blank-layout candidates separately in `reviews/`, without
+copying lyrics or changing source text, IDs, metadata or publication eligibility.
+`npm run verses:propose` creates once or validates unchanged; `verses:validate`
+preserves owner edits and fails on stale source hashes.
+
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
 and [current specification](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md).
@@ -63,7 +69,7 @@ git --no-pager diff --cached --check
 
 `npm run check` runs strict TypeScript and all fixture-publisher tests.
 It also runs source/import metadata and canonical-publication tests and validates
-the imported source set/receipt.
+the imported source set/receipt and persisted provisional verse proposals.
 Use `npm run sources:import` only under the authorized
 [draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
 `npm run sources:retry-footers` narrowly retries unchanged eligible held inputs
@@ -79,6 +85,13 @@ confirmation and every push require full applicable builds/all suites. Documenta
 only work is not automatically exempt now that executable tooling exists.
 Missing required code checks block completion/push; do not fabricate commands.
 Full-check policy does not authorize prohibited source-PR variants or live ingestion.
+
+When Ruby is unavailable locally, the installed YAML dependency can perform the
+equivalent workflow/issue-form syntax check (and check current settings):
+
+```powershell
+node --input-type=module -e 'import {readdirSync,readFileSync} from "node:fs"; import {join} from "node:path"; import {parseDocument} from "yaml"; for (const root of [".github","settings"]) for (const p of readdirSync(root,{recursive:true}).filter(p=>/\.ya?ml$/.test(p))) {const file=join(root,p); const doc=parseDocument(readFileSync(file,"utf8"),{uniqueKeys:true}); if(doc.errors.length) throw new Error(String(doc.errors)); console.log("Parsed "+file);}'
+```
 
 Update current docs/runbooks with changes; past choices and completed validation
 records only in [HISTORY.md](HISTORY.md). Respect push authorization/protections,

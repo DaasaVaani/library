@@ -19,7 +19,7 @@ async function setup(run: (root: string, sources: string, output: string) => Pro
     await writeFile(join(originals, "held.txt"), "ಅಕ್ಷರ\n");
     await importSources(originals, sources, { ...safety, reviewHoldReason: "source-import-review" });
     await run(root, sources, output);
-  } finally { await rm(root, { recursive: true }); }
+  } finally { await rm(root, { recursive: true, maxRetries: 5, retryDelay: 100 }); }
 }
 async function release(sources: string) {
   const candidates = await Promise.all((await readdir(sources)).filter(name => name.endsWith(".md")).map(async name => {
