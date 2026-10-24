@@ -1,5 +1,392 @@
 # Documentation history
 
+## Owner-authorized review-branch publication validation (2026-10-25)
+
+- The owner now authorizes committing/pushing the six pending Library paths
+  only to `source/provisional-verse-proposals-568db957` for review. The parent
+  owns staging, commit, push and exact-CI verification; this validation task
+  performs none of them and makes no future push/CI success claim.
+  Main/reviewed-content status, Shared8bd, deferred667, source bytes/holds,
+  all5,108 uncertain proposals and retained diagnostic files remain unchanged.
+- Starting HEAD is `568db9579c50ca3de59c45e3dead28a127434c13`, committed tree
+  `169deb938c62a24588476bf264b9e18e84030ee4`, with empty staging.
+  Exact pending scope: `HISTORY.md`, `README.md`, `package.json`,
+  `docs/zip-store.md`, `tools/zip-store.ts`, `tools/zip-store.test.ts`.
+- A fresh single full `npm run check` and all applicable repository/YAML/
+  actionlint-with-ShellCheck/new-file/documentation/whitespace checks are
+  required for this publication handoff. No test weakening, automatic failure
+  retry, source generation, repin, installation or host-permission change is
+  authorized. Android remains on hold; no other repository/service is touched.
+- Fresh `npm run check` passed once at01:32 using repository-local TEMP/TMP:
+  strict build/typecheck,44/44 tests (zero failures/cancellations/skips),
+  source validation871 imported/125 held, unchanged proposal validation870
+  sources/5,108 uncertain candidates. The seven ZIP tests and synthetic
+  fixture/canonical artifact integrity/failure tests were included. No real
+  source artifacts were generated. Exact output:
+  `library-review-branch-final-full-20261025.log`.
+- `python tools\check_repository.py` passed917 tracked files; the documented
+  Node/YAML parser passed all ten files; installed actionlint1.7.12 with explicit
+  ShellCheck0.11.0 passed both workflows using the exact executable command
+  recorded below. Zero tracked standalone `.sh`/`.bash` scripts were found.
+  `git --no-pager diff --check`, `git --no-pager diff --cached --check`
+  and `git --no-pager show --format= --check HEAD` all passed. Evidence:
+  `library-review-branch-final-checks-20261025.log`.
+- Supplemental non-writing `python -` checked920 tracked/untracked files,
+  all six exact pending paths and all three Markdown files: UTF8, newlines,
+  whitespace, balanced fences,15 local links and zero local heading-anchor
+  references passed. Staging remained empty. Proposal SHA256, six retained
+  gzip hashes and baseline source/original/Shared comparison were unchanged.
+  Evidence: `library-review-branch-final-newfiles-20261025.log`.
+  Only this documentation result was appended after the full pass; executable
+  code/settings remain identical. No duplicate full run was needed.
+- All applicable executable validation gates pass for parent review-branch
+  publication handling. Linguistic review, reviewed-content status, public verse
+  activation and broader release gates remain independent; candidates remain
+  uncertain. No local staging/commit/push/repin was performed and no remote CI
+  outcome is claimed.
+
+## Restart Manager diagnostic correction and filesystem clearance (2026-10-25)
+
+- Correcting the prior chronology explicitly: the directory GetList error5
+  was misclassified as an authorization/access barrier and incorrectly used
+  to gate later validation. Microsoft's
+  [RmGetList documentation](https://learn.microsoft.com/en-us/windows/win32/api/restartmanager/nf-restartmanager-rmgetlist)
+  defines this result as a registered path being a directory. Registering that
+  directory was an unsupported diagnostic use, not evidence of filesystem
+  permissions, a security restriction or the EBUSY cause. Prior entries remain
+  above/below as historical records, not valid current diagnostic guidance.
+  No further directory Restart Manager calls will be made.
+- Ordinary directory metadata/listing had succeeded; six file queries reported
+  no affected processes, and the owner's exact/broader Resource Monitor
+  searches returned no results. These are limited no-owner observations, not
+  proof that no lock ever existed or attribution of the original failure.
+- With the owner's explicit correction and authorization, ran one isolated
+  lifecycle probe at configured
+  `node_modules\.cache\verse-validation`, using installed Node22.15.0 and
+  repository-local TEMP/TMP. Probe root was
+  `daasavaani-lifecycle-XO0f1J`. Exclusive creation, write, awaited close,
+  read, rename, reread and recursive deletion all passed without retry options
+  or sleeps. Its owned directory was removed normally; the retained old six
+  gzip filenames/SHA256 inventory was identical before and after.
+  Evidence: `library-corrected-api-lifecycle-probe-20261025.log`.
+- This concrete new filesystem clearance permits the single authorized full
+  validation attempt, not a claim of an established lifecycle fix. No product
+  code, test assertions, retry settings, permissions or host policy changed.
+  Preflight had about3GiB physical memory and480GB disk free. HEAD568/tree169,
+  Shared8bd, deferred667, protected sources/holds and proposals were preserved.
+- Archived the replaced ZIP guide status sentence: "The existing full-suite
+  EBUSY blocker remains unresolved; focused checks do not establish finalization
+  or publication readiness." The current guide instead states the enduring
+  full-validation gate; dated failure/pass evidence belongs here.
+- The one authorized `npm run check` completed successfully at01:26 with
+  repository-local TEMP/TMP: strict build/typecheck and all44 tests passed,
+  with zero failures/cancellations/skips, including all seven ZIP tests and the
+  previously failing deterministic fixture publication/cleanup test. Source
+  validation passed871 imported/125 held; persisted proposal validation passed
+  unchanged870 eligible sources/5,108 uncertain candidates, including4,238
+  blank-separator endpoints and870 final closures. Protected lyric exclusion
+  remained in force. Canonical/fixture artifact schema, hashes, bounds and
+  failure-preservation assertions ran as synthetic tests; no real source-PR
+  artifacts were generated. Evidence:
+  `library-corrected-preflight-full-20261025.log`. No code/settings changed
+  after this successful run; subsequent edits only record documentation results.
+- `python tools\check_repository.py` passed917 tracked files. The documented
+  installed-Node/YAML fallback
+  `node --input-type=module -e 'import {readdirSync,readFileSync} from "node:fs"; import {join} from "node:path"; import {parseDocument} from "yaml"; for (const root of [".github","settings"]) for (const p of readdirSync(root,{recursive:true}).filter(p=>/\.ya?ml$/.test(p))) {const file=join(root,p); const doc=parseDocument(readFileSync(file,"utf8"),{uniqueKeys:true}); if(doc.errors.length) throw new Error(String(doc.errors)); console.log("Parsed "+file);}'`
+  passed all ten workflow/issue-form/settings files (the executed equivalent
+  also printed the total). `git --no-pager diff --check`,
+  `git --no-pager diff --cached --check` and
+  `git --no-pager show --format= --check HEAD` all exited0. Evidence:
+  `library-corrected-preflight-hygiene-20261025.log`.
+- Parent supplied existing approved lint executable paths; no tool was
+  installed. Executed
+  `& 'C:\Users\pots\AppData\Local\DaasaVaani\toolchains\actionlint-1.7.12\actionlint.exe' -shellcheck 'C:\Users\pots\AppData\Local\DaasaVaani\toolchains\shellcheck-0.11.0\shellcheck.exe' .github\workflows\hygiene.yml .github\workflows\publish-lyrics.yml`
+  successfully, covering both workflows with ShellCheck enabled. Version
+  commands confirmed actionlint1.7.12/ShellCheck0.11.0. `git ls-files '*.sh' '*.bash'`
+  found zero tracked standalone shell scripts, so no separate standalone
+  invocation applies. Evidence: `library-final-actionlint-shellcheck-20261025.log`.
+- Supplemental non-writing inline Python (`python -`) enumerated
+  `git ls-files --cached --others --exclude-standard -z`, validating UTF8,
+  final newlines and scoped whitespace across920 tracked/untracked files.
+  It explicitly included all three new ZIP paths. Pending `HISTORY.md`,
+  `README.md` and `docs/zip-store.md` passed Markdown-fence and local-link/
+  heading-anchor validation:15 local links and zero local heading-anchor
+  references. Evidence: `library-final-new-files-docs-anchors-20261025.log`.
+- Executable validation and applicable workflow/hygiene gates now pass; no
+  proven project lifecycle bug or underlying EBUSY owner is claimed. The prior
+  failures and mistaken diagnostic chronology remain archived, not erased.
+  ZIP remains an ALG-08/GEN-03 prerequisite, and DATA-02/03/08 authoring aids
+  remain distinct from DATA-07 linguistic review/public verse approval.
+  All5,108 candidates remain uncertain. No commit/push/repin/real artifact
+  generation was authorized here; six pending paths and retained failure data
+  remain for parent scope/publication handling.
+
+## Owner-assisted Library preflight, stopped on denial (2026-10-25, 01:23)
+
+- New owner evidence: Resource Monitor CPU/Associated Handles searches for
+  both `daasavaani-publisher-9fpEac` and `daasavaani-publisher` returned
+  no results. The owner did not authorize Handle download or elevation.
+  These observations do not prove absence of a lock at failure time.
+- Confirmed expected HEAD568/tree169, Shared8bd, deferred667 and all six pending
+  paths before the newly authorized single observation. Normal metadata/listing
+  access succeeded for retained
+  `node_modules\.cache\verse-validation\daasavaani-publisher-9fpEac\objects`;
+  it remained an ordinary directory containing six files. Metadata access is
+  not a deletion-lifecycle clearance test.
+- Repeated exactly the original Restart Manager directory-ownership observation
+  once, without an alternative API/access route. StartSession and
+  RegisterResources returned0; GetList again returned Win32 error5 (access
+  denied), zero reported count; EndSession returned0. The zero count alongside
+  a failed query is not a successful no-owner result. This diagnostic denial
+  does not itself prove source/filesystem permissions caused the earlier EBUSY.
+- Followed the explicit stop-on-denial condition: no new synthetic lifecycle
+  probe, complete validation, cleanup of retained files, code patch, timing/
+  retry change, installation, elevation or host-policy change. Current
+  authorization therefore does not permit progressing to the full-check gate.
+  Further recovery needs an explicit host-authorized diagnostic/remediation
+  decision, not another automatic query or suite attempt. No holder was inferred
+  and no user/unknown process was stopped.
+- Exact preflight evidence is in session file
+  `library-owner-assisted-preflight-20261025.log`. The prior36/37 EBUSY full
+  result remains blocking; ZIP foundation has no new combined-suite evidence.
+  Only this history record changed. Sources, holds,5,108 uncertain proposals,
+  all ZIP work, staging, pins and parent services were preserved; no commit,
+  push, repin or owned helper was created.
+
+## Installed handle-diagnostic discovery (2026-10-25, 01:10)
+
+- Under the owner's bounded fix request, checked diagnostic command discovery,
+  running diagnostic processes, named App Paths registrations and a bounded set
+  of conventional Sysinternals/Chocolatey/Scoop/WinGet and Library tool locations.
+  No Handle/Process Monitor/Process Explorer executable was found in those
+  locations, on PATH or running; no matching uninstall registration was found.
+  This is not an exhaustive machine search or proof that none exists elsewhere.
+  No tool was installed/downloaded/launched and no denied operation was retried.
+- Verified installed `C:\Windows\System32\resmon.exe`, file version
+  `10.0.26100.9711`. Resource Monitor offers a host-interactive diagnostic, not
+  a verified usable unattended ownership-capture interface in this session.
+  It was not launched, and its host UI/access requirements were not assumed
+  satisfied. The retained failing `objects` directory still has six gzip files;
+  no holder or current lock was inferred from their presence.
+- Exact minimal host request: open the already-installed Resource Monitor;
+  on CPU expand Associated Handles and search
+  `daasavaani-publisher-9fpEac`. Return matching Image/PID/Type/Handle Name rows
+  for the retained fixture directory and its `objects` child, or explicitly
+  report no matches. Do not terminate a process based on search alone.
+  If access is denied or the UI cannot be opened under authorized host access,
+  report the precise restriction rather than bypassing it. This request needs
+  host interaction; no new installation or elevation is requested or presumed.
+  A no-match result alone would not prove the earlier failure cause cleared.
+- Discovery evidence is in session file
+  `library-installed-handle-diagnostic-discovery-20261025.log`. No verified
+  task-owned holder/lifecycle bug was found, so no cleanup, code fix or suite
+  retry was performed. The existing full-validation gate remains blocked.
+  Only this history addition changed; all six pending paths, source568,
+  Shared8bd, deferred workflow branch, holds and uncertain proposals were
+  preserved. No commit, push, repin or owned helper was created.
+
+## Library validation gate reassessment (2026-10-25, 00:11)
+
+- Rechecked the same Library blocker under the owner's renewed cross-repository
+  completion request. This delegated scope explicitly retained the no-commit/
+  no-push/no-repin restriction and required credible new evidence or remediation
+  before another full run. HEAD remains
+  `568db9579c50ca3de59c45e3dead28a127434c13`, committed tree
+  `169deb938c62a24588476bf264b9e18e84030ee4`, with Shared
+  `8bd8793afb9f2fd43d52b62bc5436bbd4da1b0ce`.
+- Preserved all six pending paths: `HISTORY.md`, `README.md`, `package.json`,
+  `docs/zip-store.md`, `tools/zip-store.ts` and `tools/zip-store.test.ts`.
+  The existing package test command now includes the seven ZIP foundation
+  tests; their earlier focused pass does not validate the combined full suite.
+  No diff exists in `tools/publisher.ts` or `tools/publisher.test.ts`, and no
+  independent lifecycle fix or confirmed host-side resource clearance was
+  supplied. The exact retained
+  `node_modules\.cache\verse-validation\daasavaani-publisher-9fpEac\objects`
+  directory still contains six files. Its continued existence alone is not
+  evidence of a currently held lock or its owner.
+- No genuinely new resource-ownership evidence was available beyond the bounded
+  prior diagnostics: application-owned leak unproven, Restart Manager file
+  query reported no owners, directory query returned access denied. Did not
+  repeat denied queries, bypass access, change host settings/retry policy,
+  install tools, terminate processes or launch a blind full-suite retry.
+  Other-repository/device activity is not evidence that this directory's
+  failure cause has been resolved.
+- Full validation cannot legitimately resume yet under this bounded scope.
+  Required host-owner action: obtain a scoped directory-handle/operation-owner
+  capture for that exact path using an already-approved host diagnostic, without
+  bypassing denied access. If a holder is verified, resolve its ownership through
+  its normal supported lifecycle and provide concrete clearance/remediation
+  evidence for a coordinated full run. If capture itself requires unavailable
+  access, the host owner must supply the evidence; Library cannot infer it.
+  No blanket process termination or antivirus change is proposed.
+- No build/test/source/artifact/YAML/actionlint/ShellCheck validation was newly
+  attempted or claimed passed. The last authorized complete run remains
+  build/typecheck passed,36/37 tests with EBUSY, subsequent source/proposal
+  validators not reached. ZIP integration still needs a full combined pass;
+  any later run must include it and all owning documented checks without
+  suppressing the existing fixture test or generating real source-PR artifacts.
+- Only this additional history record was edited. Existing ZIP work/staging,
+  canonical sources, originals, holds,5,108 uncertain proposals, deferred
+  workflow branch, independent pins and parent-owned services remain untouched.
+  No commit, push, PR or owned helper was created.
+- History hygiene only: `python tools\check_repository.py` passed917 tracked
+  files; `git --no-pager diff --check` and
+  `git --no-pager diff --cached --check` exited0. The proposal SHA256 remains
+  `c6f624966cf8beed11c213f352edb8f1beabaef55edb88cf65b2ce05d8ca2eea`.
+  Evidence is in session file `library-verse-gate-reassessment-20261025.log`;
+  these checks do not unblock the full-validation gate.
+
+## Bounded ZIP STORE byte prerequisite (2026-10-24)
+
+- Added standalone `tools/zip-store.ts` construction and strict verification for
+  original gzip object bytes (ALG-08/GEN-03 prerequisite only). Reused the existing
+  deterministic gzip producer in synthetic tests and the published hash-addressed
+  object-path format. No existing ZIP/CRC helper was present. Explicit caller
+  limits count all ZIP overhead; no product defaults, Shared pin/settings,
+  changedAt/grouping/packing semantics or publisher integration were added.
+- `npm run build` passed (configured strict TypeScript build).
+  `node --import tsx --test tools\zip-store.test.ts` passed all7 focused pure
+  synthetic tests, with no failures/skips. Tests include original-byte preservation,
+  deterministic metadata/order, an independent known CRC32 vector, exact count/
+  total-size limits, malformed paths/hashes, exhaustive single-byte corruptions/
+  truncations and non-STORE/ZIP64 refusal.
+- `python tools\check_repository.py` passed (917 tracked files).
+  `git --no-pager diff --check` and
+  `git --no-pager diff --cached --check` passed. The hygiene script covers tracked
+  files; the new untracked TypeScript files were included by the configured build
+  and focused tests. New documentation was checked directly.
+- Existing dirty HISTORY evidence was preserved. Sources, proposal candidates,
+  holds, originals, staging and other repositories were not changed; no real
+  generation/publication, server access, commit or push occurred. The known
+  full-suite EBUSY blocker was not retried or attributed to a lock owner.
+  Full finalization/publication remains BLOCKED until all configured suites can
+  complete successfully; the targeted pass is not final release readiness.
+
+## Bounded publisher cleanup root-cause follow-up (2026-10-24, 23:00)
+
+- The owner authorized investigation of the existing EBUSY blocker, not another
+  blind validation run or changes to cleanup retry/timing policy. Library HEAD,
+  tree, Shared pin and the existing unstaged history record matched the previous
+  handoff. No test suite, publication, import or source generation was rerun.
+- Inspected `tools/publisher.test.ts`, its `publish` implementation, sibling
+  test fixture lifecycles and the installed Node22.15.0 filesystem implementation.
+  The publisher awaits every path-based read/write, both complete publications
+  and every verification read before its final recursive removal. There is no
+  application-managed file handle, directory iterator, stream, watcher, server
+  or child process on this path. Sibling fixtures use independently allocated
+  `daasavaani-lyrics-*`, `daasavaani-source-import-*` and
+  `.cache/verse-tests-<UUID>` roots, not the failing publisher directory.
+  Importer fault-injection mocks restore their methods in `finally`; the
+  configured Node test runner uses separate test-file processes. Imported YAML
+  helpers do not execute their CLI generator when imported. No concrete
+  cross-fixture ownership collision or missing application close was found.
+- Read the installed Node code through `process.binding('natives')`, without
+  editing runtime/dependencies. `internal/fs/promises` path-based `readFile`
+  and `writeFile` return `handleFdClose`, which awaits closure on both success
+  and failure. `readdir` returns the completed binding result, not a live
+  directory iterator. `internal/fs/rimraf` attempts `rmdir` before recursing
+  into children; only ENOTEMPTY/EEXIST/EPERM take that recursion branch, not
+  EBUSY. Thus six retained gzip files are consistent with an early directory
+  removal failure; they do not prove six outstanding file operations.
+  This explains the observed cleanup control flow, not the underlying Windows
+  lock owner or a proven Node defect.
+- Used the existing Windows Restart Manager API for one scoped ownership query
+  of the six files in retained
+  `node_modules\.cache\verse-validation\daasavaani-publisher-9fpEac\objects`
+  and one query of that exact directory. File registration/query succeeded
+  with zero reported affected processes. Directory registration succeeded but
+  its query returned Win32 error5 (access denied), so directory ownership
+  remains unknown. Both diagnostic sessions ended successfully. This was only
+  StartSession/RegisterResources/GetList/EndSession: no resource shutdown,
+  restart, elevation, permission modification or settings change.
+  The directory remains an ordinary directory, not a reparse link; no process
+  command line referencing this exact fixture was found. These later
+  observations cannot identify the owner at the earlier failure time or rule
+  out filesystem/filter-driver interference.
+- Additional session evidence is in
+  `library-verse-node-cleanup-lifecycle-20261024.log` and
+  `library-verse-resource-query-20261024.log`. Existing failure logs and the
+  retained fixture were preserved. No application-owned resource bug was
+  proven, so no speculative code patch, targeted rerun or full retry was made.
+  The prior full result remains36/37 tests and a blocked publication gate.
+- Minimal next external step: have the host owner capture the exact directory's
+  handle ownership at failure using an already-approved host diagnostic, then
+  address only a verified holder through its normal lifecycle and coordinate a
+  new full validation window. This investigation neither authorizes installing
+  tools/changing host policy nor attributes the failure to antivirus. No
+  processes or parent-owned HTTP/server/device resources were disturbed.
+- Only `HISTORY.md` changed; no staging, source/original/proposal bytes,
+  deferred branch, Shared pin, consumer worktree, commit, push or PR changed.
+  The5,108 candidate boundaries remain uncertain DATA-02/03/08 authoring aids,
+  not completed DATA-07 review or approved public verse truth.
+- Follow-up documentation checks passed: `python tools\check_repository.py`
+  (917 tracked files), `git --no-pager diff --check` and
+  `git --no-pager diff --cached --check`. The baseline source/original/Shared
+  comparison command recorded below again exited0; proposal SHA256 remained
+  `c6f624966cf8beed11c213f352edb8f1beabaef55edb88cf65b2ce05d8ca2eea`.
+  Evidence is in `library-verse-followup-history-hygiene-20261024.log`;
+  none of these checks replaces the failed full suite.
+
+## Bounded provisional verse validation resume (2026-10-24)
+
+- Resumed only Library on clean
+  `source/provisional-verse-proposals-568db957`, HEAD
+  `568db9579c50ca3de59c45e3dead28a127434c13`, tree
+  `169deb938c62a24588476bf264b9e18e84030ee4`; local/remote main remained
+  `c2837ccf383b976a1e2d20928ff018256270551c`. The deferred
+  `deferred/workflow-validation-support-667a2a7` branch was preserved.
+  No workflow/authentication/permissions changes or publication were attempted.
+- Before the single newly authorized complete attempt, disk had about481GB free,
+  physical memory about2.2GiB free, and no Library Node/test process was active.
+  Used installed Node22.15.0/npm10.9.2 without dependency/toolchain installation.
+  With `TEMP` and `TMP` set to repository-local
+  `node_modules\.cache\verse-validation`, ran exactly `npm run check`.
+  Strict build/typecheck passed; the full suite failed36/37, with zero
+  cancellations/skips. Source/proposal validators were not reached because the
+  configured command stops after test failure.
+- The failing test was `fixture publication is deterministic and all artifacts
+  verify` in `tools/publisher.test.ts`. Node reported `code: EBUSY`,
+  `failureType: testCodeFailure`, location
+  `tools/publisher.test.ts:1:1677`, and
+  `EBUSY: resource busy or locked, rmdir` for
+  `node_modules\.cache\verse-validation\daasavaani-publisher-9fpEac\objects`.
+  The TAP output supplied no additional stack. Direct lifecycle inspection found
+  both `publish` calls and all artifact reads awaited before the final
+  `await rm(output, { recursive: true })`; no concrete code-owned handle leak
+  was established. No speculative cleanup retries, timeout changes or code fixes
+  were applied, and the full command was not rerun.
+- Bounded read-only evidence after failure found that exact `objects` directory
+  still present with six gzip files and no Library Node/tsx/esbuild process.
+  Existing unrelated Node processes were left untouched. `handle`/`handle64`
+  were unavailable; `openfiles /query /fo csv /v` exited1, reporting disabled
+  local object tracking and access denied. No tracking setting, elevation,
+  antivirus change or process termination was attempted. The locking resource
+  owner and root cause remain unproven; the exact failed directory was retained
+  for inspection rather than deleted.
+- Full output and bounded evidence were saved in session files
+  `library-verse-resume-full-20261024.log` and
+  `library-verse-resume-evidence-20261024.log`. No targeted result substitutes
+  for this failed full gate. Further complete validation requires a newly
+  coordinated run; YAML/actionlint/ShellCheck and remaining full validation were
+  not claimed as passed by this attempt.
+- `git diff c2837ccf383b976a1e2d20928ff018256270551c --exit-code -- library text_files_from_source shared`
+  passed. Sources, the protected lyric, receipt, originals and Shared pin were
+  not changed. Shared remains
+  `8bd8793afb9f2fd43d52b62bc5436bbd4da1b0ce`. The proposal file remains
+  1,090,422 bytes, SHA256
+  `c6f624966cf8beed11c213f352edb8f1beabaef55edb88cf65b2ce05d8ca2eea`:
+  870 eligible sources,16,392 canonical lines and5,108 uncertain candidates,
+  with125 raw-input exceptions still held. DATA-02/03/08 authoring support is
+  unchanged; DATA-07 review/public verse activation is not completed.
+- Only this history record was edited on resume. No commit, push, PR, real
+  generated variants, consumer/pin changes, servers or device/browser work was
+  performed. Publication readiness remains blocked by the repeated full-suite
+  failure, not by missing push authorization alone.
+- History-edit hygiene passed: `python tools\check_repository.py` checked917
+  tracked files; `git --no-pager diff --check` and
+  `git --no-pager diff --cached --check` both exited0. These documentation
+  checks do not clear the failed full-suite gate.
+
 ## Owner-authorized provisional verse proposals (2026-10-23)
 
 - Starting Library HEAD was `c2837ccf383b976a1e2d20928ff018256270551c`,
