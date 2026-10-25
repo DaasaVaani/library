@@ -8,6 +8,7 @@ import { join } from "node:path";
 import { PublicationLedgerGitStore, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
 import { canonical, deterministicGzip } from "./publisher.js";
 import { prepareBaselineInitializationReview } from "./semantic-baseline.js";
+import { prepareCanonicalSnapshot, reserveCanonicalSnapshot, bindCanonicalSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
 import {
   emptyPublicationLedger, encodePublicationLedger, initializePublicationLedger, preparePublication, publicationLedgerFingerprint,
   type PendingPublication, type PublicationReceipt
@@ -91,6 +92,36 @@ test("real Git persistence creates one-file direct-child commits and writes noth
   assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), "4");
   assert.equal(git(f.remote, ["for-each-ref", "--format=%(refname)"]), stateRef);
   assert.equal(git(f.client, ["for-each-ref", "--format=%(refname)", "refs/heads", "refs/tags"]), "");
+});
+
+test("actual generated snapshot binds independently read durable reservation before a synthetic exposure callback", async t => {
+  const f = await fixture(t), base = await f.store.load(f.initial), { policy, bounds } = await readSnapshotSettings();
+  const prepared = prepareCanonicalSnapshot(base.state, publicationLedgerFingerprint(base.state), {
+    sourceCommit, publishedAt: early, items: [{
+      format: "daasavaani-lyric", formatVersion: 1, lyricId: logical.lyricId, canonicalScript: "kn",
+      title: "Synthetic snapshot", tags: [], lines: [{ kind: "line", lineId: logical.lyricId, text: "Synthetic snapshot" }]
+    }]
+  }, policy, bounds);
+  const checked = reserveCanonicalSnapshot(base.state, publicationLedgerFingerprint(base.state), prepared, bounds);
+  const reserved = await f.store.update(base, { kind: "reserve", plan: prepared.plan, manifestSha256: prepared.manifest.sha256 });
+  assert.deepEqual(reserved.state, checked.state);
+  const confirmed = await f.store.deployReserved(reserved, async pending => {
+    const durable = await f.peer.load(reserved.gitTip);
+    assert.equal(durable.state.pending?.phase, "deploying");
+    const bound = bindCanonicalSnapshot(durable.state, publicationLedgerFingerprint(durable.state), prepared, bounds);
+    assert.equal(bound.descriptor.sequence, pending.sequence);
+    assert.equal(bound.descriptor.manifest.sha256, pending.manifestSha256);
+    assert.equal(createHash("sha256").update(bound.artifacts.get(bound.descriptor.manifest.path)!).digest("hex"), pending.manifestSha256);
+    return proof(pending);
+  });
+  const next = prepareCanonicalSnapshot(confirmed.state, publicationLedgerFingerprint(confirmed.state), {
+    sourceCommit, publishedAt: later, items: [{
+      format: "daasavaani-lyric", formatVersion: 1, lyricId: logical.lyricId, canonicalScript: "kn",
+      title: "Synthetic snapshot", tags: [], lines: [{ kind: "line", lineId: logical.lyricId, text: "Synthetic snapshot" }]
+    }]
+  }, policy, bounds);
+  assert.equal(reserveCanonicalSnapshot(confirmed.state, publicationLedgerFingerprint(confirmed.state), next, bounds).outcome, "noop");
+  assert.equal((await f.peer.load(confirmed.gitTip)).state.confirmed?.manifestSha256, prepared.manifest.sha256);
 });
 
 test("competing independent Git writers cannot overwrite or consume the same reservation twice", async t => {

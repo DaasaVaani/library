@@ -7,8 +7,11 @@ protocol is a standalone prerequisite, not a public manifest schema, durable
 state-branch writer or activated publication pipeline. The separate
 [isolated Git store](../tools/publication-ledger-git.ts) implements conditional
 remote persistence and the phase-before-side-effect boundary described below.
-Neither existing publisher calls these tools. They do not initialize the real
-catalog or activate public dates.
+Neither existing publisher calls these tools. The pure
+[staged snapshot producer](snapshot-producer.md) now derives candidate public
+dates/artifacts from a plan and binds a descriptor to its exact reservation.
+It performs no persistence/deployment and does not initialize the real catalog
+or activate public dates.
 
 ## Inputs and date meaning
 

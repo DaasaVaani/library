@@ -65,6 +65,14 @@ baseline and projection identity. Legacy content stays unsequenced; new
 reservations start at1, preserving cancellation gaps. Actual review approval,
 protected state-branch creation/anchor and hosted activation remain gates.
 
+The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
+the published Shared descriptor/manifest/transfer-policy contract to real logical
+hashes, ledger-derived dates and actual original-gzip STORE bundles. It fully
+verifies candidate bytes before reservation and binds descriptor sequence only
+to the matching pending plan. It writes no source/output/state/network and
+leaves both existing publishers/live feed unchanged. Complete production
+multilingual/index contracts, output/deployment and client adapters remain open.
+
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
 and [current specification](https://github.com/DaasaVaani/shared/blob/main/docs/implementation-specification.md).

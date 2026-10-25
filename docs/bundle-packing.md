@@ -2,7 +2,9 @@
 
 Coverage: ALG-08, GEN-03, OFF-02/04/15 and SET-01/02. This standalone Library
 producer prerequisite composes the [ZIP byte profile](zip-store.md) with the
-[Shared planning policy](../shared/docs/download-planning.md). Neither publisher
+[Shared planning policy](../shared/docs/download-planning.md). The pure
+[staged snapshot producer](snapshot-producer.md) composes it with ledger-derived
+dates and public manifest/policy byte verification; neither existing publisher
 calls it yet. It does not publish source variants or complete production
 publication, request planning, consent or offline preparation.
 
@@ -80,8 +82,8 @@ temporary memory are O(N + B), with one bounded archive being encoded at a time.
 The function retains returned archives; it is not a streaming writer or consumer
 peak-staging-space admission implementation.
 
-Durable semantic dates/ledger receipts, production object/manifest/capability and
-snapshot-policy binding, deployment/headroom accounting, consumer verification,
-consent, cancellation/resume, atomic activation, repair and GC remain open.
+Full-production multilingual/index contracts, protected ledger/deployment
+wiring, deployment/headroom accounting, consumer verification, consent,
+cancellation/resume, atomic activation, repair and GC remain open.
 Full finalization requires all commands in the [validation guide](../README.md#validation),
 not only the focused tests. No production capability is enabled by this helper.

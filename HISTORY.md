@@ -1,5 +1,39 @@
 # Documentation history
 
+## 2026-10-25: staged canonical snapshot producer integration
+
+- Owner authorized Shared contracts and only Library's independently validated
+  Shared pin/integration. Published Shared review commit
+  `b3069a23b51899ddc5bf3cea9b224f0b0020fdda` after full146-test validation, then
+  adopted that exact pin. Website/Android pins, source/main merges, PRs, real
+  baseline activation/state creation and deployment remain untouched.
+- Added a pure canonical item -> logical projection -> ledger plan -> verified
+  gzip/policy/exact-cohort ZIP -> manifest -> matching reserved descriptor flow.
+  Revalidates actual bytes, schema/role/path/capability maps, exact plan dates/
+  metadata/hashes and physical STORE members before sequence admission/binding.
+  The existing fixture and live prelaunch publishers/workflows remain unchanged.
+- Added actual-bare-Git synthetic integration through durable deploying phase,
+  descriptor binding, receipt confirmation and next-generation no-op, plus
+  exact byte boundaries, semantic/tombstone/transport/no-op/retry/tamper tests.
+- First focused typecheck rejected a negative test's impossible tuple member;
+  replaced that assertion with the exact required tuple. No runtime/schema rule
+  was weakened. Focused typecheck and11 producer cases then passed; additional
+  physical ZIP and durable-Git coverage is included in full validation.
+- Archived replaced scope: ledger guide said neither publisher called its tools
+  and the packer guide left all manifest/policy binding future. Both existing
+  publishers still do not call them; only the new isolated pure canonical
+  adapter implements the bounded composition. Full production/hosted/client
+  gates remain in current guides.
+- Final validation: `npm run check` passed strict TypeScript,114/114 tests with
+  zero failures/cancellations/skips, non-writing871 imported/125 held source
+  validation and870/5,108 unchanged proposal validation. Full log:
+  `library-snapshot-producer-full-validation.log`. `python
+  tools\check_repository.py` passed940 tracked files; working/staged Git whitespace,
+  strict parsing of ten YAML files and actionlint1.7.12 with explicit
+  ShellCheck0.11.0 passed. Shared's matching contract had independently passed
+ 146/146 tests before pin adoption. No real source variants were generated,
+  no consumer runtime was changed and no remote deployment was attempted.
+
 ## 2026-10-25: explicit unsequenced baseline and private ledger v2
 
 - Continued directly after publishing the semantic audit/review safeguards at
