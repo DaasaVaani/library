@@ -1,5 +1,43 @@
 # Documentation history
 
+## 2026-10-25: explicit unsequenced baseline and private ledger v2
+
+- Continued directly after publishing the semantic audit/review safeguards at
+  `be06e65b2fb6d671d74184a9dc43c91497242d6b`. The owner selected an explicit
+  unsequenced baseline rather than importing only during the first reservation.
+  Approval covers implementation, not main merge, real state creation or deploy.
+- Added private version2 with explicit canonical-prelaunch projection binding,
+  an immutable complete review/hash baseline and separately preserving committed
+  items. No fake legacy sequence/confirmed receipt is created. Identical legacy
+  snapshots consume no sequence; new reservations start at1, with cancelled
+  gaps retained. Legacy confirmation supplies the initial clock floor.
+- Bound preparation inputs/plans to the supported family; preserved baseline
+  identity, historical dates and tombstones through all transitions. Old private
+  v1 files/unknown families fail explicitly, without silent migration. No
+  production reader/publisher or real state branch was wired to private v1 by
+  this work.
+- Archived replaced current-guide scope: private v1 had no explicit baseline
+  and projection binding remained wholly future work; bootstrap protocol choice
+  was unresolved. Current guides now define the selected v2 protocol while
+  retaining review/activation/hosted permission and full-production gates.
+- Focused strict build and35 core/projection/audit cases passed. The complete
+  `npm run check` then passed strict TypeScript and101/101 tests, zero failures/
+  cancellations/skips, including an actual bare-Git audit-review -> unsequenced
+  baseline -> first sequenced publication integration. Non-writing source/
+  proposal checks retained871 imported/125 held,870 proposed sources/5,108
+  uncertain candidates, `unchanged:true`.
+  Log: `library-unsequenced-bootstrap-full-validation.log`.
+- Reverified all871 preserved original objects and the exact review pin, then
+  constructed only the inactive session
+  `ledger-unsequenced-baseline-draft.json`:408561 bytes, SHA256
+  `e428656b638a57553dd09fe905d99e381dfe3cb8f4a9f8bafc4538959a96022f`.
+  Exact-size codec roundtrip passed and one-byte-smaller decode bound rejected.
+  It has871 committed baseline items plus the immutable871-item review, counter0,
+  null confirmed/pending and null legacy sequence. No real state ref was created.
+- Hygiene passed937 tracked files; strict YAML passed ten files; actionlint1.7.12
+  with explicit ShellCheck0.11.0 passed both workflows; working/staged whitespace
+  checks passed. Shared pins, sources, live feed and CI permissions are unchanged.
+
 ## 2026-10-25: verified semantic baseline and pinned initialization review
 
 - The owner requested continuous progress, not a stop after each prerequisite.

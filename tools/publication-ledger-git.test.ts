@@ -1,12 +1,15 @@
 import test, { type TestContext } from "node:test";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PublicationLedgerGitStore, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
+import { canonical, deterministicGzip } from "./publisher.js";
+import { prepareBaselineInitializationReview } from "./semantic-baseline.js";
 import {
-  emptyPublicationLedger, encodePublicationLedger, preparePublication, publicationLedgerFingerprint,
+  emptyPublicationLedger, encodePublicationLedger, initializePublicationLedger, preparePublication, publicationLedgerFingerprint,
   type PendingPublication, type PublicationReceipt
 } from "./publication-ledger.js";
 
@@ -26,13 +29,13 @@ function commitBlob(directory: string, encoded: Uint8Array, parent?: string, mod
   const tree = git(directory, ["mktree"], `${mode} blob ${blob}\t${name}\n`);
   return git(directory, ["commit-tree", tree, ...(parent ? ["-p", parent] : [])], "Synthetic state fixture" + trailer);
 }
-async function fixture(t: TestContext) {
+async function fixture(t: TestContext, initialState = emptyPublicationLedger()) {
   const root = await mkdtemp(join(tmpdir(), "daasavaani-ledger-git-"));
   t.after(() => rm(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }));
   const remote = join(root, "remote.git"), client = join(root, "client.git"), other = join(root, "other.git");
   for (const directory of [remote, client, other]) git(directory, ["init", "--bare", "--initial-branch=fixture-unused"]);
   for (const directory of [client, other]) git(directory, ["remote", "add", "origin", remote]);
-  const initial = commitBlob(remote, encodePublicationLedger(emptyPublicationLedger()));
+  const initial = commitBlob(remote, encodePublicationLedger(initialState));
   git(remote, ["update-ref", stateRef, initial, "0".repeat(40)]);
   const options: LedgerGitOptions = {
     repositoryDirectory: client, remoteName: "origin", stateRef, maxEncodedBytes: 1048576, gitTimeoutMs: 30000
@@ -43,7 +46,9 @@ async function fixture(t: TestContext) {
   };
 }
 function plan(snapshot: LedgerGitSnapshot, publishedAt = early) {
-  return preparePublication(snapshot.state, publicationLedgerFingerprint(snapshot.state), [logical], publishedAt, sourceCommit);
+  return preparePublication(snapshot.state, publicationLedgerFingerprint(snapshot.state), {
+    logicalProjection: snapshot.state.logicalProjection, items: [logical], publishedAt, sourceCommit
+  });
 }
 function proof(candidate: PendingPublication): PublicationReceipt {
   return {
@@ -238,4 +243,44 @@ test("source branches, unsafe options, non-bare worktrees and split push destina
   git(f.client, ["remote", "set-url", "--push", "origin", f.other]);
   await assert.rejects(f.store.load(f.initial), /same single remote/);
   assert.equal(git(f.remote, ["rev-parse", stateRef]), f.initial);
+});
+
+test("verified unsequenced baseline persists across real Git writers and first new publication reserves one", async t => {
+  const hash = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
+  const decoded = Buffer.from(canonical({
+    format: "daasavaani-lyric", formatVersion: 1, lyricId: logical.lyricId, canonicalScript: "kn",
+    title: "Synthetic bootstrap", tags: [], lines: [{
+      kind: "line", lineId: "22222222-2222-4222-8222-222222222222", text: "ಕನ್ನಡ"
+    }]
+  }));
+  const bytes = deterministicGzip(decoded), sha256 = hash(bytes);
+  const manifestBytes = deterministicGzip(Buffer.from(canonical({
+    format: "daasavaani-lyric-catalog", formatVersion: 1, stage: "prelaunch", requiredCapabilities: ["lyric-preview-v1"],
+    catalog: [{ lyricId: logical.lyricId, title: "Synthetic bootstrap", tags: [], item: {
+      sha256, path: `objects/${sha256}.json.gz`, encodedBytes: bytes.length, decodedBytes: decoded.length
+    } }]
+  })));
+  const publication = {
+    manifestBytes, manifestSha256: hash(manifestBytes), sourceCommit, confirmedAt: early,
+    runId: 1, runAttempt: 1, deploymentId: 2, statusId: 3, artifactId: 4, artifactZipSha256: "d".repeat(64)
+  };
+  const { review } = await prepareBaselineInitializationReview(publication, [publication], async () => bytes, {
+    maxManifestEncodedBytes: 8192, maxManifestDecodedBytes: 32768, maxItemEncodedBytes: 4096, maxItemDecodedBytes: 8192
+  });
+  const baseline = initializePublicationLedger(review, hash(canonical(review) + "\n"));
+  const f = await fixture(t, baseline), base = await f.store.load(f.initial);
+  assert.equal(base.state.confirmed, null);
+  assert.equal(base.state.lastSequence, 0);
+  const candidate = preparePublication(base.state, publicationLedgerFingerprint(base.state), {
+    logicalProjection: base.state.logicalProjection,
+    items: base.state.items.map(({ lyricId, logicalSha256 }) => ({ lyricId, logicalSha256 })),
+    publishedAt: later, sourceCommit
+  });
+  const reserved = await f.store.update(base, { kind: "reserve", plan: candidate, manifestSha256: manifest });
+  const confirmed = await f.peer.deployReserved(await f.peer.load(reserved.gitTip), async pending => proof(pending));
+  assert.equal(confirmed.state.confirmed?.sequence, 1);
+  assert.equal(confirmed.state.baseline?.review.sequence, null);
+  assert.deepEqual(confirmed.state.items, baseline.items);
+  assert.deepEqual(confirmed.state.baseline, baseline.baseline);
+  assert.deepEqual((await f.store.load(f.initial)).state, confirmed.state);
 });

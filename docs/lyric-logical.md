@@ -61,7 +61,9 @@ first-date candidates, not historical logical hashes or a current semantic
 change baseline. The [semantic baseline audit](semantic-baseline.md) now verifies
 historical item evidence to produce change-date candidates and a pinned read-only
 initialization review; it performs no active state import.
-Future full-production projections, projection/version binding,
+The private version2 [bootstrap](publication-ledger.md#explicit-unsequenced-bootstrap)
+binds this current family and the complete review identity, rejecting unknown
+families/private versions. Future full-production projections,
 safe migration between projection families and a reviewed initialization/
 trusted-anchor protocol remain gates before production ledger activation.
 Do not mix hashes from different projection contracts in one ledger as if they

@@ -128,7 +128,9 @@ function publication(value: LyricItem, level: 1 | 9) {
   return { encoded, manifestBytes, manifestSha256: sha(manifestBytes), logical: canonicalLyricLogicalItem(parsed) };
 }
 function commit(state: PublicationLedger, published: ReturnType<typeof publication>, publishedAt: string) {
-  const plan = preparePublication(state, tip(state), [published.logical], publishedAt, sourceCommit);
+  const plan = preparePublication(state, tip(state), {
+    logicalProjection: state.logicalProjection, items: [published.logical], publishedAt, sourceCommit
+  });
   const reserved = reservePublication(state, tip(state), plan, published.manifestSha256);
   if (reserved.outcome === "noop") return reserved.state;
   const deploying = beginPublicationDeployment(reserved.state, tip(reserved.state));
@@ -166,8 +168,10 @@ test("real logical edits advance changedAt only; derived ledger dates cannot fee
   assert.equal(updated.items[0]?.firstPublishedAt, early);
   assert.equal(updated.items[0]?.changedAt, later);
   assert.equal(updated.items[0]?.logicalSha256, edited.logical.logicalSha256);
-  const laterPlan = preparePublication(updated, tip(updated), [canonicalLyricLogicalItem({ ...value, title: value.title + " edited" })],
-    latest, sourceCommit);
+  const laterPlan = preparePublication(updated, tip(updated), {
+    logicalProjection: updated.logicalProjection, items: [canonicalLyricLogicalItem({ ...value, title: value.title + " edited" })],
+    publishedAt: latest, sourceCommit
+  });
   assert.deepEqual(laterPlan.items, updated.items);
   assert.deepEqual(canonicalLyricLogicalItem(value), originalBytes.logical);
 });

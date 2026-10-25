@@ -1,9 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { canonical } from "./publisher.js";
+import type { BaselineInitializationReview } from "./semantic-baseline.js";
 import {
   assertPublicationLedger, emptyPublicationLedger, encodePublicationLedger, decodePublicationLedger,
   publicationLedgerFingerprint as tip, preparePublication, reservePublication, beginPublicationDeployment,
-  cancelPublicationReservation, confirmPublication,
+  cancelPublicationReservation, confirmPublication, initializePublicationLedger,
   type LogicalItem, type PublicationLedger, type PublicationReceipt
 } from "./publication-ledger.js";
 
@@ -14,7 +17,7 @@ const logicalA: LogicalItem = { lyricId: first, logicalSha256: "1".repeat(64) };
 const logicalB: LogicalItem = { lyricId: second, logicalSha256: "2".repeat(64) };
 
 function reserve(state = emptyPublicationLedger(), items: LogicalItem[] = [logicalA], publishedAt = early, manifest = manifestA) {
-  const plan = preparePublication(state, tip(state), items, publishedAt, sourceCommit);
+  const plan = preparePublication(state, tip(state), { logicalProjection: state.logicalProjection, items, publishedAt, sourceCommit });
   return { plan, state: reservePublication(state, tip(state), plan, manifest).state };
 }
 function receipt(state: PublicationLedger, confirmedAt = state.pending?.publishedAt): PublicationReceipt {
@@ -67,7 +70,9 @@ test("semantic updates affect only changed items; removals and unchanged reintro
 });
 
 test("true no-op retains complete state; transport-only snapshots advance sequence but not semantic dates", () => {
-  const original = publish(), plan = preparePublication(original, tip(original), [logicalA], later, "e".repeat(40));
+  const original = publish(), plan = preparePublication(original, tip(original), {
+    logicalProjection: original.logicalProjection, items: [logicalA], publishedAt: later, sourceCommit: "e".repeat(40)
+  });
   const noop = reservePublication(original, tip(original), plan, manifestA);
   assert.equal(noop.outcome, "noop");
   assert.deepEqual(encodePublicationLedger(noop.state), encodePublicationLedger(original));
@@ -76,7 +81,9 @@ test("true no-op retains complete state; transport-only snapshots advance sequen
   assert.deepEqual(transport.items, original.items);
   assert.equal(transport.lastSequence, 2);
   assert.equal(transport.confirmed?.manifestSha256, manifestB);
-  const changed = preparePublication(original, tip(original), [{ ...logicalA, logicalSha256: "4".repeat(64) }], later, sourceCommit);
+  const changed = preparePublication(original, tip(original), {
+    logicalProjection: original.logicalProjection, items: [{ ...logicalA, logicalSha256: "4".repeat(64) }], publishedAt: later, sourceCommit
+  });
   assert.throws(() => reservePublication(original, tip(original), changed, manifestA), /Unchanged manifest/);
 });
 
@@ -90,7 +97,9 @@ test("exact pending retries reserve once in both phases; different candidates an
     assert.throws(() => reservePublication(pending, tip(pending), plan, manifestB), /different publication/);
     assert.throws(() => reservePublication(pending, tip(pending), { ...plan, publishedAt: later }, manifestA), /different publication/);
     assert.throws(() => reservePublication(pending, tip(pending), { ...plan, sourceCommit: "e".repeat(40) }, manifestA), /different publication/);
-    assert.throws(() => preparePublication(pending, tip(pending), [logicalA], later, sourceCommit), /Reconcile/);
+    assert.throws(() => preparePublication(pending, tip(pending), {
+      logicalProjection: pending.logicalProjection, items: [logicalA], publishedAt: later, sourceCommit
+    }), /Reconcile/);
   }
   assert.throws(() => reservePublication(state, tip(empty), plan, manifestA), /Stale/);
   assert.throws(() => beginPublicationDeployment(state, tip(empty)), /Stale/);
@@ -122,7 +131,9 @@ test("uncertain deployment survives serialization and cannot be cancelled or sup
   assert.deepEqual(restored, deploying);
   assert.deepEqual(beginPublicationDeployment(restored, tip(restored)), restored);
   assert.throws(() => cancelPublicationReservation(restored, tip(restored)), /never-started/);
-  assert.throws(() => preparePublication(restored, tip(restored), [], later, sourceCommit), /Reconcile/);
+  assert.throws(() => preparePublication(restored, tip(restored), {
+    logicalProjection: restored.logicalProjection, items: [], publishedAt: later, sourceCommit
+  }), /Reconcile/);
   assert.throws(() => reservePublication(restored, tip(restored), plan, manifestB), /different publication/);
   assert.deepEqual(reservePublication(restored, tip(restored), plan, manifestA).state, restored);
   assert.equal(confirmPublication(restored, tip(restored), receipt(restored, later)).lastSequence, 1);
@@ -147,15 +158,23 @@ test("clock rollback, invalid dates, malformed logical hashes and duplicate iden
   const deploying = beginPublicationDeployment(pending, tip(pending));
   const confirmed = confirmPublication(deploying, tip(deploying), receipt(deploying, latest));
   for (const publishedAt of [early, later, "2026-02-29T00:00:00.000Z", latest.replace(".000Z", "Z"), "now"]) {
-    assert.throws(() => preparePublication(confirmed, tip(confirmed), [logicalA], publishedAt, sourceCommit), /timestamp/);
+    assert.throws(() => preparePublication(confirmed, tip(confirmed), {
+      logicalProjection: confirmed.logicalProjection, items: [logicalA], publishedAt, sourceCommit
+    }), /timestamp/);
   }
-  assert.throws(() => preparePublication(original, tip(original), [{ ...logicalA, logicalSha256: "3".repeat(64) }], early, sourceCommit),
+  assert.throws(() => preparePublication(original, tip(original), {
+    logicalProjection: original.logicalProjection, items: [{ ...logicalA, logicalSha256: "3".repeat(64) }], publishedAt: early, sourceCommit
+  }),
     /advance changedAt/);
   for (const items of [[logicalA, logicalA], [{ ...logicalA, logicalSha256: "bad" }],
     [{ ...logicalA, lyricId: "not-uuid" }], [{ ...logicalA, changedAt: early }]]) {
-    assert.throws(() => preparePublication(original, tip(original), items, later, sourceCommit));
+    assert.throws(() => preparePublication(original, tip(original), {
+      logicalProjection: original.logicalProjection, items, publishedAt: later, sourceCommit
+    }));
   }
-  assert.throws(() => preparePublication(original, tip(original), [logicalA], later, "bad"), /plan/);
+  assert.throws(() => preparePublication(original, tip(original), {
+    logicalProjection: original.logicalProjection, items: [logicalA], publishedAt: later, sourceCommit: "bad"
+  }), /plan/);
   const empty = emptyPublicationLedger();
   assert.throws(() => beginPublicationDeployment(empty, tip(empty)), /No publication/);
   assert.throws(() => cancelPublicationReservation(empty, tip(empty)), /never-started/);
@@ -163,7 +182,9 @@ test("clock rollback, invalid dates, malformed logical hashes and duplicate iden
 
 test("sequence exhaustion refuses new snapshots but permits true no-ops and safe pending reconciliation", () => {
   const original = publish(), exhausted = { ...original, lastSequence: Number.MAX_SAFE_INTEGER };
-  const plan = preparePublication(exhausted, tip(exhausted), [logicalA], later, sourceCommit);
+  const plan = preparePublication(exhausted, tip(exhausted), {
+    logicalProjection: exhausted.logicalProjection, items: [logicalA], publishedAt: later, sourceCommit
+  });
   assert.equal(reservePublication(exhausted, tip(exhausted), plan, manifestA).outcome, "noop");
   assert.throws(() => reservePublication(exhausted, tip(exhausted), plan, manifestB), /exhausted/);
   const lastBase = { ...original, lastSequence: Number.MAX_SAFE_INTEGER - 1 };
@@ -183,10 +204,10 @@ test("strict state codec enforces actual byte limit, UTF8, canonical JSON, versi
   const text = encoded.toString("utf8");
   for (const invalid of [
     text.trim(), " " + text, text.replace("\n", "\r\n"), "\uFEFF" + text,
-    text.replace('"formatVersion":1', '"formatVersion":1,"formatVersion":1'),
-    text.replace('"formatVersion":1', '"formatVersion":2'), text.replace('"lastSequence":1', '"lastSequence":1.5'),
+    text.replace('"formatVersion":2', '"formatVersion":2,"formatVersion":2'),
+    text.replace('"formatVersion":2', '"formatVersion":3'), text.replace('"lastSequence":1', '"lastSequence":1.5'),
     text.replace('"lastSequence":1', '"unknown":true,"lastSequence":1'),
-    text.replace('"formatVersion":1', '"formatVersion":1,"__proto__":{}')
+    text.replace('"formatVersion":2', '"formatVersion":2,"__proto__":{}')
   ]) assert.throws(() => decodePublicationLedger(Buffer.from(invalid), encoded.length * 2));
   assert.throws(() => decodePublicationLedger(Buffer.from([0xff]), 10));
   assert.throws(() => decodePublicationLedger(Buffer.alloc(0), 10));
@@ -208,15 +229,21 @@ test("state invariants reject impossible counters, dates, item order and tampere
     { ...state, pending: { ...state.pending, items: state.pending.items.map(item => ({ ...item, firstPublishedAt: later })) } }
   ];
   for (const [index, value] of invalid.entries()) assert.throws(() => assertPublicationLedger(value), `Invalid state case ${index}`);
-  const plan = preparePublication(original, tip(original), [logicalA], later, sourceCommit);
+  const plan = preparePublication(original, tip(original), {
+    logicalProjection: original.logicalProjection, items: [logicalA], publishedAt: later, sourceCommit
+  });
   assert.throws(() => reservePublication(original, tip(original), { ...plan, items: plan.items.slice(0, 1) }, manifestB), /derivation/);
   assert.throws(() => reservePublication(original, tip(original), plan, "unknown"), /reservation/);
 });
 
 test("planning is input-order independent, reducer outputs do not alias inputs and state contains no lyric payloads", () => {
   const empty = emptyPublicationLedger(), incoming = [logicalB, logicalA], before = structuredClone(incoming);
-  const plan = preparePublication(empty, tip(empty), incoming, early, sourceCommit);
-  assert.deepEqual(plan, preparePublication(empty, tip(empty), [...incoming].reverse(), early, sourceCommit));
+  const plan = preparePublication(empty, tip(empty), {
+    logicalProjection: empty.logicalProjection, items: incoming, publishedAt: early, sourceCommit
+  });
+  assert.deepEqual(plan, preparePublication(empty, tip(empty), {
+    logicalProjection: empty.logicalProjection, items: [...incoming].reverse(), publishedAt: early, sourceCommit
+  }));
   assert.deepEqual(incoming, before);
   const { state } = reservePublication(empty, tip(empty), plan, manifestA);
   assert.ok(state.pending);
@@ -231,4 +258,97 @@ test("planning is input-order independent, reducer outputs do not alias inputs a
   assert.equal(confirmed.items[0]?.changedAt, early);
   const text = encodePublicationLedger(confirmed).toString("utf8");
   for (const field of ["title", "lyrics", "provenance", "manifestBytes"]) assert.equal(text.includes(`"${field}"`), false);
+});
+
+function baselineReview(): BaselineInitializationReview {
+  return {
+    format: "daasavaani-ledger-baseline-review", formatVersion: 1, status: "review-required",
+    logicalProjection: "canonical-prelaunch-v1", auditSha256: "f".repeat(64), sequence: null,
+    legacyPublication: {
+      sourceCommit, runId: 1, runAttempt: 1, deploymentId: 2, statusId: 3, artifactId: 4,
+      artifactZipSha256: "d".repeat(64), confirmedAt: later, manifestSha256: manifestA, catalogCount: 1
+    },
+    items: [
+      { ...logicalA, firstPublishedAt: early, changedAt: early, present: true },
+      { ...logicalB, firstPublishedAt: early, changedAt: early, present: false }
+    ]
+  };
+}
+const reviewPin = (review: BaselineInitializationReview) => createHash("sha256").update(canonical(review) + "\n").digest("hex");
+
+test("explicit legacy bootstrap seals the reviewed baseline without inventing a confirmed sequence", () => {
+  const review = baselineReview(), state = initializePublicationLedger(review, reviewPin(review));
+  assert.equal(state.formatVersion, 2);
+  assert.equal(state.logicalProjection, "canonical-prelaunch-v1");
+  assert.equal(state.lastSequence, 0);
+  assert.equal(state.confirmed, null);
+  assert.equal(state.pending, null);
+  assert.deepEqual(state.items, review.items);
+  assert.equal(state.baseline?.review.sequence, null);
+  const encoded = encodePublicationLedger(state);
+  assert.deepEqual(decodePublicationLedger(encoded, encoded.length), state);
+  review.items[0]!.changedAt = later;
+  assert.equal(state.items[0]?.changedAt, early);
+  assert.equal(state.baseline?.review.items[0]?.changedAt, early);
+});
+
+test("legacy no-op consumes no sequence; first new snapshot reserves one and preserves historical item dates", () => {
+  const review = baselineReview(), state = initializePublicationLedger(review, reviewPin(review));
+  const unchanged = reserve(state, [logicalA], latest, manifestA).state;
+  assert.deepEqual(unchanged, state);
+  const firstNew = publish(state, [logicalA], latest, manifestB);
+  assert.equal(firstNew.lastSequence, 1);
+  assert.equal(firstNew.confirmed?.sequence, 1);
+  assert.deepEqual(firstNew.items, review.items);
+  assert.deepEqual(firstNew.baseline, state.baseline);
+  assert.equal(firstNew.baseline?.review.legacyPublication.manifestSha256, manifestA);
+});
+
+test("baseline cancellations leave gaps while historical tombstones and first dates survive later sequenced edits", () => {
+  const review = baselineReview(), state = initializePublicationLedger(review, reviewPin(review));
+  const reserved = reserve(state, [logicalA], latest, manifestB).state;
+  const cancelled = cancelPublicationReservation(reserved, tip(reserved));
+  assert.equal(cancelled.lastSequence, 1);
+  assert.deepEqual(cancelled.items, state.items);
+  assert.equal(cancelled.confirmed, null);
+  const edited = { ...logicalA, logicalSha256: "4".repeat(64) };
+  const confirmed = publish(cancelled, [logicalB, edited], latest, manifestB);
+  assert.equal(confirmed.confirmed?.sequence, 2);
+  assert.equal(confirmed.items[0]?.firstPublishedAt, early);
+  assert.equal(confirmed.items[0]?.changedAt, latest);
+  assert.deepEqual(confirmed.items[1], { ...review.items[1], present: true });
+  assert.deepEqual(confirmed.baseline, state.baseline);
+});
+
+test("baseline admission rejects altered pins, dates, counts, schemas and projection mixing", () => {
+  const review = baselineReview(), state = initializePublicationLedger(review, reviewPin(review));
+  assert.throws(() => initializePublicationLedger(review, "0".repeat(64)), /identity/);
+  const badDate = structuredClone(review); badDate.items[0]!.firstPublishedAt = latest;
+  assert.throws(() => initializePublicationLedger(badDate, reviewPin(badDate)), /dates/);
+  const badCount = structuredClone(review); badCount.legacyPublication.catalogCount = 2;
+  assert.throws(() => initializePublicationLedger(badCount, reviewPin(badCount)), /count/);
+  for (const value of [
+    { ...state, logicalProjection: "future-projection" },
+    { ...state, baseline: { ...state.baseline, review: { ...review, logicalProjection: "future-projection" } } },
+    { ...state, baseline: { ...state.baseline, review: { ...review, sequence: 1 } } },
+    { ...state, baseline: { ...state.baseline, review: { ...review, status: "approved" } } },
+    { ...state, items: state.items.slice(0, 1) },
+    { ...state, items: state.items.map(item => ({ ...item, firstPublishedAt: later })) }
+  ]) assert.throws(() => assertPublicationLedger(value));
+  assert.throws(() => reserve(state, [logicalA], early, manifestB), /timestamp/);
+});
+
+test("private v1 is not silently migrated and sequenced states cannot erase or backdate their baseline", () => {
+  const review = baselineReview(), state = initializePublicationLedger(review, reviewPin(review));
+  const text = encodePublicationLedger(emptyPublicationLedger()).toString("utf8").replace('"formatVersion":2', '"formatVersion":1');
+  assert.throws(() => decodePublicationLedger(Buffer.from(text), text.length), /schema/);
+  const confirmed = publish(state, [logicalA], latest, manifestB);
+  assert.throws(() => assertPublicationLedger({ ...confirmed, items: confirmed.items.slice(0, 1) }), /identities/);
+  assert.throws(() => assertPublicationLedger({
+    ...confirmed, confirmed: { ...confirmed.confirmed, publishedAt: early }
+  }), /predates/);
+  const mutated = structuredClone(confirmed);
+  assert.ok(mutated.baseline);
+  mutated.baseline.review.legacyPublication.runId = 9;
+  assert.throws(() => assertPublicationLedger(mutated), /identity/);
 });

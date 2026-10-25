@@ -87,10 +87,15 @@ requires renewed review. A pin match alone does not grant permission or prove
 who reviewed it; approval/activation authority remains external. The returned
 draft remains `review-required`. There is no CLI auto-run, state-branch writer,
 force-clear, baseline import or production migration in these functions.
+The separate [explicit unsequenced bootstrap](publication-ledger.md#explicit-unsequenced-bootstrap)
+can construct an inactive version2 ledger from a verified review pin. It retains
+the complete immutable review without inventing a legacy sequence; it does not
+create a real state branch or replace an existing ledger.
 
-Before activation, choose the legacy-to-first-sequenced-publication protocol,
-bind the projection/review identity, review the actual baseline, define trusted
+Before activation, review the actual baseline, define trusted
 anchor/branch protection/job permissions and authenticate the deployment adapter.
+The selected protocol is an explicit unsequenced baseline with projection/review
+binding; the first new reservation starts at1, with gaps retained on cancellation.
 Full multilingual/metadata projections and migration remain separate gates.
 Preserve original verified catalogs/items outside disposable build output.
 

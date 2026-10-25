@@ -59,7 +59,11 @@ remain open; no real baseline dates or ledger state are initialized.
 The read-only [semantic baseline audit and initialization review](docs/semantic-baseline.md)
 now verify historical item bytes, compare logical versions, expose unavailable
 evidence and pin a complete candidate review without inventing a legacy sequence.
-Review approval, bootstrap/projection binding and real state activation remain gates.
+The explicit [unsequenced bootstrap](docs/publication-ledger.md#explicit-unsequenced-bootstrap)
+now constructs an inactive private version2 ledger with the complete pinned
+baseline and projection identity. Legacy content stays unsequenced; new
+reservations start at1, preserving cancellation gaps. Actual review approval,
+protected state-branch creation/anchor and hosted activation remain gates.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

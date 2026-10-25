@@ -2,7 +2,7 @@
 
 Coverage: ALG-07, GEN-02/05 and EXP-03. The
 [Shared publication specification](../shared/docs/implementation-specification.md#8-publication-transport-and-compatibility)
-owns cross-repository requirements. This Library-private version1 state/receipt
+owns cross-repository requirements. This Library-private version2 state/receipt
 protocol is a standalone prerequisite, not a public manifest schema, durable
 state-branch writer or activated publication pipeline. The separate
 [isolated Git store](../tools/publication-ledger-git.ts) implements conditional
@@ -18,8 +18,9 @@ RFC8785 canonical logical item projections, excluding derived dates and transpor
 representations. The separate
 [canonical prelaunch projection](lyric-logical.md) implements this for the current
 text-only item schema. It is not wired to a publisher and is not the full
-production multilingual/metadata projection; projection-family binding and
-migration remain gates.
+production multilingual/metadata projection. Version2 binds the explicit
+`canonical-prelaunch-v1` family in state, plans and preparation input.
+Other projection families and migration remain gates.
 Hash-shaped input alone does not establish a correct projection, schema, rights
 review or whole-publication validation. No lyric text enters this state.
 
@@ -43,24 +44,63 @@ The [historical audit](publication-history.md) remains unchanged: its candidate
 first dates are earliest verified successful deployment observations. Its result
 is not automatically converted to ledger state. Reviewed historical first dates,
 current logical hashes and a defensible semantic-change baseline are required
-before a separate initialization/migration protocol can be implemented.
+before any initialized state can be activated.
 The [semantic baseline audit](semantic-baseline.md) supplies a verified,
-projection-bound read-only review draft; real bootstrap and approval remain
+projection-bound read-only review draft. The explicit unsequenced bootstrap below
+can construct an inactive private ledger; real activation and approval remain
 separate. Legacy publications have no advertised sequence and must not be given
 an invented confirmed sequenced receipt.
 
+## Explicit unsequenced bootstrap
+
+`initializePublicationLedger(review, expectedReviewSha256)` constructs a new
+in-memory version2 state from a pinned complete initialization review. The owning
+caller must first recompute and verify the review from authenticated original
+evidence using [the review-pin verifier](semantic-baseline.md).
+Schema/hash matching alone does not grant owner approval or authenticate history.
+Do not use this constructor to replace an existing active ledger.
+
+State retains an immutable copy of the entire baseline review and its canonical
+JSON-plus-LF SHA256, including projection, audit identity, original items/
+tombstones and the genuine unsequenced legacy receipt summary. Its separate
+committed item table initially equals that review. The counter starts at zero,
+`confirmed` and `pending` are null, and the legacy `sequence` remains null.
+
+An identical legacy manifest/item table is a true no-op: consume no sequence and
+leave every byte/date unchanged. A new snapshot reserves1; cancellations may
+leave gaps before the first confirmed sequenced publication. Only its genuine
+matching started-deployment receipt becomes `confirmed`. Retain the baseline
+review unchanged through cancellation, uncertainty and later confirmations.
+
+Clock checks use the legacy confirmation until a sequenced confirmation exists.
+Historical first dates and tombstones cannot be dropped or backdated by
+transitions; same-content reintroduction/recompression preserves them. A real
+semantic edit advances only its change date. New identities cannot predate the
+verified baseline. Validate baseline hash, projection, ordered identities/dates
+and exact latest catalog count on every read/transition.
+
+Version1 private files and unknown projection families are rejected, never
+silently converted or assigned a family. Production readers do not consume this
+private format. No real state-branch creation/import/migration or hosted writer
+activation is implemented here. Those require reviewed initialization/anchor
+management and explicit deployment authorization; the Git store still requires
+an existing protected state branch and cannot recreate a deleted one.
+
 ## State and transitions
 
-State holds a format/version, highest ever reserved `lastSequence`, latest
-confirmed receipt or null, UUID-sorted committed items/tombstones, and at most
-one pending publication. Sequence starts at zero; actual snapshots use positive
+State holds a format/version, projection identity, optional immutable unsequenced
+baseline, highest ever reserved `lastSequence`, latest confirmed sequenced receipt
+or null, UUID-sorted committed items/tombstones, and at most one pending
+publication. Sequence starts at zero; actual snapshots use positive
 safe integers. Cancelled reservations leave gaps. Exhaustion fails explicitly;
 it never wraps or reuses a value. A true no-op still succeeds at exhaustion.
 
 All operations validate state and require its exact canonical-byte SHA256.
 Returned values are independent copies; inputs are not mutated.
 
-1. `preparePublication`: with no pending publication, derive candidate item dates
+1. `preparePublication`: with no pending publication, take an explicit input
+   envelope with `logicalProjection`, `items`, `publishedAt` and `sourceCommit`.
+   Reject unknown/mismatched families or input fields. Derive candidate item dates
    and bind the candidate to the current state fingerprint and source commit.
    Generate and fully validate artifacts using those exact dates. Preparation
    does not reserve a sequence or commit any dates.
