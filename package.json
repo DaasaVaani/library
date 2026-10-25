@@ -6,7 +6,7 @@
   "engines": { "node": ">=22.12.0" },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts tools/verse-proposals.test.ts tools/zip-store.test.ts",
+    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts tools/verse-proposals.test.ts tools/zip-store.test.ts tools/bundle-packing.test.ts",
     "build": "npm run typecheck",
     "check": "npm run build && npm test && npm run sources:validate && npm run verses:validate",
     "verses:propose": "tsx tools/verse-proposals.ts --generate",

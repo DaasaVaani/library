@@ -1,5 +1,44 @@
 # Documentation history
 
+## 2026-10-25: approved exact changedAt packing prerequisite
+
+- The owner selected exact timestamp cohorts after comparison with one global
+  changedAt/path stream and UTC-day buckets. Distinct semantic-change timestamps
+  must not mix. This approves a standalone packing prerequisite, not production
+  publication, source generation, ledger/manifest decisions or offline activation.
+- Library alone adopted published Shared
+  `58e474ff3f1820835b7f8bd6fbfed28fd65796e4` for strict planning policy/settings;
+  Website and Android pins remain independent and unchanged.
+- Added deterministic header-inclusive next-fit packing using the existing
+  original-byte ZIP encoder, common validated member-size accounting, strict
+  canonical dates/path uniqueness, oversized individual fallback and omission
+  of dominated singleton archives. Both publishers remain unchanged.
+- Archived superseded README scope: only ZIP byte construction/verification
+  existed, while packing remained wholly future work. The new packer is an
+  isolated prerequisite; production integrations/ledger/receipts remain gates.
+  The ZIP guide also previously said the Shared pin was unchanged and exact
+  packing boundaries remained open; it now links this approved standalone
+  packer while preserving all production integration limitations.
+- Added synthetic cohort/permutation/coverage/reuse/format/policy tests, actual
+  count and32MiB/+1 cases, and registered them in the complete test command.
+  Validation results are recorded after execution; no source or linguistic
+  approval, actual generated source-PR output or successful check is implied.
+- The first complete `npm run check` stopped at strict TypeScript on duplicate
+  properties in a negative-test policy literal. Removed those redundant test
+  keys, retaining the malformed-policy coverage; no runtime policy, assertion
+  or test limit was relaxed. Log: `library-exact-cohort-full-validation.log`.
+- A fresh complete `npm run check` passed build/typecheck and50/50 tests with
+  zero failures/cancellations/skips, including actual32MiB/+1 ZIPs. Non-writing
+  source validation retained871 imported/125 held; proposal validation retained
+  870 sources/5,108 uncertain candidates with `unchanged:true`. No real source
+  output was generated. Log: `library-exact-cohort-final-full-validation.log`
+  in the session workspace.
+- `python tools\check_repository.py` passed923 tracked files. Strict Node/YAML
+  parsing passed ten owning settings/workflow/issue files; installed
+  actionlint1.7.12 with explicit ShellCheck0.11.0 passed both workflows.
+  Working and staged whitespace checks passed. Website/native pins and the
+  active emulator/user Website server were not changed by this slice.
+
 ## Owner-authorized review-branch publication validation (2026-10-25)
 
 - The owner now authorizes committing/pushing the six pending Library paths

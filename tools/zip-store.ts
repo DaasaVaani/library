@@ -46,6 +46,15 @@ function header(path: string, bytes: Uint8Array, offset?: number): Buffer {
   return result;
 }
 
+export function zipStoreMemberSize(object: ZipStoreObject): number {
+  if (!objectPath.test(object.path)) throw new Error("Unsafe ZIP object path");
+  if (!(object.bytes instanceof Uint8Array) || object.bytes.length >= zip32Max) throw new Error("Invalid ZIP object bytes");
+  if (object.path !== `objects/${createHash("sha256").update(object.bytes).digest("hex")}.json.gz`) {
+    throw new Error("ZIP object path does not match original encoded bytes");
+  }
+  return localSize + directorySize + 2 * object.path.length + object.bytes.length;
+}
+
 /** Packages already validated gzip objects without inflating or recompressing them. */
 export function encodeZipStore(objects: readonly ZipStoreObject[], bounds: ZipStoreLimits): Buffer {
   limits(bounds);
@@ -53,14 +62,10 @@ export function encodeZipStore(objects: readonly ZipStoreObject[], bounds: ZipSt
   const seen = new Set<string>();
   let size = endSize;
   for (const object of objects) {
-    if (!objectPath.test(object.path) || seen.has(object.path)) throw new Error("Unsafe or duplicate ZIP object path");
+    if (seen.has(object.path)) throw new Error("Unsafe or duplicate ZIP object path");
     seen.add(object.path);
-    if (!(object.bytes instanceof Uint8Array) || object.bytes.length >= zip32Max) throw new Error("Invalid ZIP object bytes");
-    size += localSize + directorySize + 2 * object.path.length + object.bytes.length;
+    size += zipStoreMemberSize(object);
     if (size > bounds.maxArchiveBytes) throw new Error("ZIP archive byte limit exceeded");
-    if (object.path !== `objects/${createHash("sha256").update(object.bytes).digest("hex")}.json.gz`) {
-      throw new Error("ZIP object path does not match original encoded bytes");
-    }
   }
   const sorted = [...objects].sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
   const parts: Uint8Array[] = [], directory: Uint8Array[] = [];

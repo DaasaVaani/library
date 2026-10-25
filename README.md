@@ -31,6 +31,10 @@ The independent [ZIP STORE byte prerequisite](docs/zip-store.md) constructs and
 strictly verifies bounded deterministic archives of original gzip objects.
 It takes explicit caller limits, is not wired into either publisher and does not
 implement the production ledger, packing/planner or consumer offline lifecycle.
+The separate [exact changedAt cohort packer](docs/bundle-packing.md) now uses
+the published Shared planning limits to construct disjoint bounded archives
+without mixing semantic-change timestamps. It remains a standalone prerequisite;
+neither publisher, production ledger/manifest nor consumer lifecycle calls it.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

@@ -60,11 +60,12 @@ mismatch, every single-byte corruption and truncation of a synthetic archive,
 STORE-only restrictions and ZIP64 refusal. The focused test is also registered
 in `npm test`.
 
-Shared policy/settings are not copied here and the independent Shared pin is
-unchanged. The exact portable prerequisite must be published/pinned and owning
-gates closed before publisher integration. Durable ledger/changedAt semantics,
-grouping/packing boundaries, transfer selection, space admission, deployment,
-consumer offline lifecycle and full release validation remain separate open
-work. Finalization requires the complete `npm run check` and owning repository
+Shared policy/settings remain authoritative and are not copied here. The separate
+[exact changedAt cohort packer](bundle-packing.md) consumes the independently
+pinned published planning policy and reuses this byte codec. Neither helper is
+wired into a publisher. Durable ledger/changedAt semantics, production manifest/
+policy binding, transfer selection, space admission, deployment, consumer offline
+lifecycle and full release validation remain separate open work.
+Finalization requires the complete `npm run check` and owning repository
 hygiene/workflow checks; focused checks alone do not establish publication
 readiness. Any failing full-suite check blocks completion.
