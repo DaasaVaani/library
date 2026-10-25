@@ -35,6 +35,11 @@ The separate [exact changedAt cohort packer](docs/bundle-packing.md) now uses
 the published Shared planning limits to construct disjoint bounded archives
 without mixing semantic-change timestamps. It remains a standalone prerequisite;
 neither publisher, production ledger/manifest nor consumer lifecycle calls it.
+The separate [verified publication-date audit](docs/publication-history.md)
+checks historical encoded catalogs and explicit authenticated receipt metadata
+to produce earliest-verified date candidates, keeping unknowns unresolved and
+preserving removed identities. It does not activate dates or implement the
+durable publication ledger; the existing feed remains unchanged.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

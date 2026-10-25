@@ -1,5 +1,64 @@
 # Documentation history
 
+## 2026-10-25: verified prelaunch publication-date backfill audit
+
+- The owner selected verified successful prelaunch publication history over
+  a new production baseline or a manually prepared date register. No source/
+  commit mtime or YouTube date is used, and unavailable evidence must not be
+  replaced by guesses. This authorizes an audit prerequisite, not source
+  migration, production deployment or completed ledger/receipt integration.
+- Available workflow history and github-pages deployment records identify two
+  successful publications. Run39676226551 at source
+  `2fc213922d131a8db088f6e1b5eb2a88f2631d99` generated229 records with manifest
+  `7391b1126d0659afd8a81acf5a2eeb445556d133812583e13a9d9399cd4333c1`.
+  Its authentic upload log names artifact12381716777 and ZIP digest
+  `e77bcf3acb7ccf25f5a098ac07c1a079f7b7cf13a30e5044ecfb936683fcadc2`;
+  the deploy log uses that artifact. Deployment7237346023 successful
+  status20209558909 is dated `2026-10-21T21:08:22Z`.
+- The original artifact API returns404 and its old manifest is no longer hosted.
+  No missing archive was treated as available. The retained post-merge local
+  manifest contains229 records/23418 encoded bytes and its actual SHA256 matches
+  that authentic log. No historical output was regenerated from source.
+- Run39681751052 at source
+  `c2837ccf383b976a1e2d20928ff018256270551c` generated871 records with manifest
+  `0b48b8b5ce5c1c1546f19746eae73c0a9248c65ff3dba97ff0b57db2ff8c0a7d`.
+  The current HTTPS manifest bytes match this identity. Its authentic upload
+  names artifact12383404188, ZIP digest
+  `f2182f1a02587e51fdc7fc8c0bd123417a9050ffbbcfbff96ac831c95b631eab`;
+  deployment7238137600 successful status20211404488 is dated
+  `2026-10-21T21:49:28Z`. Both workflow attempts are1.
+- The read-only audit verifies871 current UUID candidates:229 first seen at
+  `2026-10-21T21:08:22.000Z`,642 at `2026-10-21T21:49:28.000Z`, zero unresolved.
+  These are earliest verified deployment-status observations, not inferred CDN
+  edge times or proof that no deleted/unrecorded publication ever existed.
+  `.000` serializes second-resolution upstream metadata without claiming
+  observed subsecond precision. Source IDs/text/holds and the feed are unchanged.
+- Added the bounded read-only tooling function and synthetic regressions;
+  extracted its existing canonical-instant check for reuse by the cohort packer.
+  No publisher is wired to date candidates. The actual candidate JSON and
+  authentic logs/byte evidence are retained in the session workspace, not as
+  generated real source-PR variants or an authoritative production ledger.
+- Archived superseded README scope: publication dates were wholly unimplemented.
+  The current guide now distinguishes this verified audit prerequisite from
+  still-open durable state/receipts/sequence/manifest and activation work.
+- The original manifest bytes were copied with verified identity to
+  `initial-publication-manifest-7391b112.json.gz` outside disposable build output.
+  The authenticated API responses and final871-record result are retained as
+  `verified-publication-api-evidence.json` and
+  `verified-publication-date-audit.json` in the session workspace. This preserves
+  audit evidence; it does not initialize or write the future state branch.
+- `npm run build` and the focused four-case history test passed. The final
+  complete `npm run check` passed strict build and54/54 tests with zero
+  failures/cancellations/skips, including existing publisher/ZIP/cohort suites.
+  Non-writing source validation retained871 imported/125 held and proposal
+  validation retained870 sources/5,108 uncertain candidates with `unchanged:true`.
+  Log: `library-publication-history-full-validation.log`.
+- `python tools\check_repository.py` passed926 tracked files; strict Node/YAML
+  parsing passed ten files; installed actionlint1.7.12 with explicit
+  ShellCheck0.11.0 passed both workflows. Both working/staged whitespace checks
+  passed. Library's independently adopted Shared58e remains unchanged; no other
+  consumer pin, source, live feed, device or server was changed.
+
 ## 2026-10-25: approved exact changedAt packing prerequisite
 
 - The owner selected exact timestamp cohorts after comparison with one global

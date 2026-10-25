@@ -25,6 +25,11 @@ export function yaml(text: string): unknown {
   return strictYaml(text);
 }
 
+export function isUtcMillisecondInstant(value: string): boolean {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) &&
+    Number.isFinite(Date.parse(value)) && new Date(value).toISOString() === value;
+}
+
 export function canonical(value: unknown): string {
   if (value === null || typeof value === "boolean") return JSON.stringify(value);
   if (typeof value === "number") {

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import Ajv2020 from "ajv/dist/2020.js";
 import type { TransferPlanningPolicy } from "../shared/types/download-plan.js";
-import { yaml } from "./publisher.js";
+import { isUtcMillisecondInstant, yaml } from "./publisher.js";
 import { encodeZipStore, zipStoreMemberSize, type ZipStoreLimits, type ZipStoreObject } from "./zip-store.js";
 
 export interface CohortObject extends ZipStoreObject {
@@ -40,8 +40,7 @@ export function packChangedAtCohorts(objects: readonly CohortObject[], limits: Z
   const emptySize = encodeZipStore([], limits).length;
   const seen = new Set<string>();
   const sorted = objects.map(object => {
-    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(object.changedAt) ||
-        !Number.isFinite(Date.parse(object.changedAt)) || new Date(object.changedAt).toISOString() !== object.changedAt) {
+    if (!isUtcMillisecondInstant(object.changedAt)) {
       throw new Error("Packing requires canonical UTC millisecond changedAt values");
     }
     if (seen.has(object.path)) throw new Error("Duplicate packing object path");
