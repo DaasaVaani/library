@@ -4,7 +4,8 @@ import { gunzipSync } from "node:zlib";
 import Ajv2020 from "ajv/dist/2020.js";
 import type { LyricObjectReference } from "../shared/types/lyrics.js";
 import type { SnapshotDescriptor, SnapshotManifest, SnapshotObject, SnapshotPolicy } from "../shared/types/snapshot.js";
-import { assertSnapshotDescriptor, assertSnapshotManifest, assertSnapshotPolicy } from "../shared/tools/snapshot-reference.mjs";
+import type { DownloadPlan } from "../shared/types/download-plan.js";
+import { assertSnapshotDescriptor, assertSnapshotManifest, assertSnapshotPolicy, planSnapshotDownload } from "../shared/tools/snapshot-reference.mjs";
 import { packChangedAtCohorts } from "./bundle-packing.js";
 import { canonicalLyricLogicalItem, assertCanonicalLyricItem } from "./lyric-logical.js";
 import { assertPublicationLedger, publicationLedgerFingerprint, preparePublication, reservePublication,
@@ -93,7 +94,7 @@ function readArtifact(reference: LyricObjectReference, role: "Item" | "Policy" |
   return parseCanonicalJson(decoded, "snapshot");
 }
 
-function verifyPrepared(prepared: PreparedCanonicalSnapshot, bounds: SnapshotBounds): void {
+function verifyPrepared(prepared: PreparedCanonicalSnapshot, bounds: SnapshotBounds): { manifest: SnapshotManifest; policy: SnapshotPolicy } {
   checkBounds(bounds);
   assertSnapshotDescriptor({ format: "daasavaani-snapshot-feed", formatVersion: 1, sequence: 1, manifest: prepared.manifest });
   const manifest = readArtifact(prepared.manifest, "Manifest", bounds, prepared.artifacts);
@@ -130,6 +131,7 @@ function verifyPrepared(prepared: PreparedCanonicalSnapshot, bounds: SnapshotBou
   }
   if (expectedPaths.size !== prepared.artifacts.size ||
       [...prepared.artifacts.keys()].some(path => !expectedPaths.has(path))) throw new Error("Unexpected or missing snapshot artifact");
+  return { manifest, policy };
 }
 
 export function prepareCanonicalSnapshot(state: PublicationLedger, expectedStateSha256: string,
@@ -182,6 +184,12 @@ export function reserveCanonicalSnapshot(state: PublicationLedger, expectedState
   const result = reservePublication(state, expectedStateSha256, prepared.plan, prepared.manifest.sha256);
   if (result.outcome !== "noop") bindCanonicalSnapshot(result.state, publicationLedgerFingerprint(result.state), prepared, bounds);
   return result;
+}
+
+export function planCanonicalSnapshotDownload(prepared: PreparedCanonicalSnapshot, bounds: SnapshotBounds,
+  verified: readonly string[]): DownloadPlan {
+  const { manifest, policy } = verifyPrepared(prepared, bounds);
+  return planSnapshotDownload(manifest, policy, verified);
 }
 
 export function bindCanonicalSnapshot(state: PublicationLedger, expectedStateSha256: string,

@@ -72,6 +72,9 @@ verifies candidate bytes before reservation and binds descriptor sequence only
 to the matching pending plan. It writes no source/output/state/network and
 leaves both existing publishers/live feed unchanged. Complete production
 multilingual/index contracts, output/deployment and client adapters remain open.
+Its transfer-planning API revalidates actual artifacts and delegates their exact
+snapshot-pinned policy/maps to Shared's existing planner. Returned remaining
+request totals are not full network/storage estimates or client cache proof.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

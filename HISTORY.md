@@ -1,5 +1,28 @@
 # Documentation history
 
+## 2026-10-25: verified snapshot transfer-planning integration
+
+- Continued directly after validated producer publication `b9828ab`. Published
+  Shared planner bridge `3a1627dea1eced148de203c08e86c025fc688200` after all148
+  tests/hygiene/YAML/workflow checks, then adopted only Library's authorized pin.
+- Added verified actual snapshot -> exact decoded policy/maps -> existing Shared
+  planner composition. No optimizer duplication, new settings/defaults, live
+  feed change, source generation, client pin/runtime, deployment or state writes.
+- Actual synthetic gzip/ZIP vectors independently extract selected requests,
+  prove exact missing original/policy coverage, measured transfer bytes, exact
+  costs/budget/savings, complete reuse and policy-only refresh. Corrupt artifacts
+  reject before planning even when all hashes are claimed reusable.
+- Reusable-client hash claims remain the caller's independently verified
+  responsibility. Remaining-request totals exclude already-acquired metadata,
+  HTTP/retries/app shell and storage; no hidden transfer/activation consent.
+- `npm run check` passed strict TypeScript and116/116 tests, zero failed,
+  cancelled or skipped,871 imported/125 held and870/5,108 unchanged proposal
+  validation. Log: `library-snapshot-planning-full-validation.log`.
+  `python tools\check_repository.py` passed940 paths; working/staged whitespace,
+  strict YAML10 and actionlint1.7.12 with explicit ShellCheck0.11.0 passed.
+  Shared's exact adopted revision independently passed148/148 tests. Neither
+  review push is a live deployment or complete production/offline conformance.
+
 ## 2026-10-25: staged canonical snapshot producer integration
 
 - Owner authorized Shared contracts and only Library's independently validated

@@ -9,7 +9,7 @@ import { canonical, deterministicGzip, parseCanonicalJson } from "./publisher.js
 import { emptyPublicationLedger, publicationLedgerFingerprint as fingerprint, beginPublicationDeployment,
   confirmPublication, cancelPublicationReservation, type PublicationLedger } from "./publication-ledger.js";
 import { bindCanonicalSnapshot, prepareCanonicalSnapshot, readSnapshotSettings, reserveCanonicalSnapshot,
-  type PreparedCanonicalSnapshot, type SnapshotBounds } from "./snapshot-producer.js";
+  planCanonicalSnapshotDownload, type PreparedCanonicalSnapshot, type SnapshotBounds } from "./snapshot-producer.js";
 import { decodeZipStore } from "./zip-store.js";
 
 const { policy, bounds } = await readSnapshotSettings();
@@ -217,4 +217,59 @@ test("unsupported populated metadata, duplicate identities, fixture objects and 
   const state = emptyPublicationLedger();
   assert.throws(() => prepareCanonicalSnapshot(state, fingerprint(state),
     { items, publishedAt: time, sourceCommit, ...{ privateSource: true } }, policy, bounds), /snapshot input/);
+});
+
+test("actual snapshot planning covers every missing original and policy once with measured selected request bytes", () => {
+  const large = structuredClone(items);
+  for (let i = 0; i < large.length; i++) {
+    large[i]!.lines[0]!.text = Array.from({ length: 128 }, (_, n) => hash(Buffer.from(`synthetic-${i}-${n}`))).join(" ");
+  }
+  const prepared = prepare(emptyPublicationLedger(), large), value = manifest(prepared);
+  const plan = planCanonicalSnapshotDownload(prepared, bounds, []), covered: string[] = [];
+  let bytes = 0;
+  assert.equal(plan.requests.filter(request => request.kind === "bundle").length, 1);
+  assert.equal(plan.requestCount, 2);
+  for (const request of plan.requests) {
+    const record = request.kind === "object" ? value.objects[request.sha256]! : value.bundles[request.sha256]!;
+    const actual = prepared.artifacts.get(record.path)!;
+    bytes += actual.length;
+    assert.equal(request.encodedBytes, actual.length);
+    assert.equal(hash(actual), request.sha256);
+    if (request.kind === "bundle") {
+      const original = decodeZipStore(actual, { maxMembers: 100, maxArchiveBytes: 33554432 });
+      assert.deepEqual(original.map(member => hash(member.bytes)).sort(), request.covers);
+    }
+    covered.push(...request.covers);
+  }
+  assert.deepEqual(covered.sort(), Object.keys(value.objects).sort());
+  assert.equal(new Set(covered).size, covered.length);
+  assert.equal(plan.transferEncodedBytes, bytes);
+  assert.equal(plan.missingEncodedBytes, Object.values(value.objects).reduce((sum, object) => sum + object.encodedBytes, 0));
+  assert.equal(plan.extraEncodedBytes, bytes - plan.missingEncodedBytes);
+  assert.equal(plan.costBytes, bytes + plan.requestCount * policy.transferPlanning.requestCostBytes);
+  assert.equal(plan.baselineCostBytes, plan.missingEncodedBytes + covered.length * policy.transferPlanning.requestCostBytes);
+  assert.equal(plan.savedCostBytes, plan.baselineCostBytes - plan.costBytes);
+  assert.ok(plan.extraEncodedBytes <= plan.extraBudgetBytes);
+  assert.ok(plan.savedCostBytes > 0);
+  const policyFetched = planCanonicalSnapshotDownload(prepared, bounds, [value.policy]);
+  assert.equal(policyFetched.requestCount, 1);
+  assert.equal(policyFetched.requests[0]!.kind, "bundle");
+  const none = planCanonicalSnapshotDownload(prepared, bounds, Object.keys(value.objects));
+  assert.equal(none.requestCount, 0);
+  assert.equal(none.transferEncodedBytes, 0);
+});
+
+test("planner binds verified artifact bytes and old original reuse to the exact changed policy, not newer settings", () => {
+  const first = prepare(), old = manifest(first), verified = Object.keys(old.objects);
+  const state = confirm(emptyPublicationLedger(), first), changedPolicy = structuredClone(policy);
+  changedPolicy.transferPlanning.requestCostBytes = 0;
+  const next = prepare(state, items, later, bounds, changedPolicy), value = manifest(next);
+  const plan = planCanonicalSnapshotDownload(next, bounds, verified);
+  assert.deepEqual(plan.requests, [{ kind: "object", sha256: value.policy,
+    encodedBytes: value.objects[value.policy]!.encodedBytes, covers: [value.policy] }]);
+  assert.equal(plan.costBytes, plan.transferEncodedBytes);
+  assert.throws(() => planCanonicalSnapshotDownload(first, bounds, [old.policy, old.policy]));
+  assert.throws(() => planCanonicalSnapshotDownload(first, bounds, ["invalid"]));
+  first.artifacts.get(old.objects[old.policy]!.path)!.fill(0);
+  assert.throws(() => planCanonicalSnapshotDownload(first, bounds, verified), /identity\/size mismatch/);
 });

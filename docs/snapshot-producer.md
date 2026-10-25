@@ -84,6 +84,33 @@ verification and exact recompression are O(B) with retained in-memory artifacts.
 This is bounded per artifact, not a streaming writer, total host-headroom check,
 process-wide memory guarantee or consumer staging-space admission algorithm.
 
+## Snapshot-pinned transfer planning
+
+`planCanonicalSnapshotDownload(prepared, bounds, verified)` repeats all actual
+artifact verification above and passes the decoded exact manifest/policy to
+Shared's existing `planSnapshotDownload` bridge and deterministic integer planner.
+There is no duplicate greedy implementation or application of newer settings.
+Every manifest object, including policy, is required; bundle metadata comes only
+from the verified physical ZIPs. Declared request bytes are actual stored bytes,
+including ZIP overhead and all reused/unneeded members.
+
+`verified` must come from independently verified reusable client objects. A
+hash list is not proof of cache presence/health and this producer tooling cannot
+verify a remote client's storage. The function validates hash-list structure,
+not that external claim. A client must verify its own cache before supplying it,
+including the already-fetched exact policy object to avoid counting it twice.
+The returned total covers remaining selected artifact requests only; it excludes
+descriptor/manifest acquisition already needed to plan, HTTP headers/retries,
+app shell and storage. It is not a complete network/storage cost or permission
+to start a transfer without explicit consent.
+
+Synthetic actual-byte tests independently extract selected archives, prove
+exactly-once missing original/policy coverage, compare measured request totals,
+cost/extra/budget identities and complete reuse, and verify policy-only updates
+retain old original reuse while using the new exact policy. Corrupt actual bytes
+fail before planning even if every hash is claimed reusable. Client consent,
+download/retry/resume and offline activation remain unimplemented here.
+
 ## Validation and remaining integration
 
 ```powershell
@@ -103,7 +130,7 @@ It is not a real deployment, GitHub branch-rule or permission validation.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,
-source-to-snapshot and complete generated-output/headroom adapters, planner/
+source-to-snapshot and complete generated-output/headroom adapters,
 consumer consent/storage/lifecycle integration, actual baseline approval,
 protected state initialization/anchor permissions, authenticated deployment/
 descriptor sequence binding and recovery/release/device evidence.
