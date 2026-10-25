@@ -45,8 +45,12 @@ semantic-date state, sequence reservations, pending/confirmed receipts, exact
 no-ops and conservative uncertain-deployment recovery. It uses approved reserved
 logical timestamps and records observed confirmation times separately.
 It performs no Git/network writes and is not wired to either publisher.
-Reviewed initialization, logical projections, durable expected-tip persistence
-and authenticated deployment/manifest integration remain open.
+The separate [isolated Git store](docs/publication-ledger.md#isolated-git-persistence)
+now conditionally persists direct-child state commits and records the deploying
+phase before an explicit callback can expose content. Its real-Git synthetic
+tests cover competing writers and crash/rejected-write recovery.
+Reviewed initialization, logical projections, protected job wiring and
+authenticated deployment/manifest integration remain open.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -71,8 +75,8 @@ from Website. Clients consume artifacts, not Library sources.
   incomplete/held drafts excluded, malformed references fail. Preserve corrections.
 - Five Latin/nine non-Latin renderings and raw Source Latin/status, snapshot policy,
   semantic-change ledger/state branch and monotonic sequence. The private ledger
-  core is isolated; public schemas/tables, durable writer, authenticated recovery
-  and production integrations remain open.
+  core and Git writer are isolated; public schemas/tables, protected job wiring,
+  authenticated remote recovery and production integrations remain open.
 - Individual gzip objects and ZIP STORE100/32MiB, images online separate; current-
   only hosting, explicit client restart when old targets unavailable. Whole validated
   Pages artifact with host/headroom gate, no source roots/CDN atomicity promise.
@@ -92,6 +96,8 @@ git --no-pager diff --cached --check
 `npm run check` runs strict TypeScript and all fixture-publisher tests.
 It also runs source/import metadata and canonical-publication tests and validates
 the imported source set/receipt and persisted provisional verse proposals.
+The isolated ledger Git suite requires installed Git and uses only disposable
+synthetic bare repositories; it does not contact the live Library remote.
 Use `npm run sources:import` only under the authorized
 [draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
 `npm run sources:retry-footers` narrowly retries unchanged eligible held inputs

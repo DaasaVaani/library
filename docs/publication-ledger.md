@@ -4,8 +4,11 @@ Coverage: ALG-07, GEN-02/05 and EXP-03. The
 [Shared publication specification](../shared/docs/implementation-specification.md#8-publication-transport-and-compatibility)
 owns cross-repository requirements. This Library-private version1 state/receipt
 protocol is a standalone prerequisite, not a public manifest schema, durable
-state-branch writer or activated publication pipeline. Neither existing publisher
-calls it. It does not initialize the real catalog or activate public dates.
+state-branch writer or activated publication pipeline. The separate
+[isolated Git store](../tools/publication-ledger-git.ts) implements conditional
+remote persistence and the phase-before-side-effect boundary described below.
+Neither existing publisher calls these tools. They do not initialize the real
+catalog or activate public dates.
 
 ## Inputs and date meaning
 
@@ -81,11 +84,12 @@ other snapshot-level changes without falsely marking lyrics edited.
 
 The core performs no network, Git or filesystem writes. Its expected fingerprint
 is an in-memory stale-state guard, **not an atomic Git-tip comparison**. The
-future trusted post-merge adapter must read the dedicated state branch, compare
-its expected Git tip and persist each transition using a conditional update.
-It must guard force/deletion, preserve prior state, and avoid source-PR writer
-permissions or bot bypass of main protection. A failed write must stop before
-the next side effect. A competing writer must reload/reconcile, not overwrite.
+separate Git store performs expected-tip remote persistence; production job/
+permission wiring remains unimplemented. The future trusted post-merge job must
+use the dedicated state branch with force/deletion protection, preserve prior
+state, and avoid source-PR writer permissions or bot bypass of main protection.
+A failed write must stop before the next side effect. A competing writer must
+reload/reconcile, not overwrite.
 
 Receipt fields are strictly validated metadata, not cryptographic proof. The
 adapter must authenticate the source/run/attempt/artifact/deployment/status
@@ -110,6 +114,66 @@ The future state branch's retained commit history and authenticated deployment
 evidence must provide historical provenance; local schema checks cannot prove
 that an edited state has not deleted history or that IDs were never reused.
 
+### Isolated Git persistence
+
+`PublicationLedgerGitStore` requires an existing dedicated SHA1 bare repository,
+an existing named remote, an explicit state ref in the
+`refs/heads/publication-state` namespace, a positive safe-integer state-byte
+ceiling and a bounded positive Git-process timeout. The future owning settings/
+job must supply these explicitly; there is no selected production ref, remote,
+byte ceiling, timeout or automatic initialization here. Source/main refs and
+non-bare worktrees are rejected. Git must already be installed. Fetch and push
+must resolve to the same single destination; split/multiple destinations fail.
+The scratch repository/configuration/remote must be runner-owned and trusted,
+not source-controlled executable configuration from an untrusted PR.
+
+`load(trustedTip)` requires an independently trusted existing Git commit anchor.
+It fetches the advertised tip and verifies the anchor is an ancestor, then reads
+exactly one regular `ledger.json` blob. Check its actual byte size before reading/
+decoding. A missing branch is an error, never an instruction to create or reset
+it. A divergent/unavailable trusted anchor blocks reads. Do not simply trust a
+freshly fetched tip as the initial anchor; reviewed initialization and durable
+anchor management are separate gates.
+
+`update(snapshot, command)` reloads and verifies both the exact expected Git tip
+and the snapshot bytes before applying a core command. It accepts no arbitrary
+replacement state. Unchanged results create no commit or push. Otherwise it
+writes one bounded ledger blob/tree and a direct-child commit with exactly the
+expected parent, then pushes only that commit/ref with an explicit
+`--force-with-lease=<ref>:<expected-tip>` condition. The lease supplies remote
+compare-and-swap, **not permission to rewrite history**: the newly constructed
+commit is always a fast-forward child of the leased tip. No unconditional force,
+deletion, main write or protections bypass is implemented. Normal remote
+fast-forward/permission/hook checks still apply.
+
+A rejected/stale write is never rebased or retried automatically. Read back the
+remote tip after a successful push; a mismatch stops the caller. On timeout,
+lost acknowledgment or any push/read-back error, the commit may already exist:
+reload from the last trusted anchor and reconcile the actual durable state,
+never assume failure means no write. Local Git objects or remote-tracking refs
+are caches, not authority; no source worktree/index is used. Git automatic
+maintenance is disabled for these bounded operations.
+
+`deployReserved(snapshot, deployAndVerify)` performs and confirms persistence of
+the `deploying` transition before invoking its callback. Only a fresh `reserved`
+snapshot may enter; stale snapshots, rejected writes and already-started
+deployments cannot invoke the callback. The callback receives a copy of the
+immutable candidate and must implement whole-publication validation and
+authenticated deployment/receipt verification. The store itself does neither.
+After callback success, it conditionally commits the matching receipt. A thrown
+callback, invalid receipt or failed confirmation write leaves the durable
+started candidate pending; restart requires explicit receipt reconciliation
+through `update(..., {kind: "confirm", receipt})`, not repeat deployment.
+
+Git subprocesses have bounded time/output, no shell interpolation or interactive
+prompt, and explicit errors that omit raw Git stderr, URLs and credential-bearing
+diagnostics. Callback errors propagate to the owning caller. There are no new
+credentials, network services, CLI auto-run entrypoint or workflow permissions.
+Server-side force/deletion protection and least-privilege job credentials remain
+required: ancestry checks cannot detect delete/recreate-at-the-same-tip (ABA),
+and trusted Git history alone cannot authenticate deployment evidence or prevent
+an independently authorized writer from appending fabricated state.
+
 ## Serialization and checks
 
 Encoding is canonical safe-integer JSON plus one LF, hashed over those exact
@@ -123,6 +187,7 @@ do not migrate, repair or silently discard unsupported state.
 ```powershell
 npm run build
 node --import tsx --test tools\publication-ledger.test.ts
+node --import tsx --test tools\publication-ledger-git.test.ts
 ```
 
 The synthetic suite is registered in `npm test`. It covers reservation/
@@ -131,10 +196,22 @@ semantic edits, tombstones/reintroduction, gaps/exhaustion, retries/stale caller
 uncertain restart, forged candidate fields, strict byte ceilings/codec/schema
 rejection and nonmutation. Full finalization uses
 [all configured checks](../README.md#validation).
+The Git suite uses actual independent bare repositories and a local bare remote,
+not a mocked success flag: direct-parent history, single-file trees, no-op/retry
+stability, competing writers, cancellations/gaps, durable-before-callback reads,
+post-boundary crash/restart, server-rejected boundary/confirmation writes,
+deletion/divergence refusal, redacted diagnostics, tampered snapshots, actual
+byte ceilings, tree/codec rejection and destination isolation. It creates only
+synthetic state and removes its own unique temporary fixtures. It does not
+exercise GitHub transport acknowledgment loss, branch rules or production CI.
 
 For N retained identities and B serialized state bytes, derivation is
 O(N log N + B) time and O(N + B) space, including canonical state hashing/copies.
-No history-wide scan or persistence/remote-durability guarantee is implemented.
-Production logical projections/manifest/policy binding, reviewed initialization,
-durable state-branch writer, authenticated deployment adapter and real crash/
-concurrency recovery tests remain required before publisher integration.
+The pure core performs no history-wide scan. The Git store additionally performs
+Git fetch/ancestry/object/conditional-ref operations, whose transfer and ancestry
+cost depends on retained Git history; its subprocess output is bounded, not the
+total fetched Git object database.
+Production logical projections/manifest/policy binding, reviewed initialization/
+anchor management, protected trusted-job wiring, authenticated deployment
+adapter and hosted transport/permission/crash recovery checks remain required
+before publisher integration.

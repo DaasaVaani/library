@@ -1,5 +1,42 @@
 # Documentation history
 
+## 2026-10-25: isolated expected-tip Git ledger persistence
+
+- Confirmed the previous private-core review branch clean and synchronized at
+  `7acbe3e7f39c6b6aa103b8136bcc80c9c90a4df0` before starting this slice.
+  Added a standalone Git store, not production initialization or CI activation.
+- Existing bare repositories/named remotes, an explicit dedicated ref, trusted
+  commit anchor and caller-supplied byte/process bounds are required. The store
+  creates direct-child one-file state commits, uses exact-tip conditional pushes,
+  rejects deletion/divergence/stale or altered snapshots, and never resets a
+  pending uncertain deployment. No source worktree/main/consumer pin is touched.
+- A deployment callback can run only after its fresh deploying transition is
+  durably pushed/read back. Failures thereafter preserve pending state for
+  positive matching receipt reconciliation; no automatic redeploy/force-clear.
+- Archived superseded current-guide scope: durable expected-tip persistence was
+  wholly future work. It now exists as an isolated Git implementation; reviewed
+  initialization, anchor management, protected trusted-job wiring, authenticated
+  deployment/manifest integration and hosted recovery coverage remain open.
+- The first focused strict build passed. The initial11-case Git run had four
+  passes/seven failures: one test incorrectly expected no remote-tracking cache
+  after Git push; six temporary-directory cleanup hooks encountered Windows
+  EBUSY. Limited the ref assertion to source heads/tags, reused existing test
+  cleanup's five100ms retries, and disabled automatic Git maintenance. No
+  persistence, rejection, concurrency or deployment assertion was removed.
+- Final `npm run check` passed strict TypeScript and77/77 tests with zero
+  failures, cancellations or skips, including all11 real-Git cases. Non-writing
+  source validation retained871 imported/125 held; proposal validation retained
+  870 sources/5,108 uncertain candidates with `unchanged:true`. Full log:
+  `library-publication-ledger-git-full-validation.log`; the initial focused
+  failure log is retained separately. All new test fixture directories and
+  the six exact failed-run leftovers were removed.
+- `python tools\check_repository.py` passed931 tracked files; strict Node/YAML
+  parsing passed ten files; installed actionlint1.7.12 with explicit
+  ShellCheck0.11.0 passed both workflows. Working/staged whitespace checks
+  passed. Shared58e remains unchanged. These local bare-remote tests do not
+  claim GitHub branch-rule, lost-network-acknowledgment or production deployment
+  coverage; no dependent-client compatibility change is claimed.
+
 ## 2026-10-25: reserved-timestamp private ledger prerequisite
 
 - The owner selected reserved logical publication timestamps for future

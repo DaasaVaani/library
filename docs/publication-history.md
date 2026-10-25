@@ -86,7 +86,9 @@ semantic-date state, pending/confirmed receipt validation, monotonic reservation
 no-op handling and conservative uncertain-state blocking. Future publications
 use an assigned logical marker with observed confirmation time stored separately;
 the historical audit's verified-observation semantics do not change.
-Reviewed initialization into a dedicated publication-state branch, production
-logical projections, durable expected-tip serialization, authenticated remote
-reconciliation and production manifest/policy binding remain unimplemented.
+The [isolated Git store](publication-ledger.md#isolated-git-persistence) supplies
+expected-tip persistence and the durable deployment boundary, without production
+wiring. Reviewed initialization into a dedicated publication-state branch,
+production logical projections, protected job/anchor management, authenticated
+remote reconciliation and production manifest/policy binding remain unimplemented.
 No production publisher or client consumes these candidates yet.
