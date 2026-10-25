@@ -1,5 +1,39 @@
 # Documentation history
 
+## 2026-10-25: reserved-timestamp private ledger prerequisite
+
+- The owner selected reserved logical publication timestamps for future
+  candidates, committed only after verified publication, with actual observed
+  confirmation time recorded separately. The alternative was confirmation-only
+  dates with public-date integration deferred pending a separate metadata
+  publication protocol. Historical verified first-date candidates remain
+  unchanged; neither convention claims exact first CDN availability.
+- Added a standalone strict private ledger reducer/codec and synthetic tests
+  for semantic dates, tombstones, no-ops, sequences, receipts and recovery.
+  No live publisher, generated source artifact, consumer pin, source identity/
+  text/hold, dedicated state branch or production date register was changed.
+- Archived superseded scope from the publication-history guide and README:
+  semantic dates, pending/confirmed receipts and reservation/no-op handling
+  were wholly unimplemented. They now exist only as a local core. Durable
+  expected-tip writes, authenticated remote receipts/reconciliation, production
+  logical projections/manifest binding and reviewed initialization remain open.
+- Unknown deployment outcomes deliberately remain pending without a force-clear
+  or invented negative proof. Local canonical-state fingerprints do not claim
+  atomic Git serialization or proof of deployment.
+- The first focused strict build passed; the12-case run had11 passes and one
+  incorrect negative fixture: an unchanged-content candidate at the previous
+  confirmation instant is permitted, not clock rollback. Corrected that fixture
+  to precede confirmation; no production behavior or rejection was weakened.
+- Final `npm run check` passed strict TypeScript and66/66 tests, zero failures,
+  cancellations or skips. Non-writing source validation retained871 imported/
+  125 held; proposal validation retained870 sources/5,108 uncertain candidates,
+  `unchanged:true`. Log: `library-publication-ledger-full-validation.log`.
+- `python tools\check_repository.py` passed929 tracked files; strict Node/YAML
+  parsing passed all ten workflow/form/settings files; actionlint1.7.12 with
+  explicit ShellCheck0.11.0 passed both workflows. Working/staged whitespace
+  checks passed. No dependent-consumer compatibility change is claimed;
+  Shared58e and both publishers remain unchanged.
+
 ## 2026-10-25: verified prelaunch publication-date backfill audit
 
 - The owner selected verified successful prelaunch publication history over

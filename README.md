@@ -40,6 +40,13 @@ checks historical encoded catalogs and explicit authenticated receipt metadata
 to produce earliest-verified date candidates, keeping unknowns unresolved and
 preserving removed identities. It does not activate dates or implement the
 durable publication ledger; the existing feed remains unchanged.
+The standalone [private ledger core](docs/publication-ledger.md) now validates
+semantic-date state, sequence reservations, pending/confirmed receipts, exact
+no-ops and conservative uncertain-deployment recovery. It uses approved reserved
+logical timestamps and records observed confirmation times separately.
+It performs no Git/network writes and is not wired to either publisher.
+Reviewed initialization, logical projections, durable expected-tip persistence
+and authenticated deployment/manifest integration remain open.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -63,8 +70,9 @@ from Website. Clients consume artifacts, not Library sources.
 - One canonical fence, stable line/verse-end metadata, literal layout; valid
   incomplete/held drafts excluded, malformed references fail. Preserve corrections.
 - Five Latin/nine non-Latin renderings and raw Source Latin/status, snapshot policy,
-  semantic-change ledger/state branch and monotonic sequence. Exact schemas/tables/
-  recovery protocols remain open.
+  semantic-change ledger/state branch and monotonic sequence. The private ledger
+  core is isolated; public schemas/tables, durable writer, authenticated recovery
+  and production integrations remain open.
 - Individual gzip objects and ZIP STORE100/32MiB, images online separate; current-
   only hosting, explicit client restart when old targets unavailable. Whole validated
   Pages artifact with host/headroom gate, no source roots/CDN atomicity promise.

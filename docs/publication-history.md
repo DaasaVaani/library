@@ -81,8 +81,12 @@ Work is O(P log P + N log N + B), where P is publication receipts, N distinct
 lyric IDs and B total bounded catalog bytes processed. Memory is O(P + N + M),
 where M is one decoded catalog; caller-owned encoded inputs are additional.
 
-Reviewed initialization into a dedicated publication-state branch, semantic
-change hashes/dates, pending/confirmed receipts, expected-tip serialization,
-monotonic sequence reservation/no-op handling, uncertain deployment
+The separate [private ledger core](publication-ledger.md) implements local
+semantic-date state, pending/confirmed receipt validation, monotonic reservation,
+no-op handling and conservative uncertain-state blocking. Future publications
+use an assigned logical marker with observed confirmation time stored separately;
+the historical audit's verified-observation semantics do not change.
+Reviewed initialization into a dedicated publication-state branch, production
+logical projections, durable expected-tip serialization, authenticated remote
 reconciliation and production manifest/policy binding remain unimplemented.
 No production publisher or client consumes these candidates yet.
