@@ -56,6 +56,10 @@ strict semantic hashes for the current text-only public item version1. Synthetic
 tests distinguish real logical edits from actual object/manifest recompression.
 Full-production multilingual/metadata projection and projection-family migration
 remain open; no real baseline dates or ledger state are initialized.
+The read-only [semantic baseline audit and initialization review](docs/semantic-baseline.md)
+now verify historical item bytes, compare logical versions, expose unavailable
+evidence and pin a complete candidate review without inventing a legacy sequence.
+Review approval, bootstrap/projection binding and real state activation remain gates.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

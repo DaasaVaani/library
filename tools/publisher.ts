@@ -45,6 +45,18 @@ export function canonical(value: unknown): string {
   throw new Error("Non-JSON value");
 }
 
+export function parseCanonicalJson(bytes: Uint8Array, label = "publication"): unknown {
+  let value: unknown;
+  try {
+    value = JSON.parse(new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(bytes));
+  } catch (error) {
+    if (error instanceof SyntaxError) throw new Error(`Invalid canonical ${label} JSON`);
+    throw error;
+  }
+  if (!Buffer.from(canonical(value)).equals(bytes)) throw new Error(`Noncanonical ${label} JSON bytes`);
+  return value;
+}
+
 export function source(text: string): FixtureItem | null {
   const tree = unified().use(remarkParse).use(remarkFrontmatter, ["yaml"]).parse(text);
   const first = tree.children[0];

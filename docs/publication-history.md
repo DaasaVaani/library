@@ -94,4 +94,7 @@ remote reconciliation and production manifest/policy binding remain unimplemente
 The [current canonical logical projection](lyric-logical.md) can hash verified
 decoded text-only items independently of their gzip representation. It does not
 reconstruct historical logical versions or assign real baseline dates.
+The [semantic baseline audit](semantic-baseline.md) separately verifies original
+historical item bytes and prepares a read-only pinned initialization review.
+It does not initialize a ledger or turn missing evidence into dates.
 No production publisher or client consumes these candidates yet.

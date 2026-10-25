@@ -58,7 +58,10 @@ There is no real catalog initialization, baseline-date assignment or automatic
 historical-source reconstruction. The
 [verified publication-date audit](publication-history.md) provides reviewed
 first-date candidates, not historical logical hashes or a current semantic
-change baseline. Future full-production projections, projection/version binding,
+change baseline. The [semantic baseline audit](semantic-baseline.md) now verifies
+historical item evidence to produce change-date candidates and a pinned read-only
+initialization review; it performs no active state import.
+Future full-production projections, projection/version binding,
 safe migration between projection families and a reviewed initialization/
 trusted-anchor protocol remain gates before production ledger activation.
 Do not mix hashes from different projection contracts in one ledger as if they

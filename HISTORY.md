@@ -1,5 +1,61 @@
 # Documentation history
 
+## 2026-10-25: verified semantic baseline and pinned initialization review
+
+- The owner requested continuous progress, not a stop after each prerequisite.
+  Confirmed projection commit `22870f2b17c1bd4d24e1c43955af0c59ea5b3101`
+  clean and synchronized, then implemented both the read-only historical
+  semantic audit and the next pinned initialization-review safeguard.
+- Added actual item hash/size/gzip/UTF8/canonical/schema/UUID/summary validation,
+  immutable input snapshots, encoded-identity caching, observed semantic
+  transition dates and explicit missing-evidence/unknown propagation. Reused
+  the historical catalog decoder and extracted canonical JSON parsing with
+  payload-redacted syntax errors. No source or publisher was changed.
+- A complete review binds the audit hash and canonical-prelaunch projection,
+  preserves historical dates/tombstones and explicitly has no legacy sequence.
+  Review-pin verification recomputes from original evidence, rejects changes
+  and grants no activation authority. Real bootstrap/projection binding,
+  owner review, protected job/anchor and deployment integration remain gates.
+- The focused strict build and21 existing/new audit/projection tests passed.
+  Read-only inventory found873 retained objects:871 item objects and the two
+  verified historical manifests. All229 initial item references exactly match
+  their later encoded identities; none changed or disappeared.
+- Re-fetched the actual live HTTPS descriptor/manifest, checked strict descriptor
+  schema/canonical bytes, actual encoded/decoded identities/lengths and equality
+  with verified manifest
+  `0b48b8b5ce5c1c1546f19746eae73c0a9248c65ff3dba97ff0b57db2ff8c0a7d`.
+  Authenticated historical source/run/artifact/deployment/status metadata remains
+  the earlier audit's retained evidence chain, not a newly invented receipt.
+- Actual read-only audit verified871 distinct original item objects,871 complete
+  candidates, zero missing/unresolved:229 first/change observations at
+  `2026-10-21T21:08:22.000Z`,642 at `2026-10-21T21:49:28.000Z`. These are verified
+  observations within the available history, not physical edits/CDN edge times
+  or proof against unrecorded/deleted publications.
+- Preserved all871 original gzip objects outside disposable build output in
+  session `verified-semantic-object-evidence`, plus the live descriptor.
+  Generated metadata-only `verified-semantic-baseline-audit.json`, canonical
+  SHA256 `d202ee9f0134d5077c4854a5b1495c54e7d812b68edd2407c963122d7d7752a3`,
+  and `ledger-baseline-initialization-review.json`, canonical SHA256
+  `15f104d985b9ecbdf6580b3e54ef908f12ec3fcd517c4b43c19b43d9395cb887`.
+  Both are review artifacts, not active ledger state or generated source-PR
+  previews. Status remains review-required; no sequence was fabricated.
+- Archived superseded guide scope: historical logical/date-baseline verification
+  was wholly future work. Current guides now distinguish the audit/review
+  safeguards from unimplemented bootstrap/activation/full-production contracts.
+- Replayed the actual review from preserved originals, independently of the
+  disposable publication directory, using exact review fingerprint verification.
+  All871 objects and the canonical audit/review identities reproduced; status
+  remained review-required and the legacy sequence remained null.
+- Final `npm run check` passed strict TypeScript and95/95 tests, zero failures/
+  cancellations/skips. Non-writing source validation retained871 imported/
+  125 held; proposal validation retained870 sources/5,108 uncertain candidates,
+  `unchanged:true`. Log: `library-semantic-baseline-full-validation.log`.
+- `python tools\check_repository.py` passed937 tracked files; strict Node/YAML
+  parsing passed ten files; actionlint1.7.12 with explicit ShellCheck0.11.0
+  passed both workflows. Working/staged whitespace checks passed and real-Git
+  test fixtures were removed. No independent Shared pin, source text/identity/
+  hold, main branch, active state branch, live feed or consumer was changed.
+
 ## 2026-10-25: canonical text-only logical projection prerequisite
 
 - Confirmed durable-store review commit

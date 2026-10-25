@@ -44,6 +44,10 @@ first dates are earliest verified successful deployment observations. Its result
 is not automatically converted to ledger state. Reviewed historical first dates,
 current logical hashes and a defensible semantic-change baseline are required
 before a separate initialization/migration protocol can be implemented.
+The [semantic baseline audit](semantic-baseline.md) supplies a verified,
+projection-bound read-only review draft; real bootstrap and approval remain
+separate. Legacy publications have no advertised sequence and must not be given
+an invented confirmed sequenced receipt.
 
 ## State and transitions
 
