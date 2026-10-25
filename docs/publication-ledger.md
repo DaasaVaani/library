@@ -15,8 +15,11 @@ catalog or activate public dates.
 [The reducer](../tools/publication-ledger.ts) takes reviewed permanent lyric UUIDs
 and logical SHA256 hashes. The future producer must compute those hashes from
 RFC8785 canonical logical item projections, excluding derived dates and transport
-representations. The existing canonical JSON helper supplies safe-integer/string
-serialization, but the production logical projection is not implemented here.
+representations. The separate
+[canonical prelaunch projection](lyric-logical.md) implements this for the current
+text-only item schema. It is not wired to a publisher and is not the full
+production multilingual/metadata projection; projection-family binding and
+migration remain gates.
 Hash-shaped input alone does not establish a correct projection, schema, rights
 review or whole-publication validation. No lyric text enters this state.
 
@@ -211,7 +214,7 @@ The pure core performs no history-wide scan. The Git store additionally performs
 Git fetch/ancestry/object/conditional-ref operations, whose transfer and ancestry
 cost depends on retained Git history; its subprocess output is bounded, not the
 total fetched Git object database.
-Production logical projections/manifest/policy binding, reviewed initialization/
+Full-production logical projections/manifest/policy binding, reviewed initialization/
 anchor management, protected trusted-job wiring, authenticated deployment
 adapter and hosted transport/permission/crash recovery checks remain required
 before publisher integration.

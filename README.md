@@ -49,8 +49,13 @@ The separate [isolated Git store](docs/publication-ledger.md#isolated-git-persis
 now conditionally persists direct-child state commits and records the deploying
 phase before an explicit callback can expose content. Its real-Git synthetic
 tests cover competing writers and crash/rejected-write recovery.
-Reviewed initialization, logical projections, protected job wiring and
+Reviewed initialization, full-production logical projections, protected job wiring and
 authenticated deployment/manifest integration remain open.
+The standalone [canonical logical item projection](docs/lyric-logical.md) supplies
+strict semantic hashes for the current text-only public item version1. Synthetic
+tests distinguish real logical edits from actual object/manifest recompression.
+Full-production multilingual/metadata projection and projection-family migration
+remain open; no real baseline dates or ledger state are initialized.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

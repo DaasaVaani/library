@@ -68,6 +68,10 @@ media or positively eligible Source Latin requires its owning public adapter;
 this canonical-only publisher fails explicitly rather than silently dropping it.
 Registry resolution, asset existence/rights and public metadata consumers are
 not implemented by accepting empty authoring fields.
+The standalone [canonical logical projection](lyric-logical.md) defines a
+semantic digest for this exact text-only public item schema, independently of
+gzip identity. It is a ledger prerequisite only: this publisher does not call it,
+emit dates, initialize production state or expose unsupported metadata.
 The [provisional verse review ledger](verse-proposals.md) is source-only tooling
 outside `library/`; this publisher does not consume it. Candidate generation or
 owner edits never approve public verse metadata or bypass this adapter gate.

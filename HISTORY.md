@@ -1,5 +1,39 @@
 # Documentation history
 
+## 2026-10-25: canonical text-only logical projection prerequisite
+
+- Confirmed durable-store review commit
+  `defc1bbc504c17992d60e0a042c70ca6a699d47d` clean and synchronized before
+  starting this slice. Added a standalone strict projection of the existing
+  canonical prelaunch public item schema into private ledger logical hashes.
+  Full-production multilingual/metadata projections remain gated by their
+  unimplemented public contracts; no fields or linguistic truth were invented.
+- The projection hashes exact canonical UTF8 public identity/script/title/tags/
+  ordered typed line/layout content, without the fixed wire frame or trailing
+  LF. Future/extra fields, derived dates, source provenance and transport injected
+  into the current item fail explicitly rather than disappearing. No publisher,
+  Shared pin, actual source/content, production ledger or date baseline changed.
+- Archived superseded current-guide scope: all logical item projection was
+  wholly future work. The current text-only projection now exists in isolation;
+  full-production schema/projection/version migration and reviewed initialization
+  remain open. Historical verified first-date semantics are unchanged.
+- The first focused build failed strict test typing: destructured string pairs
+  were inferred as possibly undefined under `noUncheckedIndexedAccess`. Used
+  constant tuples for those synthetic vectors, without assertions on runtime
+  values or changes to production behavior.
+- The focused strict build/eight tests then passed. Final `npm run check` passed
+  strict TypeScript and85/85 tests, zero failures/cancellations/skips, including
+  all existing real-Git writer tests. Non-writing source validation retained
+  871 imported/125 held; proposal validation retained870 sources/5,108 uncertain
+  candidates with `unchanged:true`. Full log:
+  `library-canonical-logical-full-validation.log`.
+- `python tools\check_repository.py` passed934 tracked files; strict Node/YAML
+  parsing passed all ten files; actionlint1.7.12 with explicit ShellCheck0.11.0
+  passed both workflows. Working/staged whitespace checks passed and real-Git
+  temporary fixtures were removed. No consumer compatibility change, source
+  migration, real-content generation, ledger initialization or deployment is
+  claimed; the independent Shared58e pin remains unchanged.
+
 ## 2026-10-25: isolated expected-tip Git ledger persistence
 
 - Confirmed the previous private-core review branch clean and synchronized at

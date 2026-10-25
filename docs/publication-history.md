@@ -91,4 +91,7 @@ expected-tip persistence and the durable deployment boundary, without production
 wiring. Reviewed initialization into a dedicated publication-state branch,
 production logical projections, protected job/anchor management, authenticated
 remote reconciliation and production manifest/policy binding remain unimplemented.
+The [current canonical logical projection](lyric-logical.md) can hash verified
+decoded text-only items independently of their gzip representation. It does not
+reconstruct historical logical versions or assign real baseline dates.
 No production publisher or client consumes these candidates yet.
