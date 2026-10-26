@@ -43,6 +43,12 @@ const positiveInteger = (value: number) => Number.isSafeInteger(value) && value 
 const hashPattern = /^[0-9a-f]{64}$/;
 export type CatalogBounds = Pick<LyricBounds, "maxManifestEncodedBytes" | "maxManifestDecodedBytes">;
 
+export function assertPublicationCatalog(value: unknown): asserts value is LyricManifest {
+  if (!validateManifest(value)) throw new Error("Invalid historical manifest");
+  const ids = new Set(value.catalog.map(entry => entry.lyricId));
+  if (ids.size !== value.catalog.length) throw new Error("Duplicate historical lyric identity");
+}
+
 export function decodePublicationCatalog(evidence: CatalogEvidence, bounds: CatalogBounds): LyricManifest {
   if (!positiveInteger(bounds.maxManifestEncodedBytes) || !positiveInteger(bounds.maxManifestDecodedBytes)) {
     throw new Error("Invalid publication audit bounds");
@@ -52,9 +58,7 @@ export function decodePublicationCatalog(evidence: CatalogEvidence, bounds: Cata
       digest(evidence.manifestBytes) !== evidence.manifestSha256) throw new Error("Invalid historical manifest encoded identity or size");
   const decoded = gunzipSync(evidence.manifestBytes, { maxOutputLength: bounds.maxManifestDecodedBytes });
   const value = parseCanonicalJson(decoded, "historical manifest");
-  if (!validateManifest(value)) throw new Error("Invalid historical manifest");
-  const ids = new Set(value.catalog.map(entry => entry.lyricId));
-  if (ids.size !== value.catalog.length) throw new Error("Duplicate historical lyric identity");
+  assertPublicationCatalog(value);
   return value;
 }
 

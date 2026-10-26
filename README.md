@@ -20,6 +20,11 @@ and no images/videos. `npm run publish:lyrics` generates only canonical Kannada
 public artifacts after merge. It is not the fixture publisher, production
 ledger/transliterator or public-launch approval. Owner text review is complete;
 remaining production/release gates, other holds and extraction exceptions stay open.
+The [complete hosted-output preflight](docs/hosting-preflight.md) validates every
+current-prelaunch public file and measures the entire configured Pages root,
+including retained objects, before upload. Hosting settings own the inclusive
+decimal ceiling/headroom; unsupported future bundles/images fail rather than
+being silently omitted from validation or accounting.
 
 The owner-authorized [provisional verse proposal workflow](docs/verse-proposals.md)
 persists uncertain blank-layout candidates separately in `reviews/`, without
@@ -106,6 +111,9 @@ from Website. Clients consume artifacts, not Library sources.
   Pages artifact with host/headroom gate, no source roots/CDN atomicity promise.
 - Catalog/import/image/publisher knobs in Library settings, portable profiles/policy
   in Shared. Native manifests/locks own dependency pins; no hidden defaults/secrets.
+- `settings/hosting.yml` owns the generated Pages root and hosting ceiling/headroom;
+  the post-merge prelaunch workflow uploads only the root returned by successful
+  `npm run publication:preflight`. This is not the staged snapshot's host adapter.
 
 ## Validation
 

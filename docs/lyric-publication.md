@@ -28,6 +28,7 @@ From a validated merged Library checkout:
 ```powershell
 npm run check
 npm run publish:lyrics
+npm run publication:preflight
 ```
 
 `settings/lyric-publication.yml` and its strict schema own source/output
@@ -35,6 +36,10 @@ directories, source byte limits and fixed prelaunch capability/stage.
 Shared publication-policy settings own descriptor/item/manifest byte bounds.
 Paths cannot nest/overwrite sources; defaults are explicit settings, not hidden
 CLI fallbacks. The command accepts no path overrides.
+The separate [complete hosting preflight](hosting-preflight.md) uses
+`settings/hosting.yml` to validate and count the entire generated Pages root,
+including retained objects, against the configured inclusive headroom limit.
+It does not generate or activate content.
 
 Publication excludes every nonempty hold. Bad source/header/identity/receipt is a
 validation error even on a held record; no malformed file is silently skipped.
@@ -90,7 +95,8 @@ manual recovery; never broadly delete output/source trees or force lock takeover
 
 The post-merge `Publish prelaunch lyrics` workflow runs only after successful
 main Repository hygiene from this repository, checks out that exact SHA, reruns
-full checks, generates and uploads only generated `dist/site` data to Library
+full checks, generates, preflights the complete settings-owned site root
+(initially `dist/site`) and uploads only that validated root to Library
 GitHub Pages. It refuses a superseded main before deployment. Failure does not
 deploy a partial artifact. No PR variant generation, main-writing publisher bot,
 secret signing key or provider API is involved.

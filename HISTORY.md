@@ -1,5 +1,40 @@
 # Documentation history
 
+## 2026-10-26: whole-output canonical hosting safety gate
+
+- Continued the approved CI-01/03/06 prerequisite after publishing Shared's
+  selected normalized-witness contract. Library's independent Shared pin stays
+  `3a1627dea1eced148de203c08e86c025fc688200`; no Website/Android pins changed.
+- Added owning strict hosting settings for the approved decimal 1,000,000,000-byte
+  ceiling/80% utilization and exact-integer inclusive threshold. The read-only
+  filesystem gate checks every actual staged public file, including retained
+  unreferenced objects/catalogs, strict current role/gzip/canonical/schema/hash/
+  size/summary bindings and unsupported-file/link failures before upload.
+- Extracted the existing historical catalog shape/duplicate-ID assertion without
+  changing its decoder semantics. Reused it and the canonical item validator,
+  deterministic gzip and canonical JSON helpers rather than duplicating schemas.
+- Wired only the existing canonical post-merge workflow's preflight and exact
+  validated upload root, with no permission change, ledger/new-feed activation,
+  main merge, actual owner-source generation or deployment.
+- The previous workflow generated and uploaded fixed `dist/site` with no complete
+  host-limit gate. The pure staged producer still lacks its own whole-output/
+  hosting adapter, and unsupported bundles/images remain explicit prelaunch errors.
+- Initial focused typecheck caught three test assertions passing `undefined` as
+  an error predicate. Replaced them with the `Error` predicate without weakening
+  implementation validation.
+- `node_modules\.bin\tsc.cmd --noEmit` and the focused
+  `node_modules\.bin\tsx.cmd --test tools\hosted-preflight.test.ts
+  tools\publication-history.test.ts` passed14/14 before the final nested-layout
+  and workflow-root binding cases. Final `npm run check` passed strict TypeScript
+  and128/128 tests with zero failed, cancelled or skipped, plus non-writing
+  source validation871 imported/125 held and870 proposed sources/5,108 uncertain
+  candidates unchanged. Full log: `library-hosted-preflight-full-validation.log`.
+- `python tools\check_repository.py` passed945 tracked paths; working/staged Git
+  whitespace, strict YAML11 and actionlint1.7.12 with explicit ShellCheck0.11.0
+  passed. No dependencies/toolchains were added. These are local synthetic and
+  source-validation results, not a merged workflow run, live host-size reading,
+  remote deployment or complete production conformance.
+
 ## 2026-10-25: verified snapshot transfer-planning integration
 
 - Continued directly after validated producer publication `b9828ab`. Published

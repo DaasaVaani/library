@@ -6,7 +6,7 @@
   "engines": { "node": ">=22.12.0" },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts tools/verse-proposals.test.ts tools/zip-store.test.ts tools/bundle-packing.test.ts tools/publication-history.test.ts tools/publication-ledger.test.ts tools/publication-ledger-git.test.ts tools/lyric-logical.test.ts tools/semantic-baseline.test.ts tools/snapshot-producer.test.ts",
+    "test": "tsx --test tools/publisher.test.ts tools/source-import.test.ts tools/lyric-source.test.ts tools/lyric-publisher.test.ts tools/verse-proposals.test.ts tools/zip-store.test.ts tools/bundle-packing.test.ts tools/publication-history.test.ts tools/publication-ledger.test.ts tools/publication-ledger-git.test.ts tools/lyric-logical.test.ts tools/semantic-baseline.test.ts tools/snapshot-producer.test.ts tools/hosted-preflight.test.ts",
     "build": "npm run typecheck",
     "check": "npm run build && npm test && npm run sources:validate && npm run verses:validate",
     "verses:propose": "tsx tools/verse-proposals.ts --generate",
@@ -15,7 +15,8 @@
     "sources:retry-footers": "tsx tools/source-import.ts --retry-credit-footers",
     "sources:validate": "tsx tools/source-import.ts --validate",
     "publish:demo": "tsx tools/publisher.ts --fixtures",
-    "publish:lyrics": "tsx tools/lyric-publisher.ts"
+    "publish:lyrics": "tsx tools/lyric-publisher.ts",
+    "publication:preflight": "tsx tools/hosted-preflight.ts"
   },
   "dependencies": {
     "ajv": "8.20.0", "yaml": "2.9.1", "unified": "11.0.5",
