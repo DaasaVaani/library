@@ -61,6 +61,12 @@ no-op. Policy/repacking changes may create a transport-only new snapshot without
 advancing semantic item dates. Moving from the old unsequenced catalog to this
 different envelope necessarily creates a new manifest even with unchanged items;
 it must use a real new reservation, never assign a sequence to old history.
+The separate read-only
+[staged filesystem preflight](hosting-preflight.md#isolated-staged-snapshot-filesystem-api)
+repeats binding/verification, compares every actual staged file with captured bound
+bytes and counts the entire isolated site against the explicit hosting policy.
+It includes original-plus-bundle duplication, rejects missing/extra/changed files,
+and neither writes staging nor establishes durable reservation/deployment authority.
 
 ## Verification and trust
 
@@ -115,7 +121,7 @@ download/retry/resume and offline activation remain unimplemented here.
 
 ```powershell
 npm run build
-node --import tsx --test tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
+node --import tsx --test tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
 ```
 
 Synthetic tests cover deterministic exact bytes/policy/ZIP, literal preservation,
@@ -130,7 +136,7 @@ It is not a real deployment, GitHub branch-rule or permission validation.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,
-source-to-snapshot and complete generated-output/headroom adapters,
+source-to-snapshot/output materialization and full-production output/headroom adapters,
 consumer consent/storage/lifecycle integration, actual baseline approval,
 protected state initialization/anchor permissions, authenticated deployment/
 descriptor sequence binding and recovery/release/device evidence.

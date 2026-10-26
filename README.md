@@ -25,6 +25,11 @@ current-prelaunch public file and measures the entire configured Pages root,
 including retained objects, before upload. Hosting settings own the inclusive
 decimal ceiling/headroom; unsupported future bundles/images fail rather than
 being silently omitted from validation or accounting.
+Its separate [staged snapshot API](docs/hosting-preflight.md#isolated-staged-snapshot-filesystem-api)
+now checks an isolated complete filesystem against freshly verified,
+ledger-bound descriptor/original/policy/manifest/ZIP bytes and the same whole-site
+headroom policy. It is read-only, accepts no retained extra files, and does not
+change the current CLI/workflow, write output or authorize production activation.
 
 The owner-authorized [provisional verse proposal workflow](docs/verse-proposals.md)
 persists uncertain blank-layout candidates separately in `reviews/`, without

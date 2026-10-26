@@ -8,6 +8,8 @@ import type { LyricItem, LyricDescriptor } from "../shared/types/lyrics.js";
 import { assertCanonicalLyricItem } from "./lyric-logical.js";
 import { lyricPublicationBounds, lyricPublicationSettings, type LyricBounds } from "./lyric-publisher.js";
 import { assertPublicationCatalog } from "./publication-history.js";
+import type { PublicationLedger } from "./publication-ledger.js";
+import { bindCanonicalSnapshot, type PreparedCanonicalSnapshot, type SnapshotBounds } from "./snapshot-producer.js";
 import { canonical, deterministicGzip, parseCanonicalJson, yaml } from "./publisher.js";
 
 export interface HostingPolicy {
@@ -23,6 +25,15 @@ export interface HostedPreflightReport {
   fileCount: number;
   objectCount: number;
   catalogItems: number;
+  totalHostedBytes: number;
+  headroomLimitBytes: number;
+  manifestSha256: string;
+}
+export interface SnapshotPreflightReport {
+  stage: "staged-snapshot";
+  sequence: number;
+  fileCount: number;
+  artifactCount: number;
   totalHostedBytes: number;
   headroomLimitBytes: number;
   manifestSha256: string;
@@ -65,23 +76,11 @@ function decodedObject(bytes: Buffer, sha256: string, bounds: LyricBounds): { va
   return { value: parseCanonicalJson(decoded, "hosted object"), decodedBytes: decoded.length };
 }
 
-export async function preflightHostedLyrics(siteDirectory: string, lyricDirectory: string,
-  bounds: LyricBounds, policy: HostingPolicy): Promise<HostedPreflightReport> {
-  if (!isAbsolute(siteDirectory) || !isAbsolute(lyricDirectory)) throw new Error("Hosted preflight requires absolute staging paths");
-  const site = resolve(siteDirectory), lyrics = resolve(lyricDirectory), prefix = nested(site, lyrics);
-  const byteLimit = hostingByteLimit(policy);
-  for (const value of [bounds.maxDescriptorBytes, bounds.maxManifestEncodedBytes, bounds.maxManifestDecodedBytes,
-    bounds.maxItemEncodedBytes, bounds.maxItemDecodedBytes]) {
-    if (!Number.isSafeInteger(value) || value < 1) throw new Error("Invalid hosted artifact bounds");
-  }
+async function inspectHostedOutput(site: string, allowedDirectories: ReadonlySet<string>, byteLimit: number,
+  maximum: (path: string) => number, inspect: (path: string, absolute: string, bytes: Buffer) => void) {
   const rootStat = await lstat(site);
   if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) throw new Error("Hosted site must be a regular directory");
-  const allowedDirectories = new Set<string>();
-  const parts = prefix.split("/");
-  for (let i = 1; i <= parts.length; i++) allowedDirectories.add(parts.slice(0, i).join("/"));
-  allowedDirectories.add(`${prefix}/objects`);
-  const objects = new Map<string, ObjectRecord>(), manifestPaths: { sha256: string; path: string }[] = [];
-  let descriptor: LyricDescriptor | undefined, total = 0n, fileCount = 0;
+  let total = 0n, fileCount = 0;
   const directories = [{ absolute: site, path: "" }];
   while (directories.length) {
     const directory = directories.pop()!;
@@ -95,41 +94,65 @@ export async function preflightHostedLyrics(siteDirectory: string, lyricDirector
         continue;
       }
       if (!stat.isFile()) throw new Error("Hosted output must contain only regular files");
-      const isDescriptor = path === `${prefix}/latest.json`;
-      const match = path.startsWith(`${prefix}/objects/`) ? /^([0-9a-f]{64})\.json\.gz$/.exec(entry.name) : null;
-      if (!isDescriptor && !match?.[1]) throw new Error("Unexpected hosted file");
-      const maximum = isDescriptor ? bounds.maxDescriptorBytes : Math.max(bounds.maxItemEncodedBytes, bounds.maxManifestEncodedBytes);
-      if (!Number.isSafeInteger(stat.size) || stat.size < 1 || stat.size > maximum) throw new Error("Hosted artifact exceeds encoded byte bound");
+      const limit = maximum(path);
+      if (!Number.isSafeInteger(stat.size) || stat.size < 1 || stat.size > limit) throw new Error("Hosted artifact exceeds encoded byte bound");
       total += BigInt(stat.size);
       if (total > BigInt(byteLimit)) throw new Error("Complete hosted output exceeds configured headroom");
       const bytes = await readFile(absolute);
       if (bytes.length !== stat.size) throw new Error("Hosted file changed during preflight");
+      inspect(path, absolute, bytes);
       fileCount++;
-      if (isDescriptor) {
-        if (bytes.at(-1) !== 10) throw new Error("Hosted descriptor requires canonical JSON plus LF");
-        const value = parseCanonicalJson(bytes.subarray(0, -1), "hosted descriptor");
-        if (!descriptorShape(value)) throw new Error("Invalid hosted descriptor");
-        descriptor = value;
-        continue;
-      }
-      const sha256 = match![1]!, decoded = decodedObject(bytes, sha256, bounds);
-      if (decoded.value !== null && typeof decoded.value === "object" && "format" in decoded.value &&
-          decoded.value.format === "daasavaani-lyric") {
-        assertCanonicalLyricItem(decoded.value);
-        if (bytes.length > bounds.maxItemEncodedBytes || decoded.decodedBytes > bounds.maxItemDecodedBytes) {
-          throw new Error("Hosted item exceeds role byte bound");
-        }
-        objects.set(sha256, { role: "item", encodedBytes: bytes.length, decodedBytes: decoded.decodedBytes, summary: summary(decoded.value) });
-      } else {
-        assertPublicationCatalog(decoded.value);
-        if (bytes.length > bounds.maxManifestEncodedBytes || decoded.decodedBytes > bounds.maxManifestDecodedBytes) {
-          throw new Error("Hosted manifest exceeds role byte bound");
-        }
-        objects.set(sha256, { role: "manifest", encodedBytes: bytes.length, decodedBytes: decoded.decodedBytes });
-        manifestPaths.push({ sha256, path: absolute });
-      }
     }
   }
+  return { fileCount, totalHostedBytes: Number(total) };
+}
+
+export async function preflightHostedLyrics(siteDirectory: string, lyricDirectory: string,
+  bounds: LyricBounds, policy: HostingPolicy): Promise<HostedPreflightReport> {
+  if (!isAbsolute(siteDirectory) || !isAbsolute(lyricDirectory)) throw new Error("Hosted preflight requires absolute staging paths");
+  const site = resolve(siteDirectory), lyrics = resolve(lyricDirectory), prefix = nested(site, lyrics);
+  const byteLimit = hostingByteLimit(policy);
+  for (const value of [bounds.maxDescriptorBytes, bounds.maxManifestEncodedBytes, bounds.maxManifestDecodedBytes,
+    bounds.maxItemEncodedBytes, bounds.maxItemDecodedBytes]) {
+    if (!Number.isSafeInteger(value) || value < 1) throw new Error("Invalid hosted artifact bounds");
+  }
+  const allowedDirectories = new Set<string>();
+  const parts = prefix.split("/");
+  for (let i = 1; i <= parts.length; i++) allowedDirectories.add(parts.slice(0, i).join("/"));
+  allowedDirectories.add(`${prefix}/objects`);
+  const objects = new Map<string, ObjectRecord>(), manifestPaths: { sha256: string; path: string }[] = [];
+  let descriptor: LyricDescriptor | undefined;
+  const inventory = await inspectHostedOutput(site, allowedDirectories, byteLimit, path => {
+    const isDescriptor = path === `${prefix}/latest.json`;
+    const objectName = path.startsWith(`${prefix}/objects/`) ? path.slice(`${prefix}/objects/`.length) : "";
+    const match = /^[0-9a-f]{64}\.json\.gz$/.test(objectName);
+    if (!isDescriptor && !match) throw new Error("Unexpected hosted file");
+    return isDescriptor ? bounds.maxDescriptorBytes : Math.max(bounds.maxItemEncodedBytes, bounds.maxManifestEncodedBytes);
+  }, (path, absolute, bytes) => {
+    if (path === `${prefix}/latest.json`) {
+      if (bytes.at(-1) !== 10) throw new Error("Hosted descriptor requires canonical JSON plus LF");
+      const value = parseCanonicalJson(bytes.subarray(0, -1), "hosted descriptor");
+      if (!descriptorShape(value)) throw new Error("Invalid hosted descriptor");
+      descriptor = value;
+      return;
+    }
+    const sha256 = path.slice(`${prefix}/objects/`.length, -".json.gz".length), decoded = decodedObject(bytes, sha256, bounds);
+    if (decoded.value !== null && typeof decoded.value === "object" && "format" in decoded.value &&
+        decoded.value.format === "daasavaani-lyric") {
+      assertCanonicalLyricItem(decoded.value);
+      if (bytes.length > bounds.maxItemEncodedBytes || decoded.decodedBytes > bounds.maxItemDecodedBytes) {
+        throw new Error("Hosted item exceeds role byte bound");
+      }
+      objects.set(sha256, { role: "item", encodedBytes: bytes.length, decodedBytes: decoded.decodedBytes, summary: summary(decoded.value) });
+    } else {
+      assertPublicationCatalog(decoded.value);
+      if (bytes.length > bounds.maxManifestEncodedBytes || decoded.decodedBytes > bounds.maxManifestDecodedBytes) {
+        throw new Error("Hosted manifest exceeds role byte bound");
+      }
+      objects.set(sha256, { role: "manifest", encodedBytes: bytes.length, decodedBytes: decoded.decodedBytes });
+      manifestPaths.push({ sha256, path: absolute });
+    }
+  });
   if (!descriptor) throw new Error("Hosted descriptor is missing");
   const reference = descriptor.manifest, current = objects.get(reference.sha256);
   if (reference.path !== `objects/${reference.sha256}.json.gz` || current?.role !== "manifest" ||
@@ -151,8 +174,33 @@ export async function preflightHostedLyrics(siteDirectory: string, lyricDirector
     }
     if (manifest.sha256 === reference.sha256) catalogItems = decoded.value.catalog.length;
   }
-  return { stage: "prelaunch", fileCount, objectCount: objects.size, catalogItems,
-    totalHostedBytes: Number(total), headroomLimitBytes: byteLimit, manifestSha256: reference.sha256 };
+  return { stage: "prelaunch", fileCount: inventory.fileCount, objectCount: objects.size, catalogItems,
+    totalHostedBytes: inventory.totalHostedBytes, headroomLimitBytes: byteLimit, manifestSha256: reference.sha256 };
+}
+
+export async function preflightCanonicalSnapshot(siteDirectory: string, snapshotDirectory: string,
+  state: PublicationLedger, expectedStateSha256: string, prepared: PreparedCanonicalSnapshot,
+  bounds: SnapshotBounds, policy: HostingPolicy): Promise<SnapshotPreflightReport> {
+  if (!isAbsolute(siteDirectory) || !isAbsolute(snapshotDirectory)) throw new Error("Hosted preflight requires absolute staging paths");
+  const site = resolve(siteDirectory), prefix = nested(site, resolve(snapshotDirectory)), byteLimit = hostingByteLimit(policy);
+  const bound = bindCanonicalSnapshot(state, expectedStateSha256, prepared, bounds);
+  const expected = new Map([...bound.artifacts].map(([path, bytes]) => [`${prefix}/${path}`, bytes]));
+  expected.set(`${prefix}/latest.json`, bound.descriptorBytes);
+  const allowedDirectories = new Set<string>();
+  for (const path of expected.keys()) {
+    const parts = path.split("/");
+    for (let i = 1; i < parts.length; i++) allowedDirectories.add(parts.slice(0, i).join("/"));
+  }
+  const inventory = await inspectHostedOutput(site, allowedDirectories, byteLimit, path => {
+    const bytes = expected.get(path);
+    if (!bytes) throw new Error("Unexpected hosted file");
+    return bytes.length;
+  }, (path, _absolute, bytes) => {
+    if (!bytes.equals(expected.get(path)!)) throw new Error("Hosted file does not match bound snapshot bytes");
+  });
+  if (inventory.fileCount !== expected.size) throw new Error("Hosted snapshot artifact is missing");
+  return { stage: "staged-snapshot", sequence: bound.descriptor.sequence, ...inventory,
+    artifactCount: bound.artifacts.size, headroomLimitBytes: byteLimit, manifestSha256: bound.descriptor.manifest.sha256 };
 }
 
 async function main() {

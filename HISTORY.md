@@ -1,5 +1,41 @@
 # Documentation history
 
+## 2026-10-26: isolated staged snapshot filesystem preflight
+
+- Continued from clean, published `20f4416` on a new review branch without changing
+  Library's independent Shared pin, real source bytes/identities, historical
+  baseline, state branch, live descriptor or deployment workflow.
+- Added the read-only canonical snapshot filesystem gate for CI-01/03/06 and
+  ALG-07/08. It freshly verifies the pending ledger/plan and actual prepared
+  artifact bytes through the existing producer, captures independent buffers,
+  then requires an exact complete isolated filesystem. Both original gzip
+  objects and their duplicate ZIP bytes count toward the owning inclusive
+  whole-site headroom limit. Missing/extra files, links and different bytes fail.
+- Extracted one shared strict filesystem walker so the existing prelaunch gate
+  retains its separate supported formats, retained-object validation, exact
+  accounting and current workflow output. No second byte-policy implementation,
+  generated output, production activation or new dependency was introduced.
+- Replaced the guide's blanket outstanding output/headroom adapter description
+  with the implemented isolated canonical filesystem prerequisite and the
+  remaining source/output materialization and full-production output gates.
+  Neither successful binding nor filesystem equality proves durability, review,
+  authenticated deployment or a safe mutable-tree/upload handoff.
+- The first typecheck caught an incorrectly placed closing brace in the walker
+  extraction before tests ran. Corrected the callback boundary. Strict
+  `node_modules\.bin\tsc.cmd --noEmit` then passed, and
+  `node_modules\.bin\tsx.cmd --test tools\snapshot-preflight.test.ts tools\hosted-preflight.test.ts tools\snapshot-producer.test.ts`
+  passed34/34, with no failed, skipped or cancelled tests.
+- Full `npm run check` passed strict TypeScript and136/136 tests with no failures,
+  skips or cancellations; source validation retained871 imported/125 held records,
+  and verse validation retained5,108 uncertain proposals unchanged. These checks
+  generated no actual source variants or production staging.
+- `python tools\check_repository.py` passed946 tracked files; strict YAML parsing
+  passed11 workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check` and `git diff --cached --check` passed.
+  `git diff --exit-code HEAD -- shared library reviews settings .github` confirmed
+  unchanged consumer pin, sources, review proposals, settings and workflow.
+  These are Library tooling results, not client/offline/deployment conformance.
+
 ## 2026-10-26: whole-output canonical hosting safety gate
 
 - Continued the approved CI-01/03/06 prerequisite after publishing Shared's

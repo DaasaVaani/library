@@ -1,4 +1,4 @@
-# Complete prelaunch hosting preflight
+# Complete hosting preflight
 
 ## Scope and authority
 
@@ -90,11 +90,62 @@ source review/rights nor remote Pages contents. Current-only production hosting,
 ledger/sequence binding, full multilingual/index/media output, live HTTPS checks,
 bandwidth operations and release/device measurements remain separate gates.
 
+## Isolated staged snapshot filesystem API
+
+The separate `preflightCanonicalSnapshot(siteDirectory, snapshotDirectory,
+state, expectedStateSha256, prepared, bounds, policy)` covers actual staging of the
+[canonical snapshot producer](snapshot-producer.md). Both directories must be
+absolute and the snapshot directory strictly inside the complete site root.
+`bounds` are the producer's explicit trusted role ceilings; `policy` is the same
+explicit `HostingPolicy` used by the existing prelaunch gate. No settings defaults
+or second hosting ceiling are introduced.
+
+Before any filesystem await, it calls `bindCanonicalSnapshot`: validate the fresh
+ledger fingerprint, exact pending plan/manifest and all actual canonical
+JSON/gzip/item/policy/STORE bytes, then capture independent copies of the bound
+artifact buffers and descriptor. Caller mutation cannot change those captured
+expectations during filesystem reads. Reserved and deploying phases are accepted;
+this pure check does not prove reservation durability or deployment permission.
+
+The shared filesystem walker then inventories the entire site root, rejecting
+links/junctions, nonregular files and every unexpected file/directory. Only the
+exact expected descriptor and artifact paths, plus their containing directories,
+are permitted. Unlike the existing prelaunch gate, this isolated API does not
+accept retained objects/catalogs or unrelated valid snapshots. Missing files,
+shortened/modified bytes, a different sequence/LF or oversized files fail.
+Every disk file must equal its independently verified bound bytes, not just match
+a declared length or hash-shaped filename. Therefore physical ZIP members and
+their corresponding individually hosted gzip objects are both counted in full.
+The inclusive whole-site byte limit uses the same exact-integer calculation;
+equality passes and one byte over fails. No partial-success report is returned.
+
+The report has `stage: "staged-snapshot"`, exact reserved `sequence`,
+`manifestSha256`, `fileCount`, `artifactCount`, `totalHostedBytes` and
+`headroomLimitBytes`. Artifact count includes the manifest, policy, originals and
+bundles but not the descriptor; file count includes all of them. No ledger,
+receipt, source text or payload is emitted.
+
+The API writes no files/state/network and does not materialize an output tree.
+Existing `publication:preflight` and the Pages workflow still accept only the
+current prelaunch format and still reject bundles/future artifacts. A future
+isolated writer must finish before this check and must not mutate staging before
+upload; the API is not a lock, seal or TOCTOU/concurrent-writer guarantee.
+It does not initialize/approve the real baseline, persist a reservation, confirm
+exposure or activate the new feed.
+
+For F files and B retained artifact bytes, filesystem traversal adds per-directory
+sorting bounded by O(F log F), plus O(B) byte comparisons. Binding also repeats
+the producer's full verification and retains independent expected buffers for the
+whole snapshot; reading one disk file at a time does not make this a streaming
+writer or a process-wide/peak-memory proof. Full production multilingual/index/
+media outputs, source/output adapters, durable deployment and consumer lifecycle
+remain separate gates.
+
 ## Incremental validation
 
 ```powershell
 node_modules\.bin\tsc.cmd --noEmit
-node_modules\.bin\tsx.cmd --test tools\hosted-preflight.test.ts tools\publication-history.test.ts
+node_modules\.bin\tsx.cmd --test tools\snapshot-preflight.test.ts tools\hosted-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-history.test.ts
 ```
 
 These cover actual synthetic publisher output, independent whole-directory byte
@@ -103,3 +154,7 @@ canonical/hash/summary failures, unsupported files, directory junctions and
 explicit invalid/missing inputs. Use `npm run check` and the
 [full validation gate](../README.md#validation) for finalization/push. Never run
 actual owner-source generation on a source/review branch to manufacture evidence.
+The staged suite independently measures actual nested files, including bundle
+duplication, exact whole-site equality/+1, every missing/corrupt/truncated/extended
+artifact, forged sequence/LF, stale reservations, invalid prepared bytes, unexpected
+retained files/directories, junctions and captured-buffer/input preservation.
