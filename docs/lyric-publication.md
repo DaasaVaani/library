@@ -45,6 +45,15 @@ Publication excludes every nonempty hold. Bad source/header/identity/receipt is 
 validation error even on a held record; no malformed file is silently skipped.
 Output reports published records, held source records and extraction exceptions
 separately. No unheld records is an explicit failure, not an empty successful feed.
+The shared `readCanonicalSources(sourceDirectory, bounds)` tooling now owns this
+receipt validation, source-size admission, hold filtering and canonical projection
+for both this publisher and the separate
+[snapshot preparation adapter](snapshot-producer.md#validated-source-preparation).
+The source directory itself must be a regular non-link directory; entries are
+restricted to receipt and regular UUID-named Markdown. This rejects root junctions
+rather than following them. Both callers reject malformed held records and require
+at least one supported unheld record. The loader returns fresh public-only items,
+held-source count and extraction-exception count, with no writes or hold release.
 
 ## Public allowlist and integrity
 

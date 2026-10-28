@@ -21,10 +21,10 @@ metadata/index generation and tolerant consumer support remain open.
    accepts only `items`, canonical `publishedAt` and `sourceCommit`.
    Each item must be the complete current canonical public v1 shape. Populated
    production metadata, fixture fields, generated variants and unknown item
-   fields fail instead of being discarded. A future source adapter must reuse
-   current source validation and explicitly reject every unsupported populated
-   field before constructing these public items. This helper does not grant
-   source publication/rights approval.
+   fields fail instead of being discarded. The separate source adapter below
+   reuses current source validation and rejects unsupported populated public
+   fields before constructing these items. Neither helper grants source
+   publication/rights approval.
 3. Validate all items and derive their exact logical hashes, then call the ledger's
    preparation API. Use only its derived first/change dates, preserving tombstones
    privately. Catalog order is UUID order; literal item values, line order, tags,
@@ -94,6 +94,58 @@ verification and exact recompression are O(B) with retained in-memory artifacts.
 This is bounded per artifact, not a streaming writer, total host-headroom check,
 process-wide memory guarantee or consumer staging-space admission algorithm.
 
+## Validated source preparation
+
+`prepareCanonicalSourceSnapshot(sourceDirectory, sourceBounds, state,
+expectedStateSha256, input, policy, bounds)` connects current strict source
+validation to in-memory canonical snapshot preparation. The only `input` fields
+are explicit `publishedAt` and `sourceCommit`; runtime extras, including injected
+`items`, fail. Source limits remain explicit `maxSourceFileBytes` and
+`maxTotalSourceBytes` from the owning lyric-publication settings; snapshot role/
+policy limits remain the caller's trusted Shared settings. No new defaults,
+configuration, CLI, source generation permission or live workflow is added.
+
+The adapter captures ledger/input/policy/role bounds before filesystem awaits;
+the shared loader captures source limits likewise. One shared
+`readCanonicalSources` implementation now serves both this adapter and the
+existing prelaunch publisher, avoiding divergent hold/metadata/identity rules.
+It admits the complete source inventory including the receipt against source
+byte ceilings, checks the import receipt/lock and parses every Markdown source
+with the existing strict parser and complete identity/provenance checks.
+Root/entry links and unexpected files/directories are rejected. Work must run
+in a stable isolated checkout; these checks do not lock or authenticate source
+Git state, detect all hostile concurrent rewrites or prove `sourceCommit` matches
+the current filesystem. The owning protected caller must establish that binding.
+
+Malformed held records fail rather than disappearing. Valid held records remain
+excluded; no unheld items is an explicit error. The result is `{prepared, held,
+extractionExceptions}`: `held` counts actual held parsed records and
+`extractionExceptions` counts unimported receipt entries. Neither count or private
+provenance enters public artifacts. Existing receipt truth/hold authorization is
+not inferred from these numbers.
+
+Only current text-only items are projected: permanent lyric UUID, literal title/
+ordered tags, canonical script and exact ordered line UUID/text/layout records.
+Populated classification/context/verses/media or positive Source Latin eligibility
+requires another adapter and fails explicitly; no metadata is silently dropped.
+Null/false Source Latin eligibility and source-only evidence remain source-only
+under the current canonical prelaunch contract, not multilingual publication.
+Then the unchanged pure producer derives logical hashes/dates and verifies all
+artifact bytes against the captured ledger and exact pending preparation rules.
+
+Preparation writes no output/source/state/network, releases no holds, reserves no
+sequence and initializes no real baseline. Consumers still cannot read sources.
+Subsequent explicit reservation/binding/staging retain their separate durability/
+exposure gates. Real-source generation remains post-merge; synthetic tests alone
+exercise source-to-prepared-to-staged bytes here. Complete production metadata,
+Source Latin, reviewed transliteration/index generation, source rights review and
+protected source-commit/deployment wiring remain open.
+
+For source bytes S and prepared artifact bytes B, parsing/projection adds O(S)
+work plus filename sorting and existing parser/receipt validation. It retains
+projected items before the existing in-memory producer retains/copies artifacts;
+source logical bounds and per-artifact ceilings are not measured peak-heap limits.
+
 ## Snapshot-pinned transfer planning
 
 `planCanonicalSnapshotDownload(prepared, bounds, verified)` repeats all actual
@@ -125,7 +177,7 @@ download/retry/resume and offline activation remain unimplemented here.
 
 ```powershell
 npm run build
-node --import tsx --test tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
+node --import tsx --test tools\canonical-sources.test.ts tools\lyric-publisher.test.ts tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
 ```
 
 Synthetic tests cover deterministic exact bytes/policy/ZIP, literal preservation,
@@ -140,7 +192,7 @@ It is not a real deployment, GitHub branch-rule or permission validation.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,
-reviewed source-to-snapshot adaptation and full-production output/headroom adapters,
+full-production source/item/output/headroom adapters,
 consumer consent/storage/lifecycle integration, actual baseline approval,
 protected state initialization/anchor permissions, authenticated deployment/
 descriptor sequence binding and recovery/release/device evidence.

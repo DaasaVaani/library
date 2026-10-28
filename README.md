@@ -90,6 +90,12 @@ multilingual/index contracts, output/deployment and client adapters remain open.
 Its transfer-planning API revalidates actual artifacts and delegates their exact
 snapshot-pinned policy/maps to Shared's existing planner. Returned remaining
 request totals are not full network/storage estimates or client cache proof.
+The [source snapshot adapter](docs/snapshot-producer.md#validated-source-preparation)
+now shares one strict receipt-bound canonical projection with the prelaunch
+publisher. It prepares in-memory snapshot artifacts from unheld supported records,
+preserving text/layout/identities and refusing populated unsupported metadata.
+It writes no sources/state/output, releases no holds and is not called by either
+live workflow. Real-source generation remains post-merge only.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

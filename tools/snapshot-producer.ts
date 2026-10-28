@@ -12,6 +12,7 @@ import { assertPublicationLedger, publicationLedgerFingerprint, preparePublicati
   type PublicationLedger, type PublicationPlan } from "./publication-ledger.js";
 import { canonical, deterministicGzip, parseCanonicalJson, yaml } from "./publisher.js";
 import { decodeZipStore, type ZipStoreLimits } from "./zip-store.js";
+import { readCanonicalSources, type CanonicalSourceBounds } from "./canonical-sources.js";
 
 export interface SnapshotBounds {
   maxDescriptorBytes: number;
@@ -31,6 +32,18 @@ export interface CanonicalSnapshotInput {
   items: readonly unknown[];
   publishedAt: string;
   sourceCommit: string;
+}
+export async function prepareCanonicalSourceSnapshot(sourceDirectory: string, sourceBounds: CanonicalSourceBounds,
+  state: PublicationLedger, expectedStateSha256: string, input: Omit<CanonicalSnapshotInput, "items">,
+  policy: SnapshotPolicy, bounds: SnapshotBounds):
+  Promise<{ prepared: PreparedCanonicalSnapshot; held: number; extractionExceptions: number }> {
+  const capturedState = structuredClone(state), capturedInput = structuredClone(input);
+  if (Object.keys(capturedInput).length !== 2 || !Object.hasOwn(capturedInput, "publishedAt") ||
+      !Object.hasOwn(capturedInput, "sourceCommit")) throw new Error("Invalid source snapshot preparation input");
+  const capturedPolicy = structuredClone(policy), capturedBounds = { ...bounds };
+  const { items, held, extractionExceptions } = await readCanonicalSources(sourceDirectory, sourceBounds);
+  const prepared = prepareCanonicalSnapshot(capturedState, expectedStateSha256, { ...capturedInput, items }, capturedPolicy, capturedBounds);
+  return { prepared, held, extractionExceptions };
 }
 const hash = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 const same = (a: unknown, b: unknown) => canonical(a) === canonical(b);

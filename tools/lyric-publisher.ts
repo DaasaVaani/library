@@ -1,12 +1,11 @@
 import { createHash, randomUUID } from "node:crypto";
-import { lstat, mkdir, open, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdir, open, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import { canonical, deterministicGzip, yaml } from "./publisher.js";
-import { parseLyricSource } from "./lyric-source.js";
-import { validateSources } from "./source-import.js";
-import type { LyricDescriptor, LyricItem, LyricManifest, LyricObjectReference } from "../shared/types/lyrics.js";
+import { readCanonicalSources } from "./canonical-sources.js";
+import type { LyricDescriptor, LyricManifest, LyricObjectReference } from "../shared/types/lyrics.js";
 
 interface Settings {
   formatVersion: 1; sourceDirectory: string; outputDirectory: string; stage: "prelaunch";
@@ -21,7 +20,6 @@ const schema = JSON.parse(await readFile(new URL("../shared/schemas/lyric-public
 const boundsSchema = JSON.parse(await readFile(new URL("../shared/schemas/publication-policy-settings.schema.json", import.meta.url), "utf8"));
 const settingsSchema = JSON.parse(await readFile(new URL("../settings/lyric-publication.schema.json", import.meta.url), "utf8"));
 const ajv = new Ajv2020.default({ strict: true });
-const validateItem = ajv.compile<LyricItem>({ ...schema, $ref: "#/$defs/item" });
 const validateManifest = ajv.compile<LyricManifest>({ ...schema, $ref: "#/$defs/manifest" });
 const validateDescriptor = ajv.compile<LyricDescriptor>(schema);
 const validateBounds = ajv.compile<LyricBounds>(boundsSchema);
@@ -50,17 +48,7 @@ export async function publishLyrics(outputDirectory: string, sourceDirectory: st
     if (!Number.isSafeInteger(value) || value <= 0) throw new Error("Invalid publication bound");
   }
   if (settings.maxTotalSourceBytes < settings.maxSourceFileBytes) throw new Error("Invalid publication bound relationship");
-  if (!(await lstat(source)).isDirectory()) throw new Error("Lyric source must be a regular directory");
-  const entries = await readdir(source, { withFileTypes: true });
-  let total = 0;
-  for (const entry of entries) {
-    if (!entry.isFile() || (entry.name !== ".source-import.json" && !/^[0-9a-f-]{36}\.md$/.test(entry.name))) {
-      throw new Error("Unexpected file or link in lyric source directory");
-    }
-    const size = (await lstat(join(source, entry.name))).size;
-    if (size > settings.maxSourceFileBytes || (total += size) > settings.maxTotalSourceBytes) throw new Error("Lyric source byte limit exceeded");
-  }
-  const validation = await validateSources(source);
+  const sources = await readCanonicalSources(source, settings);
   const artifacts = new Map<string, Buffer>();
   function artifact(value: unknown, role: "Item" | "Manifest"): LyricObjectReference {
     const decoded = Buffer.from(canonical(value)), encoded = deterministicGzip(decoded);
@@ -73,30 +61,9 @@ export async function publishLyrics(outputDirectory: string, sourceDirectory: st
   }
   const manifest: LyricManifest = { format: "daasavaani-lyric-catalog", formatVersion: 1, stage: "prelaunch",
     requiredCapabilities: ["lyric-preview-v1"], catalog: [] };
-  const ids = new Set<string>();
-  let held = 0, actualTotal = 0;
-  for (const name of entries.map(entry => entry.name).filter(name => name.endsWith(".md")).sort()) {
-    const bytes = await readFile(join(source, name));
-    actualTotal += bytes.length;
-    if (bytes.length > settings.maxSourceFileBytes || actualTotal > settings.maxTotalSourceBytes) throw new Error("Lyric source grew beyond its byte limit");
-    const parsed = parseLyricSource(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
-    if (name !== `${parsed.header.lyricId}.md` || ids.has(parsed.header.lyricId)) throw new Error("Invalid or duplicate lyric identity");
-    ids.add(parsed.header.lyricId);
-    if (parsed.header.review.holdReasons.length) { held++; continue; }
-    const metadata = parsed.header.public;
-    if (metadata.contextDescription || metadata.verses?.length || metadata.youtube?.length || metadata.images?.length ||
-        (metadata.classification && Object.values(metadata.classification).some(values => values.length)) ||
-        parsed.header.review.sourceLatin?.readable === true || parsed.header.review.sourceLatin?.searchable === true) {
-      throw new Error(`Lyric ${parsed.header.lyricId} needs registry/media/verse/Source Latin publication adapters; canonical preview must not silently discard populated public metadata`);
-    }
-    const item: LyricItem = { format: "daasavaani-lyric", formatVersion: 1, lyricId: parsed.header.lyricId,
-      canonicalScript: "kn", title: parsed.header.public.title, tags: parsed.header.public.tags,
-      lines: parsed.canonical.map(line => "id" in line ? { kind: "line", lineId: line.id, text: line.text }
-        : { kind: "layout", text: line.text }) };
-    if (!validateItem(item)) throw new Error("Invalid public lyric: " + JSON.stringify(validateItem.errors));
+  for (const item of sources.items) {
     manifest.catalog.push({ lyricId: item.lyricId, title: item.title, tags: item.tags, item: artifact(item, "Item") });
   }
-  if (!manifest.catalog.length) throw new Error("No unheld owner-authorized lyrics to publish");
   if (!validateManifest(manifest)) throw new Error("Invalid lyric manifest");
   const descriptor: LyricDescriptor = { format: "daasavaani-lyrics", formatVersion: 1, manifest: artifact(manifest, "Manifest") };
   if (!validateDescriptor(descriptor)) throw new Error("Invalid lyric descriptor");
@@ -131,13 +98,13 @@ export async function publishLyrics(outputDirectory: string, sourceDirectory: st
     try {
       const previous = join(output, "latest.json");
       if (!(await lstat(previous)).isFile()) throw new Error("Descriptor must be a regular file");
-      if ((await readFile(previous)).equals(descriptorBytes)) return { descriptor, manifest, held, extractionExceptions: validation.held, unchanged: true };
+      if ((await readFile(previous)).equals(descriptorBytes)) return { descriptor, manifest, held: sources.held, extractionExceptions: sources.extractionExceptions, unchanged: true };
     } catch (error) {
       if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) throw error;
     }
     await writeFile(pending, descriptorBytes, { flag: "wx" }); pendingCreated = true;
     await rename(pending, join(output, "latest.json")); pendingCreated = false;
-    return { descriptor, manifest, held, extractionExceptions: validation.held, unchanged: false };
+    return { descriptor, manifest, held: sources.held, extractionExceptions: sources.extractionExceptions, unchanged: false };
   } finally {
     try { if (pendingCreated) await rm(pending); }
     finally { await lock.close(); await rm(lockPath); }

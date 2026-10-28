@@ -1,5 +1,42 @@
 # Documentation history
 
+## 2026-10-28: shared canonical source projection and snapshot preparation
+
+- Continued from clean published isolated staging commit `1f5ef28` under the
+  owner's instruction to keep validating/committing/pushing coherent batches.
+  Created a separate source-adapter review branch; no main merge/PR/deploy.
+- Extracted receipt-bound canonical loading from the existing prelaunch publisher.
+  Both it and the new read-only source snapshot adapter now share source-size,
+  identity/provenance, hold and unsupported-public-metadata validation/projection.
+  Preserved public item bytes, literal lines/layout/UUIDs, independent formats
+  and separate held-source/extraction-exception accounting. Root source junctions
+  now fail explicitly instead of being followed, consistent with member policy.
+- Added source-to-snapshot preparation with captured ledger/date/policy/bounds
+  before awaits, strict date/source-commit input shape and no caller item injection.
+  It delegates unchanged logical/date/byte validation to the existing producer,
+  reserves no sequence and writes no source/state/output/network.
+- Archived the prior specification's future canonical-source-adapter obligation
+  here: source validation must be reused and every unsupported populated public
+  field rejected before item construction. This is now executable for canonical
+  prelaunch only; full-production metadata/linguistic/index/source-commit binding,
+  rights, protected state initialization and deployment remain gates.
+- Focused strict `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\canonical-sources.test.ts tools\lyric-publisher.test.ts tools\snapshot-producer.test.ts tools\snapshot-staging.test.ts`
+  passed38/38. Synthetic tests compare direct/source preparation, actual staged
+  public bytes, original prelaunch item bytes, exact source ceilings/receipt
+  accounting, literal layout, held-record validation, metadata refusal, links,
+  private-field exclusion and caller mutation. No actual source generation,
+  source/hold/identity changes, Shared pin update or production activation.
+- Full `npm run check` passed strict TypeScript and155/155 tests, with zero
+  failures/skips/cancellations. Source validation retained871 imported/125 held
+  records; verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed949 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  These are Library tooling results; consumer, production-language and live
+  deployment conformance remain unclaimed.
+
 ## 2026-10-26: isolated canonical snapshot output materialization
 
 - Verified the previous Shared decimal fix and Library staged preflight were
