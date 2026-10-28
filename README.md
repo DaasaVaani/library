@@ -30,6 +30,11 @@ now checks an isolated complete filesystem against freshly verified,
 ledger-bound descriptor/original/policy/manifest/ZIP bytes and the same whole-site
 headroom policy. It is read-only, accepts no retained extra files, and does not
 change the current CLI/workflow, write output or authorize production activation.
+The separate [isolated staging writer](docs/hosting-preflight.md#isolated-output-materialization)
+now materializes those captured public bytes into an exclusively new site root,
+admits whole-site bytes before writing and returns only after complete filesystem
+preflight. Existing roots are never reused; failures leave the new candidate for
+inspection, not a replacement publication. No live workflow calls this API.
 
 The owner-authorized [provisional verse proposal workflow](docs/verse-proposals.md)
 persists uncertain blank-layout candidates separately in `reviews/`, without

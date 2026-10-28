@@ -1,5 +1,46 @@
 # Documentation history
 
+## 2026-10-26: isolated canonical snapshot output materialization
+
+- Verified the previous Shared decimal fix and Library staged preflight were
+  already pushed, with clean Website, Shared and Library worktrees. Continued
+  from Library `a9a14d0` on a separate review branch; no empty commit was created.
+- Implemented explicit isolated canonical output staging for CI-01/03/06 and
+  ALG-07/08. Capture validated ledger/plan/bytes/limits before filesystem awaits,
+  reject excess whole-site bytes before mkdir, exclusively create an absent
+  root and public files, then require the complete staged filesystem preflight.
+  Caller mutation cannot change captured output/admission. Existing roots and
+  immediate-parent junctions are refused, never overwritten or reused.
+- Replaced the previous blanket pending output-materialization description with
+  this restricted canonical writer and explicit remaining reviewed source,
+  full-production output, durable state and exposure/deployment gates.
+  A failed new candidate remains unexposed for inspection; no recursive cleanup,
+  automatic retry/overwrite, atomic publication or fsync durability is claimed.
+- No live publisher/workflow, Shared pin, source/identity/proposal, baseline
+  approval, protected state or actual publication activation changed. Synthetic
+  staging tests do not generate actual source-PR variants.
+- Paused at the owner's request before full validation/commit/push. The first
+  pause-milestone run passed42/43; the added empty-catalog test incorrectly
+  assumed support that the existing producer explicitly rejects. Preserved that
+  producer guard and corrected the test/current guide rather than expanding scope.
+- The corrected pause milestone passed
+  `node_modules\.bin\tsc.cmd --noEmit` and
+  `node_modules\.bin\tsx.cmd --test tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\hosted-preflight.test.ts tools\snapshot-producer.test.ts`
+  (43/43, no failures/skips/cancellations), plus `git diff --check`.
+  Full `npm run check` and final ancillary checks have not run for this slice;
+  all seven changed/new files remain uncommitted and unpushed for resumption.
+- Resumed on 2026-10-28 after verifying the exact saved branch/base and seven
+  intended local files. Full `npm run check` passed strict TypeScript and145/145
+  tests with no failures, skips or cancellations. Source validation retained871
+  imported/125 held records; verse validation retained5,108 uncertain proposals
+  unchanged. No actual source variants were generated.
+- `python tools\check_repository.py` passed947 tracked files. Strict YAML parsing
+  passed all11 workflow/settings files; Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check` and `git diff --cached --check` passed.
+  `git diff --exit-code HEAD -- shared library reviews settings .github` confirmed
+  unchanged Shared pin, sources, reviews, settings and live workflow. Results
+  cover isolated Library tooling, not consumer/offline or deployment conformance.
+
 ## 2026-10-26: isolated staged snapshot filesystem preflight
 
 - Continued from clean, published `20f4416` on a new review branch without changing

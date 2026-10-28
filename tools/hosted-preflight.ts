@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { appendFile, lstat, readFile, readdir, realpath } from "node:fs/promises";
+import { appendFile, lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
@@ -201,6 +201,32 @@ export async function preflightCanonicalSnapshot(siteDirectory: string, snapshot
   if (inventory.fileCount !== expected.size) throw new Error("Hosted snapshot artifact is missing");
   return { stage: "staged-snapshot", sequence: bound.descriptor.sequence, ...inventory,
     artifactCount: bound.artifacts.size, headroomLimitBytes: byteLimit, manifestSha256: bound.descriptor.manifest.sha256 };
+}
+
+export async function stageCanonicalSnapshot(siteDirectory: string, snapshotDirectory: string,
+  state: PublicationLedger, expectedStateSha256: string, prepared: PreparedCanonicalSnapshot,
+  bounds: SnapshotBounds, policy: HostingPolicy): Promise<SnapshotPreflightReport> {
+  if (!isAbsolute(siteDirectory) || !isAbsolute(snapshotDirectory)) throw new Error("Snapshot staging requires absolute paths");
+  const site = resolve(siteDirectory), snapshots = resolve(snapshotDirectory);
+  nested(site, snapshots);
+  const safety = { ...bounds }, hosting = { ...policy }, byteLimit = hostingByteLimit(hosting);
+  const capturedState = structuredClone(state);
+  const bound = bindCanonicalSnapshot(capturedState, expectedStateSha256, prepared, safety);
+  const capturedPrepared: PreparedCanonicalSnapshot = {
+    plan: structuredClone(prepared.plan), manifest: bound.descriptor.manifest, artifacts: bound.artifacts
+  };
+  const total = [...bound.artifacts.values()].reduce((sum, bytes) => sum + BigInt(bytes.length), BigInt(bound.descriptorBytes.length));
+  if (total > BigInt(byteLimit)) throw new Error("Complete hosted output exceeds configured headroom");
+  const parent = await lstat(dirname(site));
+  if (!parent.isDirectory() || parent.isSymbolicLink()) throw new Error("Snapshot staging parent must be a regular directory");
+  await mkdir(site);
+  for (const [path, bytes] of bound.artifacts) {
+    const absolute = join(snapshots, ...path.split("/"));
+    await mkdir(dirname(absolute), { recursive: true });
+    await writeFile(absolute, bytes, { flag: "wx" });
+  }
+  await writeFile(join(snapshots, "latest.json"), bound.descriptorBytes, { flag: "wx" });
+  return preflightCanonicalSnapshot(site, snapshots, capturedState, expectedStateSha256, capturedPrepared, safety, hosting);
 }
 
 async function main() {

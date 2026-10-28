@@ -141,11 +141,65 @@ writer or a process-wide/peak-memory proof. Full production multilingual/index/
 media outputs, source/output adapters, durable deployment and consumer lifecycle
 remain separate gates.
 
+## Isolated output materialization
+
+`stageCanonicalSnapshot(siteDirectory, snapshotDirectory, state,
+expectedStateSha256, prepared, bounds, policy)` writes an already prepared,
+ledger-bound canonical candidate. Paths are explicit absolute caller-owned
+staging paths; the snapshot directory must be strictly inside the site root.
+A future settings-owned caller must provide them; this API introduces no path
+defaults, source adapter, CLI or workflow activation.
+
+Before any filesystem await, capture the ledger, validated plan/manifest,
+independent bound artifact/descriptor bytes and explicit safety/hosting limits.
+Validate the pending reservation and all actual prepared bytes through the
+existing binder. Count descriptor plus every artifact, including duplicated
+original/ZIP bytes, using the existing exact hosting limit. Invalid inputs or
+one byte beyond that limit fail before creating any output directory.
+Later caller mutation cannot change the captured candidate or loosen its limits.
+
+The immediate site parent must already exist as a regular non-link directory.
+Create the site root exclusively, never recursively creating its parent or
+accepting an existing directory, file or junction. Create only the expected
+snapshot subdirectories and write each bound artifact with exclusive `wx`
+creation, then the exact canonical descriptor plus LF. No source, private ledger,
+receipt or transient lock file is copied into the public tree.
+Run the complete staged filesystem preflight over the captured inputs and actual
+new site before returning its `SnapshotPreflightReport`. The current producer
+requires publishable items; empty catalogs remain rejected before staging.
+This writer does not broaden supported publication formats or invent content.
+
+This is local materialization, not atomic publication, a deployment callback or
+proof of remote durability. Writing the descriptor after other files establishes
+only local operation order, not CDN atomicity or exposure permission. Run only
+inside an isolated job-owned staging location; the writer is not an OS sandbox,
+ancestor-link audit or defense against an adversarial concurrent filesystem
+writer. Existing live output is never an acceptable destination.
+
+Failures throw explicitly, never return a usable candidate or alter an existing
+site. A failure after exclusive root creation can leave a partial **new** candidate;
+the API deliberately does not recursively delete or repurpose caller paths.
+Keep it unexposed, inspect the reported error and exact caller-supplied path,
+and retry only with a new absent root. Remove an owned partial candidate only
+after explicitly resolving/inspecting that exact path. Do not bypass the
+preflight, upload partial output or relax bounds to hide an error.
+
+Successful completion does not fsync a durable journal, reserve/confirm state,
+approve the baseline, change dates or activate a feed. The owning future publisher
+still needs reviewed source adaptation, protected Git persistence, exposure
+fencing and authenticated deployment/reconciliation. The existing prelaunch
+publisher, CLI and Pages workflow remain unchanged.
+
+Writing is O(B) for total descriptor/artifact bytes, followed by full verification
+and per-directory inventory sorting. Captured buffers and preflight copies add
+live allocations beyond the prepared input and current disk buffer; this is not a
+streaming or measured peak-memory guarantee.
+
 ## Incremental validation
 
 ```powershell
 node_modules\.bin\tsc.cmd --noEmit
-node_modules\.bin\tsx.cmd --test tools\snapshot-preflight.test.ts tools\hosted-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-history.test.ts
+node_modules\.bin\tsx.cmd --test tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\hosted-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-history.test.ts
 ```
 
 These cover actual synthetic publisher output, independent whole-directory byte
@@ -158,3 +212,7 @@ The staged suite independently measures actual nested files, including bundle
 duplication, exact whole-site equality/+1, every missing/corrupt/truncated/extended
 artifact, forged sequence/LF, stale reservations, invalid prepared bytes, unexpected
 retained files/directories, junctions and captured-buffer/input preservation.
+Staging tests additionally compare every actual byte with independent expected
+files, decode original ZIP members, preserve empty-catalog refusal, reject existing roots/
+parent junctions and pre-write invalid/oversized candidates, preserve previous
+output through real filesystem failure, and mutate caller inputs after entry.

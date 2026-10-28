@@ -67,6 +67,10 @@ repeats binding/verification, compares every actual staged file with captured bo
 bytes and counts the entire isolated site against the explicit hosting policy.
 It includes original-plus-bundle duplication, rejects missing/extra/changed files,
 and neither writes staging nor establishes durable reservation/deployment authority.
+The separate [isolated staging writer](hosting-preflight.md#isolated-output-materialization)
+materializes captured bound bytes only into an absent explicit site root, then
+requires that same whole-site preflight. It writes no source/private state and
+does not replace the live publisher or grant exposure permission.
 
 ## Verification and trust
 
@@ -121,7 +125,7 @@ download/retry/resume and offline activation remain unimplemented here.
 
 ```powershell
 npm run build
-node --import tsx --test tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
+node --import tsx --test tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
 ```
 
 Synthetic tests cover deterministic exact bytes/policy/ZIP, literal preservation,
@@ -136,7 +140,7 @@ It is not a real deployment, GitHub branch-rule or permission validation.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,
-source-to-snapshot/output materialization and full-production output/headroom adapters,
+reviewed source-to-snapshot adaptation and full-production output/headroom adapters,
 consumer consent/storage/lifecycle integration, actual baseline approval,
 protected state initialization/anchor permissions, authenticated deployment/
 descriptor sequence binding and recovery/release/device evidence.
