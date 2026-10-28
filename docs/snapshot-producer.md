@@ -146,6 +146,59 @@ work plus filename sorting and existing parser/receipt validation. It retains
 projected items before the existing in-memory producer retains/copies artifacts;
 source logical bounds and per-artifact ceilings are not measured peak-heap limits.
 
+## Isolated staged deployment handoff
+
+`deployCanonicalSnapshot(store, reserved, prepared, bounds, siteDirectory,
+snapshotDirectory, hostingPolicy, deployAndVerify)` is isolated Library tooling
+for an **already durably reserved** snapshot. `store` is the existing
+`PublicationLedgerGitStore`; `reserved` must be its fresh exact reserved snapshot.
+The complete prepared candidate, ledger and limits are copied before awaits,
+including Buffer copies rather than structured-clone byte arrays. Paths and
+limits are explicit; no CLI, owning settings defaults, live service, credentials
+or deployment workflow is added.
+
+1. Reject non-reserved/restarted input or a missing callback.
+2. Materialize the exact candidate into a new isolated site through
+   `stageCanonicalSnapshot`. Full verification/headroom admission precede writes,
+   and whole-filesystem preflight must succeed. Failure here cannot start a
+   deployment; the original durable reservation remains reserved/cancellable.
+3. Call the store's `deployReserved`, which checks the fresh remote tip/state,
+   conditionally persists `deploying` and verifies acknowledgment before invoking
+   its callback. Stale input/server rejection cannot invoke exposure even if local
+   staging succeeded. An unused local candidate may remain for inspection.
+4. Inside that durable boundary, repeat the complete filesystem preflight against
+   the captured candidate. Only then call the explicit `deployAndVerify` with
+   `{siteDirectory, snapshotDirectory, candidate, preflight}`. `candidate` is the
+   store's copied actual started pending record; the report binds the exact
+   sequence/manifest and measured whole-site bytes.
+5. The callback must deploy **only** that exact isolated tree and return genuine
+   authenticated matching deployment evidence as a `PublicationReceipt`. The
+   existing store then performs the conditional confirmation. The returned
+   `LedgerGitSnapshot` is confirmed only after that persistence succeeds.
+
+Local bytes/preflight, callback resolution and receipt-shaped fields are not
+authentication. The future trusted adapter must verify actual deployment
+identity/status/artifact/source/manifest binding, preserve tree immutability
+through upload and enforce the approved permissions/receipt protocol. This helper
+does not upload, poll GitHub, create an artifact or authenticate a caller's proof.
+Run only in trusted isolated runner-owned paths/configuration; a final preflight
+is not an immutable seal or concurrent-writer defense.
+
+Any failure after the durable boundary, including the final preflight before
+exposure, is conservatively started/uncertain. Callback/receipt/confirmation-write
+errors propagate; never automatically cancel, retry exposure or regenerate under
+that sequence. Reload durable state from the independently trusted anchor and
+reconcile genuine evidence through the store's explicit confirmation command.
+Already-started input is refused before new staging. A failed confirmation may
+have committed remotely; reload rather than assuming it did not. No local
+candidate is automatically removed or existing tree reused.
+
+The helper reserves no sequence and initializes no baseline/state branch. It
+does not grant deployment permission, remove holds, change production formats,
+wire a real publisher or resolve branch protections/source-commit authentication.
+It adds another complete filesystem preflight and in-memory candidate copy to
+the existing staging/binding/Git costs; it is not a streaming or peak-memory proof.
+
 ## Snapshot-pinned transfer planning
 
 `planCanonicalSnapshotDownload(prepared, bounds, verified)` repeats all actual
@@ -189,6 +242,11 @@ A real independent-bare-Git integration persists the generated manifest
 reservation, reads back `deploying`, binds actual descriptor bytes inside a
 synthetic callback, confirms a synthetic receipt and proves the subsequent no-op.
 It is not a real deployment, GitHub branch-rule or permission validation.
+Additional real-Git handoff checks read back the durable started phase inside a
+synthetic exposure callback, compare actual staged bytes, refuse stale/rejected
+boundaries, preserve reserved state on staging failure, retain uncertainty after
+callback/final-preflight/confirmation failure, explicitly reconcile genuine
+synthetic receipts, forbid replay and isolate caller mutation.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,

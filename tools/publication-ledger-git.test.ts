@@ -2,10 +2,12 @@ import test, { type TestContext } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { PublicationLedgerGitStore, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
+import { PublicationLedgerGitStore, type LedgerGitCommand, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
+import { deployCanonicalSnapshot } from "./snapshot-deployment.js";
+import { hostingSettings } from "./hosted-preflight.js";
 import { canonical, deterministicGzip } from "./publisher.js";
 import { prepareBaselineInitializationReview } from "./semantic-baseline.js";
 import { prepareCanonicalSnapshot, reserveCanonicalSnapshot, bindCanonicalSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
@@ -63,6 +65,143 @@ async function rejectPush(remote: string) {
   await writeFile(path, "#!/bin/sh\necho 'synthetic-sensitive-diagnostic' >&2\nexit 1\n", { mode: 0o755 });
   return path;
 }
+
+async function stagedFixture(t: TestContext) {
+  const f = await fixture(t), base = await f.store.load(f.initial), { policy, bounds } = await readSnapshotSettings();
+  const prepared = prepareCanonicalSnapshot(base.state, publicationLedgerFingerprint(base.state), {
+    sourceCommit, publishedAt: early, items: [{
+      format: "daasavaani-lyric", formatVersion: 1, lyricId: logical.lyricId, canonicalScript: "kn",
+      title: "Synthetic staged deployment", tags: [], lines: [{ kind: "line", lineId: logical.lyricId, text: "Synthetic permitted fixture" }]
+    }]
+  }, policy, bounds);
+  const reserved = await f.store.update(base, { kind: "reserve", plan: prepared.plan, manifestSha256: prepared.manifest.sha256 });
+  const site = join(f.client, "candidate"), snapshots = join(site, "snapshots"), hosting = await hostingSettings();
+  return { ...f, prepared, reserved, bounds, site, snapshots, hosting };
+}
+
+test("staged deployment handoff independently proves durable phase before exposing exact filesystem bytes and confirming receipt", async t => {
+  const f = await stagedFixture(t), before = canonical(f.prepared.plan);
+  const expectedArtifacts = new Map([...f.prepared.artifacts].map(([path, bytes]) => [path, Buffer.from(bytes)]));
+  let calls = 0;
+  const confirmed = await deployCanonicalSnapshot(f.store, f.reserved, f.prepared, f.bounds, f.site, f.snapshots, f.hosting, async staged => {
+    calls++;
+    const durable = await f.peer.load(f.initial);
+    assert.equal(durable.state.pending?.phase, "deploying");
+    assert.deepEqual(staged.candidate, durable.state.pending);
+    assert.equal(staged.siteDirectory, f.site);
+    assert.equal(staged.snapshotDirectory, f.snapshots);
+    assert.equal(staged.preflight.stage, "staged-snapshot");
+    assert.equal(staged.preflight.manifestSha256, f.prepared.manifest.sha256);
+    assert.equal(staged.preflight.sequence, staged.candidate.sequence);
+    const descriptor = JSON.parse((await readFile(join(staged.snapshotDirectory, "latest.json"))).toString("utf8"));
+    assert.equal(descriptor.sequence, staged.candidate.sequence);
+    for (const [path, bytes] of f.prepared.artifacts) {
+      assert.deepEqual(await readFile(join(staged.snapshotDirectory, ...path.split("/"))), bytes);
+    }
+    return proof(staged.candidate);
+  });
+  assert.equal(calls, 1);
+  assert.equal(confirmed.state.pending, null);
+  assert.equal(confirmed.state.confirmed?.manifestSha256, f.prepared.manifest.sha256);
+  assert.equal(canonical(f.prepared.plan), before);
+  assert.deepEqual(f.prepared.artifacts, expectedArtifacts);
+  assert.deepEqual((await f.peer.load(f.initial)).state, confirmed.state);
+});
+
+test("staging failure leaves the reservation cancellable and never enters a deployment callback", async t => {
+  const f = await stagedFixture(t);
+  let calls = 0;
+  await assert.rejects(deployCanonicalSnapshot(f.store, f.reserved, f.prepared, f.bounds, f.site, f.snapshots,
+    { ...f.hosting, maxHostedBytes: 1 }, async staged => { calls++; return proof(staged.candidate); }), /headroom/);
+  assert.equal(calls, 0);
+  assert.deepEqual(await f.peer.load(f.initial), f.reserved);
+  await assert.rejects(lstat(f.site), { code: "ENOENT" });
+  assert.equal((await f.store.update(f.reserved, { kind: "cancel" })).state.pending, null);
+});
+
+test("stale or server-rejected deployment boundaries cannot invoke exposure even after successful local staging", async t => {
+  for (const outcome of ["stale", "rejected"]) {
+    const f = await stagedFixture(t);
+    if (outcome === "stale") await f.peer.update(f.reserved, { kind: "cancel" });
+    else await rejectPush(f.remote);
+    let calls = 0;
+    await assert.rejects(deployCanonicalSnapshot(f.store, f.reserved, f.prepared, f.bounds, f.site, f.snapshots, f.hosting,
+      async staged => { calls++; return proof(staged.candidate); }), /Stale|Git conditional push failed/);
+    assert.equal(calls, 0);
+    assert.ok((await readdir(f.site)).length > 0);
+    const durable = await f.peer.load(f.initial);
+    assert.equal(durable.state.pending?.phase ?? null, outcome === "stale" ? null : "reserved");
+  }
+});
+
+test("callback failure leaves durable started state uncertain and forbids replay while preserving staged bytes", async t => {
+  const f = await stagedFixture(t);
+  let calls = 0;
+  await assert.rejects(deployCanonicalSnapshot(f.store, f.reserved, f.prepared, f.bounds, f.site, f.snapshots, f.hosting,
+    async () => { calls++; throw new Error("Synthetic exposure outcome unknown"); }), /outcome unknown/);
+  const durable = await f.peer.load(f.initial);
+  assert.equal(durable.state.pending?.phase, "deploying");
+  const bytes = await readFile(join(f.snapshots, "latest.json"));
+  const retrySite = join(f.client, "retry-candidate");
+  await assert.rejects(deployCanonicalSnapshot(f.store, durable, f.prepared, f.bounds, retrySite,
+    join(retrySite, "snapshots"), f.hosting, async staged => { calls++; return proof(staged.candidate); }), /reconcile/);
+  await assert.rejects(lstat(retrySite), { code: "ENOENT" });
+  assert.deepEqual(await readFile(join(f.snapshots, "latest.json")), bytes);
+  assert.equal(calls, 1);
+});
+
+test("failed confirmation after a valid exposure callback remains pending for explicit evidence reconciliation", async t => {
+  const f = await stagedFixture(t);
+  let receipt: PublicationReceipt | undefined;
+  await assert.rejects(deployCanonicalSnapshot(f.store, f.reserved, f.prepared, f.bounds, f.site, f.snapshots, f.hosting,
+    async staged => {
+      receipt = proof(staged.candidate);
+      await rejectPush(f.remote);
+      return receipt;
+    }), /Git conditional push failed/);
+  const durable = await f.peer.load(f.initial);
+  assert.equal(durable.state.pending?.phase, "deploying");
+  assert.equal(durable.state.confirmed, null);
+  await rm(join(f.remote, "hooks", "pre-receive"));
+  assert.ok(receipt);
+  const confirmed = await f.store.update(durable, { kind: "confirm", receipt });
+  assert.equal(confirmed.state.pending, null);
+});
+
+test("post-boundary filesystem corruption fails final preflight before callback and conservatively remains started", async t => {
+  const f = await stagedFixture(t);
+  class CorruptingStore extends PublicationLedgerGitStore {
+    override async update(snapshot: LedgerGitSnapshot, command: LedgerGitCommand): Promise<LedgerGitSnapshot> {
+      const result = await super.update(snapshot, command);
+      if (command.kind === "begin-deployment") await writeFile(join(f.snapshots, "latest.json"), "Synthetic corrupted descriptor");
+      return result;
+    }
+  }
+  let calls = 0;
+  await assert.rejects(deployCanonicalSnapshot(new CorruptingStore(f.options), f.reserved, f.prepared, f.bounds,
+    f.site, f.snapshots, f.hosting, async staged => { calls++; return proof(staged.candidate); }), /bound snapshot bytes/);
+  assert.equal(calls, 0);
+  const durable = await f.peer.load(f.initial);
+  assert.equal(durable.state.pending?.phase, "deploying");
+  await assert.rejects(f.store.update(durable, { kind: "cancel" }), /started|deploy/i);
+});
+
+test("handoff captures caller buffers and state before awaits so later mutation cannot change exposure", async t => {
+  const f = await stagedFixture(t), digest = f.prepared.manifest.sha256;
+  const safety = { ...f.bounds }, hosting = { ...f.hosting };
+  const deployment = deployCanonicalSnapshot(f.store, f.reserved, f.prepared, safety, f.site, f.snapshots, hosting,
+    async staged => {
+      assert.equal(staged.candidate.manifestSha256, digest);
+      assert.equal(staged.preflight.sequence, 1);
+      return proof(staged.candidate);
+    });
+  f.prepared.artifacts.get(f.prepared.manifest.path)!.fill(0);
+  f.prepared.plan.sourceCommit = "e".repeat(40);
+  f.reserved.state.pending!.sequence++;
+  safety.maxDescriptorBytes = 0;
+  hosting.maxHostedBytes = 0;
+  assert.equal((await deployment).state.confirmed?.manifestSha256, digest);
+});
 
 test("real Git persistence creates one-file direct-child commits and writes nothing for exact retries/no-ops", async t => {
   const f = await fixture(t), base = await f.store.load(f.initial), candidate = plan(base);

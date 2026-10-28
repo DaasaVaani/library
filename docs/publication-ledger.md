@@ -214,6 +214,12 @@ After callback success, it conditionally commits the matching receipt. A thrown
 callback, invalid receipt or failed confirmation write leaves the durable
 started candidate pending; restart requires explicit receipt reconciliation
 through `update(..., {kind: "confirm", receipt})`, not repeat deployment.
+The separate
+[staged snapshot handoff](snapshot-producer.md#isolated-staged-deployment-handoff)
+now connects this boundary to the existing isolated writer and final
+whole-filesystem preflight before an explicit caller-owned exposure/verification
+callback. It accepts an existing reservation, not arbitrary replacement state,
+and does not implement a hosted deployment service or authenticate receipt facts.
 
 Git subprocesses have bounded time/output, no shell interpolation or interactive
 prompt, and explicit errors that omit raw Git stderr, URLs and credential-bearing

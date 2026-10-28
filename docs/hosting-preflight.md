@@ -189,6 +189,12 @@ approve the baseline, change dates or activate a feed. The owning future publish
 still needs reviewed source adaptation, protected Git persistence, exposure
 fencing and authenticated deployment/reconciliation. The existing prelaunch
 publisher, CLI and Pages workflow remain unchanged.
+The separate
+[deployment handoff](snapshot-producer.md#isolated-staged-deployment-handoff)
+can now stage an existing reserved candidate, persist the store's deploying phase,
+then repeat this complete preflight before its explicit exposure callback.
+This additional check does not seal a mutable tree, supply authenticated evidence
+or authorize any live deployment; failed post-boundary checks remain uncertain.
 
 Writing is O(B) for total descriptor/artifact bytes, followed by full verification
 and per-directory inventory sorting. Captured buffers and preflight copies add

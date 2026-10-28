@@ -96,6 +96,12 @@ publisher. It prepares in-memory snapshot artifacts from unheld supported record
 preserving text/layout/identities and refusing populated unsupported metadata.
 It writes no sources/state/output, releases no holds and is not called by either
 live workflow. Real-source generation remains post-merge only.
+The [isolated staged deployment handoff](docs/snapshot-producer.md#isolated-staged-deployment-handoff)
+now connects an explicit existing Git reservation to local staging, durable
+`deploying` persistence, a final filesystem preflight and an explicit caller-owned
+deployment/receipt-verification callback. Synthetic real-Git checks cover failed
+boundaries, uncertain exposure and confirmation recovery. No hosted deployment
+adapter, production branch initialization, credentials or live workflow is added.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

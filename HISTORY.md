@@ -1,5 +1,37 @@
 # Documentation history
 
+## 2026-10-28: isolated staged snapshot deployment handoff
+
+- Continued directly after publishing source adapter `9ada2dd` with clean exact
+  local/remote SHA and full155/155 validation on its own review branch.
+- Added an explicit isolated helper joining the already-published staging and
+  conditional Git-store APIs: copied actual prepared buffers/ledger/limits,
+  complete staging/preflight, durable deploying boundary, repeated final
+  filesystem preflight, then a caller-owned deployment/receipt-verification
+  callback and the existing conditional receipt confirmation.
+- No production remote/state-branch initialization, hosted adapter, CLI, settings
+  defaults, credentials, workflow activation, consumer pin or source generation.
+  Archived the earlier remaining-integration implication that no staged helper
+  connected these primitives; real source-commit/authenticated hosted deployment
+  wiring, protections and permissions still remain gates. Callback proof fields
+  and local byte checks are not authenticated deployment evidence.
+- Real disposable independent bare-Git tests cover durable-before-exposure reads,
+  exact staged bytes, pre-boundary staging failure/cancellation, stale/server-
+  rejected boundaries, post-boundary filesystem corruption, callback uncertainty,
+  refused replay, failed confirmation/explicit reconciliation and caller mutation.
+  No remote Library state is created or modified by tests.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\publication-ledger-git.test.ts tools\snapshot-staging.test.ts`
+  passed29/29 with no failures, skips or cancellations.
+- Full `npm run check` passed strict TypeScript and162/162 tests with zero
+  failures/skips/cancellations. Source validation retained871 imported/125 held
+  records; verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed950 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  No live deployment was attempted and no source variants were generated.
+
 ## 2026-10-28: shared canonical source projection and snapshot preparation
 
 - Continued from clean published isolated staging commit `1f5ef28` under the
