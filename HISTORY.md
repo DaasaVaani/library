@@ -1,5 +1,33 @@
 # Documentation history
 
+## 2026-10-28: verified durable snapshot reservation admission
+
+- Continued directly from clean published handoff commit `e6ba400` to the next
+  isolated review branch. Added a narrow adapter that captures the actual prepared
+  candidate/ledger/bounds, invokes full pure snapshot reservation admission before
+  any Git await, then delegates only the existing conditional reserve command.
+- This closes the missing owning connection between descriptor/actual-artifact
+  validation and durable sequence consumption. The generic ledger/store still
+  intentionally operates on logical plans/hashes; no broader claim that those
+  generic APIs independently authenticate artifact bytes is made.
+- Reused one private prepared-buffer capture helper for reservation and deployment.
+  Real disposable bare-Git tests cover invalid local bytes/descriptor bounds
+  without counter/history writes, exact equality/retries, stale/server rejection,
+  confirmed true no-ops and caller mutation. Existing staged handoff tests now
+  enter through this fully verified durable admission API.
+- No production branch/state/anchor creation, baseline approval, automatic
+  exposure, workflow/credential/settings change, consumer pin update, source
+  generation or source/identity/hold modification.
+- Full `npm run check` passed strict TypeScript and166/166 tests with no failures,
+  skips or cancellations. Source validation retained871 imported/125 held records;
+  verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed950 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  These checks exercise isolated Library tooling/local synthetic Git, not
+  production hosted deployment, rights/linguistic approval or client lifecycle.
+
 ## 2026-10-28: isolated staged snapshot deployment handoff
 
 - Continued directly after publishing source adapter `9ada2dd` with clean exact

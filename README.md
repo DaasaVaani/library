@@ -102,6 +102,11 @@ now connects an explicit existing Git reservation to local staging, durable
 deployment/receipt-verification callback. Synthetic real-Git checks cover failed
 boundaries, uncertain exposure and confirmation recovery. No hosted deployment
 adapter, production branch initialization, credentials or live workflow is added.
+Its `reserveCanonicalSnapshotInGit` admission helper now fully verifies the
+candidate and descriptor limits before requesting any durable sequence change,
+then delegates exact-tip conditional persistence to the same Git store. Valid
+no-ops/retries remain byte/sequence/commit stable; invalid local bytes cannot
+consume a reservation.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

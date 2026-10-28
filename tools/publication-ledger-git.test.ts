@@ -6,7 +6,7 @@ import { lstat, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promis
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PublicationLedgerGitStore, type LedgerGitCommand, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
-import { deployCanonicalSnapshot } from "./snapshot-deployment.js";
+import { deployCanonicalSnapshot, reserveCanonicalSnapshotInGit } from "./snapshot-deployment.js";
 import { hostingSettings } from "./hosted-preflight.js";
 import { canonical, deterministicGzip } from "./publisher.js";
 import { prepareBaselineInitializationReview } from "./semantic-baseline.js";
@@ -66,7 +66,7 @@ async function rejectPush(remote: string) {
   return path;
 }
 
-async function stagedFixture(t: TestContext) {
+async function snapshotFixture(t: TestContext) {
   const f = await fixture(t), base = await f.store.load(f.initial), { policy, bounds } = await readSnapshotSettings();
   const prepared = prepareCanonicalSnapshot(base.state, publicationLedgerFingerprint(base.state), {
     sourceCommit, publishedAt: early, items: [{
@@ -74,10 +74,74 @@ async function stagedFixture(t: TestContext) {
       title: "Synthetic staged deployment", tags: [], lines: [{ kind: "line", lineId: logical.lyricId, text: "Synthetic permitted fixture" }]
     }]
   }, policy, bounds);
-  const reserved = await f.store.update(base, { kind: "reserve", plan: prepared.plan, manifestSha256: prepared.manifest.sha256 });
   const site = join(f.client, "candidate"), snapshots = join(site, "snapshots"), hosting = await hostingSettings();
-  return { ...f, prepared, reserved, bounds, site, snapshots, hosting };
+  return { ...f, base, prepared, bounds, site, snapshots, hosting };
 }
+async function stagedFixture(t: TestContext) {
+  const f = await snapshotFixture(t);
+  const reserved = await reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, f.bounds);
+  return { ...f, reserved };
+}
+
+test("durable reservation admits only fully verified descriptor/artifact bytes before consuming sequence or writing Git state", async t => {
+  const f = await snapshotFixture(t);
+  await assert.rejects(reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, { ...f.bounds, maxDescriptorBytes: 1 }), /Descriptor/);
+  const damaged = { ...f.prepared, artifacts: new Map(f.prepared.artifacts) };
+  damaged.artifacts.set(f.prepared.manifest.path, Buffer.alloc(damaged.artifacts.get(f.prepared.manifest.path)!.length));
+  await assert.rejects(reserveCanonicalSnapshotInGit(f.store, f.base, damaged, f.bounds), /identity\/size/);
+  assert.deepEqual(await f.peer.load(f.initial), f.base);
+  assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), "1");
+  assert.equal(f.base.state.lastSequence, 0);
+  const admitted = reserveCanonicalSnapshot(f.base.state, publicationLedgerFingerprint(f.base.state), f.prepared, f.bounds).state;
+  const bound = bindCanonicalSnapshot(admitted, publicationLedgerFingerprint(admitted), f.prepared, f.bounds);
+  const exact = { ...f.bounds, maxDescriptorBytes: bound.descriptorBytes.length };
+  const reserved = await reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, exact);
+  assert.equal(reserved.state.pending?.sequence, 1);
+  assert.equal(reserved.state.lastSequence, 1);
+  assert.deepEqual(await reserveCanonicalSnapshotInGit(f.store, reserved, f.prepared, exact), reserved);
+  assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), "2");
+});
+
+test("durable snapshot reservation rejects stale/server-blocked writes and never retries or rebases", async t => {
+  for (const outcome of ["stale", "rejected"]) {
+    const f = await snapshotFixture(t);
+    if (outcome === "stale") await f.peer.update(f.base, { kind: "reserve", plan: f.prepared.plan, manifestSha256: f.prepared.manifest.sha256 });
+    else await rejectPush(f.remote);
+    await assert.rejects(reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, f.bounds), /Stale|Git conditional push failed/);
+    assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), outcome === "stale" ? "2" : "1");
+  }
+});
+
+test("verified transport-identical snapshot no-op consumes no sequence or Git commit after genuine synthetic confirmation", async t => {
+  const f = await stagedFixture(t);
+  const confirmed = await f.store.deployReserved(f.reserved, async pending => proof(pending));
+  const next = prepareCanonicalSnapshot(confirmed.state, publicationLedgerFingerprint(confirmed.state), {
+    sourceCommit, publishedAt: later, items: [{
+      format: "daasavaani-lyric", formatVersion: 1, lyricId: logical.lyricId, canonicalScript: "kn",
+      title: "Synthetic staged deployment", tags: [], lines: [{ kind: "line", lineId: logical.lyricId, text: "Synthetic permitted fixture" }]
+    }]
+  }, (await readSnapshotSettings()).policy, f.bounds);
+  const count = git(f.remote, ["rev-list", "--count", stateRef]);
+  assert.deepEqual(await reserveCanonicalSnapshotInGit(f.store, confirmed, next, f.bounds), confirmed);
+  assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), count);
+  assert.equal(confirmed.state.lastSequence, 1);
+});
+
+test("durable reservation captures validated plan/artifact bytes before asynchronous Git work", async t => {
+  const f = await snapshotFixture(t), digest = f.prepared.manifest.sha256;
+  const expectedPlan = canonical(f.prepared.plan), limits = { ...f.bounds };
+  const reserving = reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, limits);
+  f.prepared.artifacts.get(f.prepared.manifest.path)!.fill(0);
+  f.prepared.plan.sourceCommit = "e".repeat(40);
+  f.base.state.lastSequence = 99;
+  limits.maxDescriptorBytes = 0;
+  const result = await reserving;
+  assert.equal(result.state.pending?.manifestSha256, digest);
+  assert.equal(result.state.pending?.sourceCommit, sourceCommit);
+  assert.equal(result.state.lastSequence, 1);
+  const { phase: _phase, sequence: _sequence, manifestSha256: _manifest, ...plan } = result.state.pending!;
+  assert.equal(canonical(plan), expectedPlan);
+});
 
 test("staged deployment handoff independently proves durable phase before exposing exact filesystem bytes and confirming receipt", async t => {
   const f = await stagedFixture(t), before = canonical(f.prepared.plan);

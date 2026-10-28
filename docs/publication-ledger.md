@@ -220,6 +220,12 @@ now connects this boundary to the existing isolated writer and final
 whole-filesystem preflight before an explicit caller-owned exposure/verification
 callback. It accepts an existing reservation, not arbitrary replacement state,
 and does not implement a hosted deployment service or authenticate receipt facts.
+Its separate `reserveCanonicalSnapshotInGit` helper now performs full snapshot
+byte and descriptor-limit admission before invoking this store's conditional
+reserve command. The ledger reducer alone intentionally accepts logical plans/
+manifest hashes rather than artifact bytes; snapshot-producing callers should
+use that stronger owning admission path, not infer artifact validity from the
+generic store API.
 
 Git subprocesses have bounded time/output, no shell interpolation or interactive
 prompt, and explicit errors that omit raw Git stderr, URLs and credential-bearing

@@ -148,6 +148,30 @@ source logical bounds and per-artifact ceilings are not measured peak-heap limit
 
 ## Isolated staged deployment handoff
 
+`reserveCanonicalSnapshotInGit(store, current, prepared, bounds)` connects pure
+snapshot admission to the existing Git store before deployment. It captures the
+ledger, plan/reference, original Buffer bytes and trusted role limits, then calls
+`reserveCanonicalSnapshot` locally. Full actual-byte/manifest/policy/item/ZIP
+verification and exact descriptor admission must succeed before any Git await.
+Invalid candidate bytes or an oversized descriptor therefore cannot consume a
+durable sequence or create a remote state commit.
+
+After local admission, delegate only `{kind: "reserve", plan, manifestSha256}` to
+the store's existing exact-tip conditional update. Do not write the pure reducer's
+returned state as arbitrary replacement state. The store reloads/validates current
+remote state, checks the expected tip and applies the same reducer before pushing
+its direct-child commit. Concurrent/stale/server/acknowledgment failures propagate
+with no automatic retry/rebase; reload and reconcile through existing policy.
+An identical confirmed snapshot remains a true no-op; an exact pending retry
+retains its sequence and bytes, with no new Git commit. Local Git objects do not
+prove a rejected reservation did or did not reach the remote.
+
+This helper initializes no state/anchor, creates no real branch, selects no
+permissions and grants no baseline/content/deployment approval. Callers must
+already supply a trusted store, genuine current snapshot and explicit bounds.
+Its output can feed the separate staged handoff below; it does not invoke that
+handoff or exposure automatically.
+
 `deployCanonicalSnapshot(store, reserved, prepared, bounds, siteDirectory,
 snapshotDirectory, hostingPolicy, deployAndVerify)` is isolated Library tooling
 for an **already durably reserved** snapshot. `store` is the existing
@@ -247,6 +271,10 @@ synthetic exposure callback, compare actual staged bytes, refuse stale/rejected
 boundaries, preserve reserved state on staging failure, retain uncertainty after
 callback/final-preflight/confirmation failure, explicitly reconcile genuine
 synthetic receipts, forbid replay and isolate caller mutation.
+Reservation admission tests additionally prove invalid descriptor/corrupt bytes
+leave the actual remote counter/history unchanged, exact descriptor equality and
+pending retries pass, stale/rejected writes are not retried, confirmed no-ops
+create no commits and post-entry caller mutation cannot change the reserved plan.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,
