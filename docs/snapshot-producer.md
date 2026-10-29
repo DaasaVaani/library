@@ -387,6 +387,18 @@ stalls. Server connections, processes and owned temporary files are bounded and
 cleaned up. Missing OpenSSL fails rather than silently skipping the suite; see
 the [validation prerequisites](../README.md#validation).
 
+The local transport fixture additionally stages the actual synthetic reserved
+candidate using `stageCanonicalSnapshot` and serves only its allowlisted disk
+files through the TLS server. Native read-back of those files checks the complete
+report shape and exact sequence/manifest/artifact/request/byte accounting, with
+no receipt fields. It then changes one encoded gzip artifact on disk under its
+unchanged hash-named path and descriptor. A new audit must fail at that artifact,
+without reading the final descriptor or returning partial success. Both source
+reserved state and started state remain unchanged, including pending status and
+null confirmed receipt. This does not seal a mutable upload tree or make a failed
+candidate safe to expose; staging/preflight/durable-start/authenticated-deployment
+requirements still apply independently.
+
 This is synthetic local transport conformance, not Pages/CDN/global freshness,
 authenticated run/deployment/status/receipt identity or source approval. No real
 hosted deployment is contacted. Actual merged-source generation, authenticated

@@ -178,6 +178,9 @@ and runs native Node fetch in child processes. Only the trusted child receives
 fail before an HTTP request. Missing certificate tooling fails the test, not a
 skip. No key/certificate is committed or retained; this does not contact Pages
 or authenticate production hosting/deployment evidence.
+The same native suite also serves actual exclusively staged snapshot files:
+the exact round-trip passes, then on-disk encoded artifact corruption fails
+without changing the reserved/started ledger or descriptor or creating a receipt.
 Use `npm run sources:import` only under the authorized
 [draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
 `npm run sources:retry-footers` narrowly retries unchanged eligible held inputs

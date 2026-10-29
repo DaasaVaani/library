@@ -1,5 +1,36 @@
 # Documentation history
 
+## 2026-10-29: staged-file to native HTTPS round-trip
+
+- Continued directly from clean exact published `f9ed117` on a separate integration
+  review branch. Reused the existing disposable native TLS fixture without new
+  dependencies, certificates, global trust or production tooling.
+- Staged the actual reserved synthetic candidate through exclusive output plus
+  complete preflight, then served allowlisted disk bytes over HTTPS to native
+  child Node fetch. Checked exact complete report keys/identity/counts, request
+  order and original-plus-ZIP byte accounting rather than a readiness flag.
+- Damaged one encoded gzip artifact on disk while preserving its hash filename
+  and descriptor; the next native audit rejected at that exact artifact without
+  final descriptor read or partial success. The original reserved ledger and
+  started ledger, pending status/confirmed-null receipt and descriptor stayed
+  unchanged. This is observation only, not confirmation, a mutable-tree seal,
+  actual remote deployment or authenticated hosted receipt evidence.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\snapshot-staging.test.ts tools\snapshot-readback.test.ts`
+  passed19/19 with no failures/skips/cancellations before the additional explicit
+  reserved-state equality assertion. Coverage remains CI-01/03/06 and ALG-07/08
+  isolated staged-output/transport integrity. No source/hold/identity, setting,
+  workflow, independent Shared pin, runtime adapter or deployment activation changed.
+- Full `npm run check` passed strict TypeScript and189/189 tests with zero
+  failures/skips/cancellations, including the final reserved-state equality.
+  Source validation retained871 imported/125 held records; verse validation
+  retained5,108 uncertain proposals unchanged. `python tools\check_repository.py`
+  passed954 tracked files; strict YAML passed11 workflow/settings files.
+  Actionlint1.7.12 with ShellCheck0.11.0, `git diff --check`,
+  `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Actual socket/file evidence remains limited to permitted synthetic local data.
+
 ## 2026-10-29: native loopback HTTPS snapshot read-back conformance
 
 - Verified previous `aaa8d05` was already clean and exactly published; continued

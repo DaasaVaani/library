@@ -1,13 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { execFile, execFileSync } from "node:child_process";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { readFileSync } from "node:fs";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:https";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { promisify } from "node:util";
 import { gzipSync } from "node:zlib";
 import { auditHostedCanonicalSnapshot } from "./snapshot-readback.js";
+import { hostingSettings, stageCanonicalSnapshot } from "./hosted-preflight.js";
 import { emptyPublicationLedger, publicationLedgerFingerprint as fingerprint, beginPublicationDeployment } from "./publication-ledger.js";
 import { bindCanonicalSnapshot, prepareCanonicalSnapshot, reserveCanonicalSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
 
@@ -191,6 +193,12 @@ test("caller mutations after the first request cannot change captured expectatio
 test("native fetch validates disposable HTTPS trust and exact hosted bytes while refusing real redirect/coding/fault responses", async t => {
   const f = fixture(), directory = await mkdtemp(join(tmpdir(), "daasavaani-readback-tls-"));
   t.after(() => rm(directory, { recursive: true, maxRetries: 5, retryDelay: 100 }));
+  const stateBefore = structuredClone(f.state), reservedBefore = structuredClone(f.reserved);
+  const site = join(directory, "candidate"), snapshots = join(site, "snapshots");
+  const preflight = await stageCanonicalSnapshot(site, snapshots, f.reserved, fingerprint(f.reserved),
+    f.prepared, bounds, await hostingSettings());
+  assert.equal(preflight.manifestSha256, f.prepared.manifest.sha256);
+  assert.equal(preflight.totalHostedBytes, [...f.files.values()].reduce((sum, bytes) => sum + bytes.length, 0));
   const key = join(directory, "server-key.pem"), cert = join(directory, "server-cert.pem");
   const args = ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-keyout", key, "-out", cert,
     "-days", "1", "-subj", "/CN=localhost", "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1"];
@@ -207,7 +215,8 @@ test("native fetch validates disposable HTTPS trust and exact hosted bytes while
     const [, mode, ...parts] = url.pathname.split("/"), path = parts.join("/");
     requests.push(url.pathname);
     headers.push({ authorization: request.headers.authorization, cookie: request.headers.cookie });
-    const bytes = f.files.get(path);
+    const bytes = mode === "staged" && f.files.has(path) ?
+      readFileSync(join(snapshots, ...path.split("/"))) : f.files.get(path);
     if (mode === "redirect") { response.writeHead(302, { location: "/trap/latest.json" }); response.end(); return; }
     if (!bytes) { response.writeHead(404); response.end(); return; }
     if (mode === "headers-stall" || mode === "body-stall") {
@@ -254,18 +263,32 @@ test("native fetch validates disposable HTTPS trust and exact hosted bytes while
     import assert from 'node:assert/strict';
     const { auditHostedCanonicalSnapshot } = await import(process.env.READBACK_MODULE);
     const data = JSON.parse(process.env.READBACK_FIXTURE);
+    const stateBefore = structuredClone(data.state);
     const prepared = { ...data.prepared, artifacts: new Map(data.prepared.artifacts.map(([path, bytes]) => [path, Buffer.from(bytes, 'base64')])) };
     const check = (mode, requestTimeoutMs = 10000) => auditHostedCanonicalSnapshot(
       { baseUrl: data.origin + '/' + mode + '/', requestTimeoutMs }, data.state, data.fingerprint, prepared, data.bounds);
-    if (process.env.READBACK_EXPECT_UNTRUSTED === '1') {
-      await assert.rejects(check('valid'), /transport or response stream failed/);
-      console.log('untrusted certificate refused');
-    } else {
-      const report = await check('valid');
+    const assertReport = async mode => {
+      const report = await check(mode);
+      assert.deepEqual(Object.keys(report).sort(),
+        ['artifactCount','manifestSha256','observedBytes','requestCount','sequence','stage']);
+      assert.equal(report.stage, 'hosted-readback');
       assert.equal(report.sequence, 1);
       assert.equal(report.manifestSha256, prepared.manifest.sha256);
+      assert.equal(report.artifactCount, prepared.artifacts.size);
       assert.equal(report.requestCount, prepared.artifacts.size + 2);
       assert.equal(report.observedBytes, data.expectedObservedBytes);
+    };
+    if (process.env.READBACK_CASE === 'untrusted') {
+      await assert.rejects(check('valid'), /transport or response stream failed/);
+      console.log('untrusted certificate refused');
+    } else if (process.env.READBACK_CASE === 'staged') {
+      await assertReport('staged');
+      console.log('staged HTTPS audit passed');
+    } else if (process.env.READBACK_CASE === 'staged-corrupt') {
+      await assert.rejects(check('staged'), /bytes do not match/);
+      console.log('damaged staged artifact refused');
+    } else {
+      await assertReport('valid');
       for (const [mode, pattern] of [
         ['redirect', /transport or response stream failed/], ['coding', /encoding/],
         ['corrupt', /bytes do not match/], ['truncated', /truncated/],
@@ -274,25 +297,46 @@ test("native fetch validates disposable HTTPS trust and exact hosted bytes while
       for (const mode of ['headers-stall', 'body-stall']) await assert.rejects(check(mode, 300), /deadline/);
       console.log('native HTTPS audit cases passed');
     }
+    assert.deepEqual(data.state, stateBefore);
   `;
   const env = { ...process.env, NODE_TLS_REJECT_UNAUTHORIZED: "1",
     READBACK_MODULE: new URL("./snapshot-readback.ts", import.meta.url).href, READBACK_FIXTURE: payload };
   const execute = promisify(execFile);
   const trusted = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
-    env: { ...env, NODE_EXTRA_CA_CERTS: cert }, timeout: 60000, windowsHide: true
+    env: { ...env, NODE_EXTRA_CA_CERTS: cert, READBACK_CASE: "trusted" }, timeout: 60000, windowsHide: true
   });
   assert.equal(trusted.stdout.trim(), "native HTTPS audit cases passed");
   const before = requests.length;
-  const untrustedEnv: NodeJS.ProcessEnv = { ...env, READBACK_EXPECT_UNTRUSTED: "1" };
+  const untrustedEnv: NodeJS.ProcessEnv = { ...env, READBACK_CASE: "untrusted" };
   delete untrustedEnv.NODE_EXTRA_CA_CERTS;
   const untrusted = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
     env: untrustedEnv, timeout: 30000, windowsHide: true
   });
   assert.equal(untrusted.stdout.trim(), "untrusted certificate refused");
   assert.equal(requests.length, before);
+  const staged = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
+    env: { ...env, NODE_EXTRA_CA_CERTS: cert, READBACK_CASE: "staged" }, timeout: 30000, windowsHide: true
+  });
+  assert.equal(staged.stdout.trim(), "staged HTTPS audit passed");
+  const expectedPaths = ["latest.json", ...[...f.files.keys()].filter(path => path !== "latest.json").sort(), "latest.json"];
+  assert.deepEqual(requests.filter(path => path.startsWith("/staged/")), expectedPaths.map(path => `/staged/${path}`));
+  const damagedPath = [...f.prepared.artifacts.keys()].find(path => path.endsWith(".json.gz"));
+  assert.ok(damagedPath);
+  const damaged = Buffer.from(f.files.get(damagedPath)!);
+  damaged[0] = damaged[0]! ^ 1;
+  await writeFile(join(snapshots, ...damagedPath.split("/")), damaged);
+  const beforeDamaged = requests.length;
+  const rejected = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
+    env: { ...env, NODE_EXTRA_CA_CERTS: cert, READBACK_CASE: "staged-corrupt" }, timeout: 30000, windowsHide: true
+  });
+  assert.equal(rejected.stdout.trim(), "damaged staged artifact refused");
+  assert.deepEqual(requests.slice(beforeDamaged), expectedPaths.slice(0, expectedPaths.indexOf(damagedPath) + 1).map(path => `/staged/${path}`));
+  assert.deepEqual(await readFile(join(snapshots, "latest.json")), f.files.get("latest.json"));
+  assert.deepEqual(f.state, stateBefore);
+  assert.deepEqual(f.reserved, reservedBefore);
   assert.equal(requests.some(path => path.startsWith("/trap/")), false);
   assert.deepEqual(requests.filter(path => path.startsWith("/valid/")),
-    ["latest.json", ...[...f.files.keys()].filter(path => path !== "latest.json").sort(), "latest.json"].map(path => `/valid/${path}`));
+    expectedPaths.map(path => `/valid/${path}`));
   assert.equal(closedStalls, 2);
   assert.ok(headers.every(value => value.authorization === undefined && value.cookie === undefined));
 });
