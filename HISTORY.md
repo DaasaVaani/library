@@ -1,5 +1,35 @@
 # Documentation history
 
+## 2026-10-29: trusted source-history containment admission
+
+- Continued from clean published Git source binding `badb121` on a separate review
+  branch. Required explicit `trustedSourceTip` in the isolated Git source options;
+  validate both full SHA1 commit objects and source ancestor/equality before source
+  tree/blob reads. No HEAD/ref fallback, fetch, tip advancement or history repair.
+- Archived the previous blanket statement that the Git adapter established only
+  byte/commit identity and no ancestry: it now checks containment in the supplied
+  tip's history. Authenticating that tip/allowed branch/checks remains the caller's
+  obligation; assigning candidate-as-tip is not independent approval. Supersession,
+  trusted local history/configuration, rights and deployment remain separate.
+- This deliberate required-option tightening affects standalone tooling callers
+  only; updated every existing caller/test. No public format, application API,
+  settings/consumer pin, source/hold/identity, state branch or workflow changed.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\git-source-snapshot.test.ts` passed12/12
+  with no failures/skips/cancellations. Real synthetic Git tests cover equal/older
+  tips preserving original bytes, valid merge containment, unapproved descendants/
+  divergent identical trees, replacement-ref ancestry fabrication, invalid/missing/
+  tag/blob tips and post-entry caller mutation, plus all previous source checks.
+- Full `npm run check` passed strict TypeScript and178/178 tests with no failures,
+  skips or cancellations. Source validation retained871 imported/125 held records;
+  verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed952 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Only synthetic sources/repositories supplied generation/ancestry evidence;
+  no real source artifacts, state activation or deployment were attempted.
+
 ## 2026-10-29: exact Git-commit source snapshot preparation
 
 - Continued from clean published reservation admission commit `ece9bf9` on a new

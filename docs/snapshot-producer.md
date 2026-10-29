@@ -152,7 +152,7 @@ source logical bounds and per-artifact ceilings are not measured peak-heap limit
 `prepareGitCanonicalSourceSnapshot(options, sourceBounds, state,
 expectedStateSha256, input, policy, bounds)` prepares the same canonical candidate
 from exact committed source bytes. `options` explicitly supplies absolute
-`repositoryDirectory`, a restricted slash-separated relative Git `sourcePath`
+`repositoryDirectory`, a full SHA1 `trustedSourceTip`, a restricted slash-separated relative Git `sourcePath`
 (for example `library`) and positive bounded `gitTimeoutMs`. This Git-tree path
 is not an OS filesystem path; no absolute/dot/parent/backslash/revision/option
 syntax is accepted. No product defaults, CLI or workflow are introduced.
@@ -164,6 +164,29 @@ never checks out, executes hooks/source code, changes HEAD/index/refs or fetches
 objects. Missing local objects fail; provision the trusted repository separately.
 An explicit command-scoped bare-repository allowance permits the caller-selected
 bare path even on hosts disabling implicit bare discovery.
+
+`trustedSourceTip` is required with no HEAD/ref/remote fallback; it must also be
+a full lowercase 40-hex local commit object. Before reading the source tree or
+any source blob, require `sourceCommit` to be an ancestor of or equal to that
+tip using Git's ancestry check, with replacement objects disabled. Equal tips,
+older contained commits and commits genuinely included by merges are accepted.
+Descendants beyond the trusted tip and divergent commits fail even when their
+source trees are identical. Bytes still come only from the declared source
+commit, never the trusted tip's newer source tree. Ancestry failures, missing
+objects and Git errors propagate as the same explicit redacted read failure;
+there is no automatic fetch, tip advancement or history repair.
+
+The required option tightens this isolated tooling API; existing direct callers
+must now supply an independently authenticated approved-history tip explicitly.
+No application API, publication format, settings value or consumer pin changes.
+Do not populate the tip from the candidate itself, dirty HEAD or an unauthenticated
+remote response merely to make admission pass. A protected owning caller must
+authenticate repository identity, the allowed branch/tip and applicable successful
+checks, then capture that exact commit before invoking this API. Containment in
+that captured history is not proof the candidate is the latest tip or still
+current after a concurrent remote update. The caller remains responsible for
+supersession/current-tip rules before exposure and for trusted repository
+configuration/history (including local grafts and shallow history).
 
 Capture caller state, options, dates/policy and bounds before awaits. Git runs
 without shell interpolation/interactive prompts, with object replacements and
@@ -195,14 +218,16 @@ The original repository/worktree, ledger and caller objects remain unchanged.
 
 Dirty worktrees, staged edits, moved HEAD, untracked worktree files and local
 replacement refs cannot substitute for committed source bytes. This closes
-byte-to-declared-commit binding, **not** authority: the protected future caller
-must separately authenticate the repository/approved commit, successful checks,
-trusted-main ancestry, rights/review, tooling/Shared/settings identities and
+byte-to-declared-commit binding and containment in the supplied trusted history,
+**not** authentication of that history: the protected future caller must
+separately authenticate the repository/approved tip and successful checks,
+rights/review, tooling/Shared/settings identities and
 deployment permission. No real-source generation is authorized on review
 branches and no baseline, sequence, protected branch or feed is activated here.
 
 For source bytes S and F entries, Git uses O(F) bounded subprocesses plus bounded
-metadata output; temporary disk is O(S), in addition to the existing parser and
+metadata output; ancestry traversal additionally depends on local commit-graph
+history and has the explicit per-command timeout. Temporary disk is O(S), in addition to the existing parser and
 in-memory producer allocations. There is no streaming/peak-heap guarantee.
 
 ## Isolated staged deployment handoff

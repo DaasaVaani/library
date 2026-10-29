@@ -45,7 +45,7 @@ async function setup(t: TestContext) {
   }
   const sourceCommit = commit(), state = emptyPublicationLedger();
   const input = { publishedAt: "2026-01-01T00:00:00.000Z", sourceCommit };
-  const options: GitSourceOptions = { repositoryDirectory: repository, sourcePath: "library", gitTimeoutMs: 30000 };
+  const options: GitSourceOptions = { repositoryDirectory: repository, sourcePath: "library", trustedSourceTip: sourceCommit, gitTimeoutMs: 30000 };
   return { root, repository, sources, permitted, state, input, options, commit,
     prepare: () => prepareGitCanonicalSourceSnapshot(options, sourceBounds, state, fingerprint(state), input, policy, bounds) };
 }
@@ -97,6 +97,7 @@ test("committed unexpected files, nested directories, executable blobs, symlinks
       git(f.repository, ["commit", "--quiet", "-m", "Synthetic unsupported mode"]);
       f.input.sourceCommit = git(f.repository, ["rev-parse", "HEAD"]);
     } else f.input.sourceCommit = f.commit();
+    f.options.trustedSourceTip = f.input.sourceCommit;
     await assert.rejects(f.prepare(), /permits only|receipt is missing/);
   }
 });
@@ -117,6 +118,7 @@ test("committed malformed held records and receipt mismatches cannot disappear b
   const original = await readFile(f.permitted, "utf8");
   await writeFile(f.permitted, original.replace(/sha256: [a-f0-9]{64}/, `sha256: ${"e".repeat(64)}`));
   f.input.sourceCommit = f.commit();
+  f.options.trustedSourceTip = f.input.sourceCommit;
   await assert.rejects(f.prepare(), /disagrees/);
   await writeFile(f.permitted, original);
   for (const name of (await readdir(f.sources)).filter(name => name.endsWith(".md"))) {
@@ -124,6 +126,7 @@ test("committed malformed held records and receipt mismatches cannot disappear b
     if (text.includes("sourceFile: held.txt")) await writeFile(path, text.replace("sourceFormat: 2", "sourceFormat: 99"));
   }
   f.input.sourceCommit = f.commit();
+  f.options.trustedSourceTip = f.input.sourceCommit;
   await assert.rejects(f.prepare(), /Invalid draft header/);
 });
 
@@ -157,7 +160,58 @@ test("caller state/date/path/bound mutations after entry cannot alter the captur
   const options = { ...f.options }, dates = { ...f.input }, limits = { ...sourceBounds };
   const ledger = structuredClone(f.state), snapshotPolicy = structuredClone(policy), safety = { ...bounds };
   const preparing = prepareGitCanonicalSourceSnapshot(options, limits, ledger, fingerprint(ledger), dates, snapshotPolicy, safety);
-  options.sourcePath = "missing"; dates.sourceCommit = "f".repeat(40); limits.maxSourceFileBytes = 1;
+  options.sourcePath = "missing"; options.trustedSourceTip = "f".repeat(40);
+  dates.sourceCommit = "f".repeat(40); limits.maxSourceFileBytes = 1;
   ledger.lastSequence = 99; snapshotPolicy.transferPlanning.maxBundleMembers = 0; safety.maxItemEncodedBytes = 0;
   assert.deepEqual(await preparing, expected);
+});
+
+test("source commits equal to or older than the trusted tip pass without taking source bytes from that newer tip", async t => {
+  const f = await setup(t), expected = await f.prepare();
+  const original = await readFile(f.permitted, "utf8");
+  await writeFile(f.permitted, original.replace("ಕನ್ನಡ", "ಕನ್ನಡ ಕನ್ನಡ"));
+  f.options.trustedSourceTip = f.commit();
+  assert.notEqual(f.options.trustedSourceTip, f.input.sourceCommit);
+  assert.deepEqual(await f.prepare(), expected);
+  assert.equal((await f.prepare()).prepared.plan.sourceCommit, f.input.sourceCommit);
+});
+
+test("unapproved descendants and divergent commits fail even if their source trees are valid or identical", async t => {
+  const f = await setup(t), initial = f.input.sourceCommit;
+  const tree = git(f.repository, ["rev-parse", `${initial}^{tree}`]);
+  const descendant = git(f.repository, ["commit-tree", tree, "-p", initial], "Synthetic unapproved descendant\n");
+  f.input.sourceCommit = descendant;
+  await assert.rejects(f.prepare(), /Git source snapshot read failed/);
+  const divergent = git(f.repository, ["commit-tree", tree], "Synthetic unrelated root\n");
+  f.input.sourceCommit = divergent;
+  await assert.rejects(f.prepare(), /Git source snapshot read failed/);
+  assert.equal(git(f.repository, ["rev-parse", "HEAD"]), initial);
+  f.options.trustedSourceTip = descendant;
+  f.input.sourceCommit = initial;
+  assert.equal((await f.prepare()).prepared.plan.sourceCommit, initial);
+});
+
+test("a genuinely merged source commit passes but a replacement-ref fabricated ancestry does not", async t => {
+  const f = await setup(t), initial = f.input.sourceCommit;
+  const tree = git(f.repository, ["rev-parse", `${initial}^{tree}`]);
+  const side = git(f.repository, ["commit-tree", tree, "-p", initial], "Synthetic side commit\n");
+  const tip = git(f.repository, ["commit-tree", tree, "-p", initial, "-p", side], "Synthetic approved merge\n");
+  f.input.sourceCommit = side; f.options.trustedSourceTip = initial;
+  git(f.repository, ["replace", initial, tip]);
+  await assert.rejects(f.prepare(), /Git source snapshot read failed/);
+  f.options.trustedSourceTip = tip;
+  assert.equal((await f.prepare()).prepared.plan.sourceCommit, side);
+  assert.equal(git(f.repository, ["replace", "-l"]), initial);
+});
+
+test("trusted tips must be explicit full local commit objects, not refs, blobs, tags or unavailable IDs", async t => {
+  const f = await setup(t);
+  const blob = git(f.repository, ["rev-parse", `${f.input.sourceCommit}:library/.source-import.json`]);
+  git(f.repository, ["tag", "-a", "synthetic-trusted", "-m", "Synthetic annotated tag", f.input.sourceCommit]);
+  const tag = git(f.repository, ["rev-parse", "synthetic-trusted"]);
+  for (const trustedSourceTip of ["", "HEAD", f.input.sourceCommit.slice(0, 7), `${f.input.sourceCommit}^{commit}`,
+    "f".repeat(40), blob, tag]) {
+    await assert.rejects(prepareGitCanonicalSourceSnapshot({ ...f.options, trustedSourceTip }, sourceBounds,
+      f.state, fingerprint(f.state), f.input, policy, bounds), /Invalid Git|commit object|Git source snapshot read failed/);
+  }
 });

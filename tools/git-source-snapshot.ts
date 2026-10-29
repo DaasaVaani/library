@@ -10,19 +10,22 @@ import type { SnapshotPolicy } from "../shared/types/snapshot.js";
 export interface GitSourceOptions {
   repositoryDirectory: string;
   sourcePath: string;
+  trustedSourceTip: string;
   gitTimeoutMs: number;
 }
 
 export async function prepareGitCanonicalSourceSnapshot(options: GitSourceOptions, sourceBounds: CanonicalSourceBounds,
   state: PublicationLedger, expectedStateSha256: string, input: Omit<CanonicalSnapshotInput, "items">,
   policy: SnapshotPolicy, bounds: SnapshotBounds) {
-  const { repositoryDirectory, sourcePath, gitTimeoutMs } = options;
+  const { repositoryDirectory, sourcePath, trustedSourceTip, gitTimeoutMs } = options;
   const limits = { ...sourceBounds }, ledger = structuredClone(state), dates = structuredClone(input);
   const snapshotPolicy = structuredClone(policy), safety = { ...bounds };
   if (!isAbsolute(repositoryDirectory) || !/^[A-Za-z0-9_][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_][A-Za-z0-9._-]*)*$/.test(sourcePath) ||
       !Number.isSafeInteger(gitTimeoutMs) || gitTimeoutMs < 1 || gitTimeoutMs > 2147483647 ||
       Object.keys(dates).length !== 2 || !Object.hasOwn(dates, "publishedAt") || !Object.hasOwn(dates, "sourceCommit") ||
-      !/^[0-9a-f]{40}$/.test(dates.sourceCommit)) throw new Error("Invalid Git source snapshot input");
+      !/^[0-9a-f]{40}$/.test(dates.sourceCommit) || !/^[0-9a-f]{40}$/.test(trustedSourceTip)) {
+    throw new Error("Invalid Git source snapshot input");
+  }
   if (![limits.maxSourceFileBytes, limits.maxTotalSourceBytes].every(value => Number.isSafeInteger(value) && value > 0) ||
       limits.maxTotalSourceBytes < limits.maxSourceFileBytes) throw new Error("Invalid Git source byte bounds");
   const env: NodeJS.ProcessEnv = { ...process.env, GIT_TERMINAL_PROMPT: "0", GIT_NO_REPLACE_OBJECTS: "1", GIT_NO_LAZY_FETCH: "1" };
@@ -38,9 +41,11 @@ export async function prepareGitCanonicalSourceSnapshot(options: GitSourceOption
     });
   });
   if ((await git(["rev-parse", "--show-object-format"])).toString("utf8").trim() !== "sha1" ||
-      (await git(["cat-file", "-t", dates.sourceCommit])).toString("utf8").trim() !== "commit") {
+      (await git(["cat-file", "-t", dates.sourceCommit])).toString("utf8").trim() !== "commit" ||
+      (await git(["cat-file", "-t", trustedSourceTip])).toString("utf8").trim() !== "commit") {
     throw new Error("Git source snapshot requires a full SHA1 commit object");
   }
+  await git(["merge-base", "--is-ancestor", dates.sourceCommit, trustedSourceTip]);
   const tree = `${dates.sourceCommit}:${sourcePath}`;
   if ((await git(["cat-file", "-t", tree])).toString("utf8").trim() !== "tree") throw new Error("Git source path must be a tree");
   const listing = (await git(["ls-tree", "-z", tree])).toString("utf8");

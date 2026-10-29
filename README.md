@@ -111,8 +111,10 @@ The [Git-bound source adapter](docs/snapshot-producer.md#git-bound-source-prepar
 now reads receipt/Markdown blobs from an explicit full commit rather than HEAD,
 index or worktree. It reuses canonical validation through disposable local source
 staging and binds the plan to those exact committed bytes. This establishes
-byte/commit identity, not trusted-main ancestry, review/rights approval or live
-deployment authorization; no live workflow is changed.
+byte/commit identity and requires containment in an explicitly supplied trusted
+source-history tip. The caller must independently authenticate that tip; ancestry
+does not establish review/rights approval or live deployment authorization.
+No live workflow is changed.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
