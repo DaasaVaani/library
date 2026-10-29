@@ -2,12 +2,16 @@ import test, { type TestContext } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { lstat, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { gunzipSync } from "node:zlib";
 import { PublicationLedgerGitStore, type LedgerGitCommand, type LedgerGitOptions, type LedgerGitSnapshot } from "./publication-ledger-git.js";
 import { deployCanonicalSnapshot, reserveCanonicalSnapshotInGit } from "./snapshot-deployment.js";
 import { hostingSettings } from "./hosted-preflight.js";
+import { prepareGitCanonicalSourceSnapshot } from "./git-source-snapshot.js";
+import { importSources } from "./source-import.js";
+import { parseLyricSource } from "./lyric-source.js";
 import { canonical, deterministicGzip } from "./publisher.js";
 import { prepareBaselineInitializationReview } from "./semantic-baseline.js";
 import { prepareCanonicalSnapshot, reserveCanonicalSnapshot, bindCanonicalSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
@@ -82,6 +86,93 @@ async function stagedFixture(t: TestContext) {
   const reserved = await reserveCanonicalSnapshotInGit(f.store, f.base, f.prepared, f.bounds);
   return { ...f, reserved };
 }
+
+test("committed contained sources flow through durable reservation, exact staging, synthetic exposure, confirmation and unchanged no-op", async t => {
+  const f = await fixture(t), base = await f.store.load(f.initial);
+  const { policy, bounds } = await readSnapshotSettings(), hosting = await hostingSettings();
+  const root = dirname(f.client), originals = join(root, "originals"), sources = join(root, "source-fixture");
+  await mkdir(originals);
+  const sourceBounds = { maxSourceFileBytes: 8388608, maxTotalSourceBytes: 67108864 };
+  await writeFile(join(originals, "permitted.txt"), "ಕನ್ನಡ  \n \t \nಅಕ್ಷರ\n\nkannaDa\n");
+  await writeFile(join(originals, "held.txt"), "ಅಕ್ಷರ\n");
+  await writeFile(join(originals, "exception.txt"), "Synthetic missing initial Kannada\n");
+  await importSources(originals, sources, { ...sourceBounds, reviewHoldReason: "source-import-review" });
+  let permittedName = "";
+  for (const name of (await readdir(sources)).filter(name => name.endsWith(".md"))) {
+    const path = join(sources, name), text = await readFile(path, "utf8");
+    if (parseLyricSource(text).header.provenance.sourceFile === "permitted.txt") {
+      permittedName = name;
+      await writeFile(path, text.replace("holdReasons:\n    - source-import-review", "holdReasons: []"));
+    }
+  }
+  assert.ok(permittedName);
+  const sourceFiles = new Map(await Promise.all((await readdir(sources)).sort().map(async name =>
+    [name, await readFile(join(sources, name))] as const)));
+  const treeRows = [...sourceFiles].map(([name, bytes]) =>
+    `100644 blob ${git(f.client, ["hash-object", "-w", "--stdin"], bytes)}\t${name}\n`).join("");
+  const sourceTree = git(f.client, ["mktree"], treeRows);
+  const tree = git(f.client, ["mktree"], `040000 tree ${sourceTree}\tlibrary\n`);
+  const approvedSource = git(f.client, ["commit-tree", tree], "Synthetic approved source fixture" + trailer);
+  const trustedTip = git(f.client, ["commit-tree", tree, "-p", approvedSource], "Synthetic approved later tip" + trailer);
+  const options = { repositoryDirectory: f.client, sourcePath: "library", trustedSourceTip: trustedTip, gitTimeoutMs: 30000 };
+  const input = { publishedAt: early, sourceCommit: approvedSource };
+  const result = await prepareGitCanonicalSourceSnapshot(options, sourceBounds, base.state,
+    publicationLedgerFingerprint(base.state), input, policy, bounds);
+  assert.equal(result.held, 1);
+  assert.equal(result.extractionExceptions, 1);
+  assert.equal(result.prepared.plan.sourceCommit, approvedSource);
+  const original = parseLyricSource(sourceFiles.get(permittedName)!.toString("utf8"));
+  const manifestBytes = result.prepared.artifacts.get(result.prepared.manifest.path)!;
+  const value = JSON.parse(gunzipSync(manifestBytes).toString("utf8"));
+  assert.equal(value.catalog.length, 1);
+  assert.equal(value.catalog[0].lyricId, original.header.lyricId);
+  const itemRecord = value.objects[value.catalog[0].item];
+  const publicItem = JSON.parse(gunzipSync(result.prepared.artifacts.get(itemRecord.path)!).toString("utf8"));
+  assert.deepEqual(publicItem.lines, original.canonical.map(line => "id" in line ?
+    { kind: "line", lineId: line.id, text: line.text } : { kind: "layout", text: line.text }));
+  for (const [path, bytes] of result.prepared.artifacts) {
+    if (!path.endsWith(".json.gz")) continue;
+    const decoded = gunzipSync(bytes).toString("utf8");
+    for (const privateField of ["sourceFile", "provenance", "holdReasons", "kannaDa", "exception.txt"]) {
+      assert.equal(decoded.includes(privateField), false);
+    }
+  }
+  const reserved = await reserveCanonicalSnapshotInGit(f.store, base, result.prepared, bounds);
+  const site = join(root, "site"), snapshots = join(site, "snapshots");
+  let calls = 0;
+  const confirmed = await deployCanonicalSnapshot(f.store, reserved, result.prepared, bounds, site, snapshots, hosting, async staged => {
+    calls++;
+    const durable = await f.peer.load(f.initial);
+    assert.equal(durable.state.pending?.phase, "deploying");
+    assert.equal(staged.candidate.sourceCommit, approvedSource);
+    assert.equal(staged.candidate.manifestSha256, result.prepared.manifest.sha256);
+    assert.equal(staged.preflight.sequence, durable.state.pending?.sequence);
+    for (const [path, bytes] of result.prepared.artifacts) {
+      assert.deepEqual(await readFile(join(staged.snapshotDirectory, ...path.split("/"))), bytes);
+    }
+    return proof(staged.candidate);
+  });
+  assert.equal(calls, 1);
+  assert.equal(confirmed.state.confirmed?.sourceCommit, approvedSource);
+  assert.equal(confirmed.state.items.length, 1);
+  assert.equal(confirmed.state.items[0]?.lyricId, original.header.lyricId);
+  assert.equal(confirmed.state.pending, null);
+  const before = git(f.remote, ["rev-parse", stateRef]);
+  const next = await prepareGitCanonicalSourceSnapshot(options, sourceBounds, confirmed.state,
+    publicationLedgerFingerprint(confirmed.state), { ...input, publishedAt: later }, policy, bounds);
+  assert.equal(next.prepared.manifest.sha256, result.prepared.manifest.sha256);
+  assert.deepEqual(await reserveCanonicalSnapshotInGit(f.store, confirmed, next.prepared, bounds), confirmed);
+  const unapproved = git(f.client, ["commit-tree", tree, "-p", trustedTip], "Synthetic unapproved descendant" + trailer);
+  await assert.rejects(prepareGitCanonicalSourceSnapshot(options, sourceBounds, confirmed.state,
+    publicationLedgerFingerprint(confirmed.state), { ...input, sourceCommit: unapproved }, policy, bounds),
+  /Git source snapshot read failed/);
+  assert.equal(git(f.remote, ["rev-parse", stateRef]), before);
+  assert.deepEqual(await f.peer.load(f.initial), confirmed);
+  assert.equal(git(f.remote, ["rev-list", "--count", stateRef]), "4");
+  assert.equal(git(f.remote, ["for-each-ref", "--format=%(refname)"]), stateRef);
+  assert.equal(git(f.client, ["for-each-ref", "--format=%(refname)", "refs/heads", "refs/tags"]), "");
+  for (const [name, bytes] of sourceFiles) assert.deepEqual(await readFile(join(sources, name)), bytes);
+});
 
 test("durable reservation admits only fully verified descriptor/artifact bytes before consuming sequence or writing Git state", async t => {
   const f = await snapshotFixture(t);

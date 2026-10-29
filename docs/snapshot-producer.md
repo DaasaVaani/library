@@ -359,6 +359,17 @@ Reservation admission tests additionally prove invalid descriptor/corrupt bytes
 leave the actual remote counter/history unchanged, exact descriptor equality and
 pending retries pass, stale/rejected writes are not retried, confirmed no-ops
 create no commits and post-entry caller mutation cannot change the reserved plan.
+One complete synthetic committed-source integration additionally starts with an
+import receipt, a released permitted record, a held record and an extraction
+exception. It writes actual source blobs into an isolated bare Git history,
+captures a trusted descendant tip, prepares from the earlier contained commit,
+reserves through verified durable admission, stages and independently reads back
+the durable deploying state before comparing every exposed artifact byte, then
+confirms a synthetic receipt. It verifies literal line/layout identities and
+private-field exclusion, unchanged source files, exact four-commit state history,
+stable no-op at a later marker and refusal of an unapproved descendant without
+advancing state. This is cross-component conformance using real local Git/files,
+not authentication of real source approval or a hosted deployment/receipt.
 
 Full finalization uses [all configured checks](../README.md#validation).
 Remaining gates include full production item/index/policy/profile contracts,

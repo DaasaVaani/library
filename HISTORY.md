@@ -1,5 +1,36 @@
 # Documentation history
 
+## 2026-10-29: complete committed-source publication conformance
+
+- Continued directly from clean published trusted-history admission `f3cbff3`
+  on a separate validation branch. Added a whole-chain integration rather than
+  relying only on independently tested adjacent components.
+- The synthetic test imports permitted/held/exception fixtures, persists actual
+  receipt/Markdown blobs in a local bare Git source history, selects a contained
+  commit under an explicit trusted descendant, prepares and verifies canonical
+  bytes, conditionally reserves real local remote state, materializes staging,
+  independently reads durable deploying state inside the synthetic callback,
+  compares exposed bytes and conditionally confirms its synthetic receipt.
+- Checks literal line/layout UUID/text preservation, private-field exclusion,
+  held/exception accounting, exact four-commit state history, untouched source
+  files, true later-marker no-op and unapproved-descendant refusal without any
+  further remote state change. No new runtime behavior, dependency, live remote
+  branch creation, workflow/setting/pin/source change or real generation/deployment.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test --test-name-pattern='committed contained sources flow' tools\publication-ledger-git.test.ts`
+  passed1/1 with no failures/skips/cancellations. Real approval/rights,
+  source-tip authentication, protected GitHub permissions, hosted artifact/
+  receipt verification and consumer lifecycle are still independent gates.
+- Full `npm run check` passed strict TypeScript and179/179 tests with no failures,
+  skips or cancellations. Source validation retained871 imported/125 held records;
+  verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed952 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Evidence is limited to isolated local synthetic publication; no actual source
+  artifacts, state activation, live exposure or hosted evidence were produced.
+
 ## 2026-10-29: trusted source-history containment admission
 
 - Continued from clean published Git source binding `badb121` on a separate review
