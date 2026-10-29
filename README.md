@@ -170,6 +170,14 @@ It also runs source/import metadata and canonical-publication tests and validate
 the imported source set/receipt and persisted provisional verse proposals.
 The isolated ledger Git suite requires installed Git and uses only disposable
 synthetic bare repositories; it does not contact the live Library remote.
+The read-back suite also requires installed OpenSSL1.1.1+ (`openssl` on PATH,
+or the default Windows Git installation's `usr\bin\openssl.exe`). It generates
+a disposable self-signed loopback certificate/key in an owned temporary directory
+and runs native Node fetch in child processes. Only the trusted child receives
+`NODE_EXTRA_CA_CERTS`; TLS verification stays enabled, and an untrusted child must
+fail before an HTTP request. Missing certificate tooling fails the test, not a
+skip. No key/certificate is committed or retained; this does not contact Pages
+or authenticate production hosting/deployment evidence.
 Use `npm run sources:import` only under the authorized
 [draft workflow](docs/source-import.md); `npm run sources:validate` is non-writing.
 `npm run sources:retry-footers` narrowly retries unchanged eligible held inputs

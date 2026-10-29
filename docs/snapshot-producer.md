@@ -371,9 +371,26 @@ artifact/status/source evidence before explicit reconciliation/confirmation.
 Synthetic tests use standard Response/ReadableStream objects behind an injected
 fetch boundary. They exercise all artifact paths, request options, exact bodies,
 status/redirect/encoding/length refusal, truncation/overrun/cancellation, descriptor
-replacement, stalls/deadlines, redaction and caller mutation. They do **not** make
-a live request, prove native TLS/CDN behavior or authenticate any actual deployment.
-Actual merged-source generation and live audit remain gated separately.
+replacement, stalls/deadlines, redaction and caller mutation.
+
+The same suite additionally creates a real ephemeral HTTPS server bound only to
+an OS-selected loopback port. Installed OpenSSL1.1.1+ generates a disposable
+self-signed certificate/key inside an owned temporary directory; both are removed
+afterward. The native Node fetch path runs in a child with that certificate added
+only through its `NODE_EXTRA_CA_CERTS`, without disabling TLS verification.
+A separate child without the certificate must fail before any HTTP request.
+Native cases check exact descriptor/artifact bytes, sorted request order,
+sequence/manifest/request/byte accounting, absent credentials, redirect refusal
+without following the trap, HTTP gzip-coding refusal, changed/truncated/overlong
+chunked responses, final descriptor replacement and aborting real header/body
+stalls. Server connections, processes and owned temporary files are bounded and
+cleaned up. Missing OpenSSL fails rather than silently skipping the suite; see
+the [validation prerequisites](../README.md#validation).
+
+This is synthetic local transport conformance, not Pages/CDN/global freshness,
+authenticated run/deployment/status/receipt identity or source approval. No real
+hosted deployment is contacted. Actual merged-source generation, authenticated
+deployment evidence and live audit remain gated separately.
 
 For B expected artifact bytes, request body comparison is O(B), with serial
 current-stream chunks plus the producer's captured whole-snapshot buffers.

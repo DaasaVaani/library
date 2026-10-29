@@ -1,5 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { execFile, execFileSync } from "node:child_process";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { createServer } from "node:https";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { promisify } from "node:util";
+import { gzipSync } from "node:zlib";
 import { auditHostedCanonicalSnapshot } from "./snapshot-readback.js";
 import { emptyPublicationLedger, publicationLedgerFingerprint as fingerprint, beginPublicationDeployment } from "./publication-ledger.js";
 import { bindCanonicalSnapshot, prepareCanonicalSnapshot, reserveCanonicalSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
@@ -179,4 +186,113 @@ test("caller mutations after the first request cannot change captured expectatio
   for (const [path, bytes] of f.files) f.files.set(path, Buffer.from(bytes));
   const result = await auditHostedCanonicalSnapshot(options, f.state, fingerprint(f.state), f.prepared, bounds, fetcher);
   assert.equal(result.sequence, 1);
+});
+
+test("native fetch validates disposable HTTPS trust and exact hosted bytes while refusing real redirect/coding/fault responses", async t => {
+  const f = fixture(), directory = await mkdtemp(join(tmpdir(), "daasavaani-readback-tls-"));
+  t.after(() => rm(directory, { recursive: true, maxRetries: 5, retryDelay: 100 }));
+  const key = join(directory, "server-key.pem"), cert = join(directory, "server-cert.pem");
+  const args = ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-keyout", key, "-out", cert,
+    "-days", "1", "-subj", "/CN=localhost", "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1"];
+  try { execFileSync("openssl", args, { stdio: "pipe", windowsHide: true, timeout: 30000 }); }
+  catch (error) {
+    if (!(error instanceof Error && "code" in error && error.code === "ENOENT" && process.platform === "win32")) throw error;
+    execFileSync(join(process.env.ProgramFiles ?? "C:\\Program Files", "Git", "usr", "bin", "openssl.exe"),
+      args, { stdio: "pipe", windowsHide: true, timeout: 30000 });
+  }
+  const requests: string[] = [], headers: { authorization: string | undefined; cookie: string | undefined }[] = [];
+  let descriptorReads = 0, closedStalls = 0;
+  const server = createServer({ key: await readFile(key), cert: await readFile(cert) }, (request, response) => {
+    const url = new URL(request.url!, "https://localhost");
+    const [, mode, ...parts] = url.pathname.split("/"), path = parts.join("/");
+    requests.push(url.pathname);
+    headers.push({ authorization: request.headers.authorization, cookie: request.headers.cookie });
+    const bytes = f.files.get(path);
+    if (mode === "redirect") { response.writeHead(302, { location: "/trap/latest.json" }); response.end(); return; }
+    if (!bytes) { response.writeHead(404); response.end(); return; }
+    if (mode === "headers-stall" || mode === "body-stall") {
+      response.on("close", () => { closedStalls++; });
+      if (mode === "body-stall") {
+        response.writeHead(200, { "content-length": String(bytes.length) });
+        response.write(bytes.subarray(0, 1));
+      }
+      return;
+    }
+    if (mode === "coding") {
+      response.writeHead(200, { "content-encoding": "gzip" });
+      response.end(gzipSync(bytes));
+      return;
+    }
+    if (mode === "corrupt") { const corrupt = Buffer.from(bytes); corrupt[0] = corrupt[0]! ^ 1; response.end(corrupt); return; }
+    if (mode === "truncated") { response.write(bytes.subarray(0, -1)); response.end(); return; }
+    if (mode === "overrun") { response.write(bytes); response.end(Buffer.from([0])); return; }
+    if (mode === "replace" && path === "latest.json" && ++descriptorReads === 2) {
+      response.write("Synthetic replacement publication"); response.end(); return;
+    }
+    response.writeHead(200, { "content-length": String(bytes.length) });
+    for (let offset = 0; offset < bytes.length; offset += 23) response.write(bytes.subarray(offset, offset + 23));
+    response.end();
+  });
+  t.after(() => new Promise<void>((accept, reject) => {
+    server.close(error => error ? reject(error) : accept());
+    server.closeAllConnections();
+  }));
+  await new Promise<void>((accept, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", accept);
+  });
+  const address = server.address();
+  assert.ok(address && typeof address !== "string");
+  const origin = `https://127.0.0.1:${address.port}`;
+  const payload = JSON.stringify({
+    state: f.state, fingerprint: fingerprint(f.state), bounds, origin,
+    expectedObservedBytes: [...f.files.values()].reduce((sum, bytes) => sum + bytes.length, f.files.get("latest.json")!.length),
+    prepared: { plan: f.prepared.plan, manifest: f.prepared.manifest,
+      artifacts: [...f.prepared.artifacts].map(([path, bytes]) => [path, bytes.toString("base64")]) }
+  });
+  const child = `
+    import assert from 'node:assert/strict';
+    const { auditHostedCanonicalSnapshot } = await import(process.env.READBACK_MODULE);
+    const data = JSON.parse(process.env.READBACK_FIXTURE);
+    const prepared = { ...data.prepared, artifacts: new Map(data.prepared.artifacts.map(([path, bytes]) => [path, Buffer.from(bytes, 'base64')])) };
+    const check = (mode, requestTimeoutMs = 10000) => auditHostedCanonicalSnapshot(
+      { baseUrl: data.origin + '/' + mode + '/', requestTimeoutMs }, data.state, data.fingerprint, prepared, data.bounds);
+    if (process.env.READBACK_EXPECT_UNTRUSTED === '1') {
+      await assert.rejects(check('valid'), /transport or response stream failed/);
+      console.log('untrusted certificate refused');
+    } else {
+      const report = await check('valid');
+      assert.equal(report.sequence, 1);
+      assert.equal(report.manifestSha256, prepared.manifest.sha256);
+      assert.equal(report.requestCount, prepared.artifacts.size + 2);
+      assert.equal(report.observedBytes, data.expectedObservedBytes);
+      for (const [mode, pattern] of [
+        ['redirect', /transport or response stream failed/], ['coding', /encoding/],
+        ['corrupt', /bytes do not match/], ['truncated', /truncated/],
+        ['overrun', /bytes do not match/], ['replace', /bytes do not match/]
+      ]) await assert.rejects(check(mode), pattern);
+      for (const mode of ['headers-stall', 'body-stall']) await assert.rejects(check(mode, 300), /deadline/);
+      console.log('native HTTPS audit cases passed');
+    }
+  `;
+  const env = { ...process.env, NODE_TLS_REJECT_UNAUTHORIZED: "1",
+    READBACK_MODULE: new URL("./snapshot-readback.ts", import.meta.url).href, READBACK_FIXTURE: payload };
+  const execute = promisify(execFile);
+  const trusted = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
+    env: { ...env, NODE_EXTRA_CA_CERTS: cert }, timeout: 60000, windowsHide: true
+  });
+  assert.equal(trusted.stdout.trim(), "native HTTPS audit cases passed");
+  const before = requests.length;
+  const untrustedEnv: NodeJS.ProcessEnv = { ...env, READBACK_EXPECT_UNTRUSTED: "1" };
+  delete untrustedEnv.NODE_EXTRA_CA_CERTS;
+  const untrusted = await execute(process.execPath, ["--import", "tsx", "--input-type=module", "-e", child], {
+    env: untrustedEnv, timeout: 30000, windowsHide: true
+  });
+  assert.equal(untrusted.stdout.trim(), "untrusted certificate refused");
+  assert.equal(requests.length, before);
+  assert.equal(requests.some(path => path.startsWith("/trap/")), false);
+  assert.deepEqual(requests.filter(path => path.startsWith("/valid/")),
+    ["latest.json", ...[...f.files.keys()].filter(path => path !== "latest.json").sort(), "latest.json"].map(path => `/valid/${path}`));
+  assert.equal(closedStalls, 2);
+  assert.ok(headers.every(value => value.authorization === undefined && value.cookie === undefined));
 });

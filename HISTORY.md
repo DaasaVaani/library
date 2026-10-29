@@ -1,5 +1,41 @@
 # Documentation history
 
+## 2026-10-29: native loopback HTTPS snapshot read-back conformance
+
+- Verified previous `aaa8d05` was already clean and exactly published; continued
+  on a new native-transport validation branch with no empty commit.
+- Extended the read-back suite with an actual ephemeral loopback HTTPS server
+  and native Node fetch child processes. Existing installed OpenSSL generates
+  disposable certificate/key files in owned temp; no dependency was installed,
+  certificate/key committed, global trust changed or TLS verification disabled.
+  Windows uses OpenSSL on PATH or the default installed Git binary; documented
+  OpenSSL1.1.1+ as a mandatory test prerequisite rather than permitting skips.
+- Exact bytes/order/accounting, trusted and untrusted TLS, absent credentials,
+  redirect trap refusal, HTTP gzip coding, corruption/truncation/overrun,
+  descriptor replacement and header/body stall aborts are exercised over actual
+  local sockets. Temporary files, children, connections and server are cleaned up.
+- Initial typecheck passed and focused suite passed9/10: native replacement
+  response received Node's automatic Content-Length and correctly failed the
+  length guard rather than reaching the intended stream comparison. Changed
+  only that fixture to actual chunked framing; focused command
+  `node_modules\.bin\tsx.cmd --test tools\snapshot-readback.test.ts` passed10/10
+  with no failures/skips/cancellations. No runtime behavior changed.
+- Supersedes only the prior broad current-guide claim that no native TLS was
+  exercised. Injected-fetch tests still do not make real requests; native evidence
+  is local/synthetic, not Pages/CDN/authenticated deployment evidence. This maps
+  to CI-01/03/06 and ALG-07/08 transport-integrity prerequisites, not production
+  release or source/language/rights approval. Sources, holds, identities, settings,
+  workflow, independent Shared pin and production activation remain unchanged.
+- Full `npm run check` passed strict TypeScript and189/189 tests with zero
+  failures/skips/cancellations. Source validation retained871 imported/125 held
+  records; verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed954 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Native transport evidence used installed OpenSSL3.5.9 and Node22.15.0 only on
+  local loopback; no actual source artifacts, hosted state or deployment were made.
+
 ## 2026-10-29: bounded hosted snapshot read-back audit
 
 - Verified `9cb0869` was already pushed at the exact remote SHA with a clean tree;
