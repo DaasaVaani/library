@@ -107,6 +107,12 @@ candidate and descriptor limits before requesting any durable sequence change,
 then delegates exact-tip conditional persistence to the same Git store. Valid
 no-ops/retries remain byte/sequence/commit stable; invalid local bytes cannot
 consume a reservation.
+The [Git-bound source adapter](docs/snapshot-producer.md#git-bound-source-preparation)
+now reads receipt/Markdown blobs from an explicit full commit rather than HEAD,
+index or worktree. It reuses canonical validation through disposable local source
+staging and binds the plan to those exact committed bytes. This establishes
+byte/commit identity, not trusted-main ancestry, review/rights approval or live
+deployment authorization; no live workflow is changed.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

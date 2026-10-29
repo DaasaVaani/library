@@ -1,5 +1,39 @@
 # Documentation history
 
+## 2026-10-29: exact Git-commit source snapshot preparation
+
+- Continued from clean published reservation admission commit `ece9bf9` on a new
+  review branch. Added a narrow adapter reading only exact receipt/Markdown blob
+  identities from an explicit full SHA1 commit, independent of worktree/index/
+  HEAD and replacement refs. Reused the canonical loader via owned disposable
+  source staging, then the existing pure snapshot producer. No source checkout,
+  hooks, network fetch, live source generation, state/sequence or feed activation.
+- Archived the prior canonical-source limitation: a stable filesystem adapter
+  cannot prove its caller-supplied sourceCommit matches current bytes. That
+  limitation still applies to that lower-level API; the new adapter binds exact
+  committed source bytes but does not authenticate approved-main/review/rights,
+  tooling/settings identity or deployment permissions.
+- Initial strict typecheck passed; focused Git/source suites passed16/18. The two
+  failures exposed implicit bare-repository discovery rejection under host policy
+  and option-shaped source-path admission. Added an explicit command-scoped
+  allowance for the caller-selected trusted bare path and tightened segment
+  syntax; both failed cases then passed in a targeted2/2 rerun.
+- Synthetic actual-Git tests cover canonical artifact/count parity, moved HEAD,
+  staged/dirty/untracked worktree independence, replacement-ref isolation, bare
+  clones, rejected file modes/trees/missing receipt, actual source byte equality/
+  one-below, malformed held/receipt data, exact commit/input/limits and captured
+  caller mutations. Real Library sources/holds/identities/Shared pin, owning
+  settings and live workflows remain unchanged.
+- Full `npm run check` passed strict TypeScript and174/174 tests with no failures,
+  skips or cancellations. Source validation retained871 imported/125 held records;
+  verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed952 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Local synthetic repositories, not actual source generation or live publication,
+  supplied the Git/byte-binding evidence.
+
 ## 2026-10-28: verified durable snapshot reservation admission
 
 - Continued directly from clean published handoff commit `e6ba400` to the next

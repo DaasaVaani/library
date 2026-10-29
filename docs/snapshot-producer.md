@@ -115,7 +115,8 @@ with the existing strict parser and complete identity/provenance checks.
 Root/entry links and unexpected files/directories are rejected. Work must run
 in a stable isolated checkout; these checks do not lock or authenticate source
 Git state, detect all hostile concurrent rewrites or prove `sourceCommit` matches
-the current filesystem. The owning protected caller must establish that binding.
+the current filesystem. The owning protected caller must establish that binding
+or use the separate Git-bound adapter below; neither API authenticates review.
 
 Malformed held records fail rather than disappearing. Valid held records remain
 excluded; no unheld items is an explicit error. The result is `{prepared, held,
@@ -145,6 +146,64 @@ For source bytes S and prepared artifact bytes B, parsing/projection adds O(S)
 work plus filename sorting and existing parser/receipt validation. It retains
 projected items before the existing in-memory producer retains/copies artifacts;
 source logical bounds and per-artifact ceilings are not measured peak-heap limits.
+
+## Git-bound source preparation
+
+`prepareGitCanonicalSourceSnapshot(options, sourceBounds, state,
+expectedStateSha256, input, policy, bounds)` prepares the same canonical candidate
+from exact committed source bytes. `options` explicitly supplies absolute
+`repositoryDirectory`, a restricted slash-separated relative Git `sourcePath`
+(for example `library`) and positive bounded `gitTimeoutMs`. This Git-tree path
+is not an OS filesystem path; no absolute/dot/parent/backslash/revision/option
+syntax is accepted. No product defaults, CLI or workflow are introduced.
+
+`input` still contains only `publishedAt` and `sourceCommit`, now requiring a full
+lowercase 40-hex SHA1 **commit object**, not HEAD, an abbreviation, tag, tree or
+revision expression. Worktree and bare repositories are supported. The adapter
+never checks out, executes hooks/source code, changes HEAD/index/refs or fetches
+objects. Missing local objects fail; provision the trusted repository separately.
+An explicit command-scoped bare-repository allowance permits the caller-selected
+bare path even on hosts disabling implicit bare discovery.
+
+Capture caller state, options, dates/policy and bounds before awaits. Git runs
+without shell interpolation/interactive prompts, with object replacements and
+lazy fetching disabled and inherited repository-location/object redirections
+removed. Commands have the explicit per-process timeout and bounded stdout/
+stderr (`max(65536, maxTotalSourceBytes)`). Process failure/timeout/output overflow
+is an explicit redacted error, never a partial successful source read. These
+are per-command limits, not a global wall-clock or Git object-database budget.
+The repository/configuration and runner must already be trusted; this is not a
+sandbox for malicious Git configuration or object-database mutation.
+
+Inspect only the declared commit's source tree. Its complete flat inventory must
+contain a receipt and only regular non-executable `100644` UUID Markdown blobs.
+Reject nested trees, symlinks, gitlinks, executable modes and unknown names rather
+than following or filtering them. Before reading blob bodies, inspect every
+actual blob size and enforce the source file/total limits including receipt.
+Read by captured blob object identity and verify returned length. LF/CRLF and all
+other source bytes are read literally, with no checkout filters/autocrlf applied.
+The unchanged source parser owns its documented CRLF handling and literal layout.
+
+Materialize only these bounded source bytes into a unique OS-temp directory,
+then reuse `readCanonicalSources` for receipt/identity/provenance/hold/schema and
+unsupported-public-field validation. Cleanup removes only that newly owned
+temporary directory on success or failure; cleanup errors also fail explicitly.
+No temporary path, receipt/provenance or raw source enters the public artifacts.
+The existing pure snapshot producer binds its resulting plan to the exact input
+commit and returns the same `{prepared, held, extractionExceptions}` shape.
+The original repository/worktree, ledger and caller objects remain unchanged.
+
+Dirty worktrees, staged edits, moved HEAD, untracked worktree files and local
+replacement refs cannot substitute for committed source bytes. This closes
+byte-to-declared-commit binding, **not** authority: the protected future caller
+must separately authenticate the repository/approved commit, successful checks,
+trusted-main ancestry, rights/review, tooling/Shared/settings identities and
+deployment permission. No real-source generation is authorized on review
+branches and no baseline, sequence, protected branch or feed is activated here.
+
+For source bytes S and F entries, Git uses O(F) bounded subprocesses plus bounded
+metadata output; temporary disk is O(S), in addition to the existing parser and
+in-memory producer allocations. There is no streaming/peak-heap guarantee.
 
 ## Isolated staged deployment handoff
 
@@ -254,7 +313,7 @@ download/retry/resume and offline activation remain unimplemented here.
 
 ```powershell
 npm run build
-node --import tsx --test tools\canonical-sources.test.ts tools\lyric-publisher.test.ts tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
+node --import tsx --test tools\git-source-snapshot.test.ts tools\canonical-sources.test.ts tools\lyric-publisher.test.ts tools\snapshot-staging.test.ts tools\snapshot-preflight.test.ts tools\snapshot-producer.test.ts tools\publication-ledger-git.test.ts
 ```
 
 Synthetic tests cover deterministic exact bytes/policy/ZIP, literal preservation,
