@@ -115,6 +115,11 @@ byte/commit identity and requires containment in an explicitly supplied trusted
 source-history tip. The caller must independently authenticate that tip; ancestry
 does not establish review/rights approval or live deployment authorization.
 No live workflow is changed.
+The [hosted snapshot read-back audit](docs/snapshot-producer.md#bounded-hosted-read-back)
+now verifies an explicitly started candidate's descriptor and every expected
+artifact over bounded single-attempt HTTPS requests, with a final descriptor
+recheck. It is read-only and returns byte-observation accounting, not an
+authenticated deployment receipt or permission to confirm state.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)

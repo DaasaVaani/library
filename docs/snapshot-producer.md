@@ -307,6 +307,88 @@ wire a real publisher or resolve branch protections/source-commit authentication
 It adds another complete filesystem preflight and in-memory candidate copy to
 the existing staging/binding/Git costs; it is not a streaming or peak-memory proof.
 
+## Bounded hosted read-back
+
+`auditHostedCanonicalSnapshot(options, state, expectedStateSha256, prepared,
+bounds, fetcher)` is an isolated read-only positive byte-observation check for a
+ledger candidate already in `deploying`. `options` explicitly supplies a
+credential-free HTTPS `baseUrl` ending in `/`, without query/fragment, and positive
+safe-integer `requestTimeoutMs` at most2,147,483,647. A future owning caller must
+supply its approved endpoint/deadline settings. No product defaults, CLI or live
+workflow are added. The optional `fetcher` uses native Node fetch when omitted;
+injection exists for transport tests, not untrusted source/plugin execution.
+
+Before any request, repeat complete `bindCanonicalSnapshot` verification against
+the fresh ledger fingerprint and captured candidate bytes. Reserved, absent,
+stale or mismatched state, corrupt actual artifacts and invalid options fail
+before network work. The binder's independent buffers and sequence/manifest
+identity remain fixed if caller-owned inputs later change.
+
+1. Fetch `latest.json` and require exact bound canonical descriptor-plus-LF bytes.
+2. Fetch every exact bound artifact path in deterministic path order, including
+   manifest/policy, each original item gzip and every STORE ZIP. Compare bytes
+   incrementally against the already independently verified local artifact.
+3. Fetch `latest.json` again and require those same bytes. Changed/mixed
+   descriptors, missing/corrupt/truncated/extended objects or a different sequence
+   fail; there is no successful partial report.
+
+Requests are serial, single-attempt and contain no cookie credentials or
+authorization headers. They request cache revalidation/no storage using explicit
+Cache-Control/Pragma headers; intermediaries can still ignore those directives.
+Redirect following is disabled and any non200 status, redirected response or
+different reported response URL fails. A missing body fails. A present
+Content-Length must be a canonical decimal matching the expected byte length;
+absence does not bypass exact streamed accounting. Reject HTTP Content-Encoding
+other than identity, so transport decompression cannot disguise the original
+gzip artifact bytes. The producer's artifact gzip is distinct from HTTP coding.
+
+One request deadline covers fetch plus the complete streamed body. Abort on
+expiry and throw an explicit error. Compare chunks without concatenating a
+second full response; reject before retaining/draining bytes beyond expected
+length, and cancel/release the owned reader. Transport/stream diagnostics are
+redacted rather than logging endpoints, credentials or payloads. A supplied
+fetch implementation must honor AbortSignal/standard response ownership.
+No retry, backoff, timeout extension or implicit endpoint/target switch occurs.
+This audit is not the production client download/retry/resume protocol.
+
+The report contains `stage: "hosted-readback"`, exact sequence/manifest,
+artifact count, request count and observed bytes. Requests equal artifact count
+plus two descriptor reads; observed bytes include both descriptors and duplicate
+original/ZIP bytes. They are application response-body counts, not HTTP/TLS
+overhead, retry traffic, remote total hosting size or storage estimates.
+Safe-integer total accounting is checked before any requests.
+
+No artifact, source, ledger, receipt or file is written, and no sequence is
+reserved/confirmed. Observation of matching HTTPS bytes is not authenticated
+run/deployment/status/artifact identity, proof of global CDN atomicity/freshness,
+an immutable seal, source review or deployment authorization. The final descriptor
+recheck cannot detect every transient change/ABA or guarantee the server remains
+unchanged afterward. A failure leaves the existing started candidate uncertain;
+never cancel/redeploy automatically or manufacture a positive receipt.
+The owning trusted adapter must separately verify genuine hosted deployment/
+artifact/status/source evidence before explicit reconciliation/confirmation.
+
+Synthetic tests use standard Response/ReadableStream objects behind an injected
+fetch boundary. They exercise all artifact paths, request options, exact bodies,
+status/redirect/encoding/length refusal, truncation/overrun/cancellation, descriptor
+replacement, stalls/deadlines, redaction and caller mutation. They do **not** make
+a live request, prove native TLS/CDN behavior or authenticate any actual deployment.
+Actual merged-source generation and live audit remain gated separately.
+
+For B expected artifact bytes, request body comparison is O(B), with serial
+current-stream chunks plus the producer's captured whole-snapshot buffers.
+Upstream transport buffering, full candidate verification/copies and peak process
+memory are not bounded by the streamed comparison alone.
+
+Incremental validation:
+
+```powershell
+node_modules\.bin\tsc.cmd --noEmit
+node_modules\.bin\tsx.cmd --test tools\snapshot-readback.test.ts
+```
+
+Finalization/push still requires every configured Library check.
+
 ## Snapshot-pinned transfer planning
 
 `planCanonicalSnapshotDownload(prepared, bounds, verified)` repeats all actual

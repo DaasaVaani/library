@@ -1,5 +1,36 @@
 # Documentation history
 
+## 2026-10-29: bounded hosted snapshot read-back audit
+
+- Verified `9cb0869` was already pushed at the exact remote SHA with a clean tree;
+  no empty commit/push was needed. Continued on an isolated read-back review branch.
+- Added read-only started-candidate observation: fresh bound-byte validation,
+  exact HTTPS descriptor, all original/policy/manifest/ZIP artifact bodies and
+  final exact descriptor recheck. Serial single-attempt requests have explicit
+  whole-request deadlines, redirect refusal, no credentials, cache directives,
+  exact optional Content-Length, HTTP-coding refusal, incremental byte comparison,
+  early overrun cancellation and redacted transport errors.
+- The result is only byte-observation accounting, never a deployment receipt,
+  authenticated hosted evidence, permission or ledger confirmation. No retries,
+  client offline protocol, CLI/live workflow, credentials, actual source artifacts,
+  source/hold/identity changes, settings/pin or production activation was added.
+- Initial typecheck exposed that this Node-only project's RequestInit lacks the
+  browser cache/referrerPolicy options and requires Response.redirect's explicit
+  status. Replaced browser-only options with explicit cache headers and omitted
+  referrer behavior, keeping native typed Node fetch rather than unsafe casts.
+  Corrected typecheck and initial focused read-back suite passed8/8.
+- Full `npm run check` passed strict TypeScript and188/188 tests with zero
+  failures/skips/cancellations, including the added ninth early-overrun ownership
+  test. Source validation retained871 imported/125 held records; verse validation
+  retained5,108 uncertain proposals unchanged. This is CI-01/03/06 and ALG-07/08
+  isolated byte-integrity coverage, not live hosted receipt conformance.
+- `python tools\check_repository.py` passed954 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  No live HTTP endpoint or TLS/CDN behavior was tested; no actual source
+  artifacts, deployment or publication state were created.
+
 ## 2026-10-29: complete committed-source publication conformance
 
 - Continued directly from clean published trusted-history admission `f3cbff3`
