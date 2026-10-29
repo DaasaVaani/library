@@ -148,6 +148,11 @@ descriptor to the reservation, and obtain the successful status time. This core
 cannot detect a caller passing a fabricated but well-shaped receipt or a false
 logical hash. Future consumers must not treat this private format as a signed
 public contract.
+The [source-run observer](github-source-run.md) separately checks one expected
+successful source push-CI identity and before/after source branch tip using
+bounded authenticated CLI reads. This is not the publisher's `workflow_run`
+identity or artifact/deployment/status/receipt verification. Neither its report
+nor a positive hosted byte audit authorizes confirmation.
 
 After a crash in `deploying`, retain the exact immutable candidate and reserved
 sequence. Inspect authenticated deployment history and reconcile that candidate;

@@ -1,5 +1,52 @@
 # Documentation history
 
+## 2026-10-29: bounded read-only GitHub source-run observations
+
+- Verified `fcd6f8d` was already clean and exactly pushed; continued without an
+  empty commit on a new source-run admission review branch. Chose the narrower
+  source CI identity prerequisite, not fabricated deployment/receipt proof.
+- Added `auditGitHubSourceRun`: caller-pinned repository ID/name, source workflow
+  ID/path, source SHA/branch and exact current run attempt; successful completed
+  push CI must match both repository/head-repository identities between two exact
+  current-ref observations. Initially superseded/changed branches and wrong,
+  forked, PR/workflow-run, stale-attempt or unsuccessful runs stop without retry.
+- The default uses existing installed `gh api`, explicit public host/GET/JSON/
+  REST version/cache directives, copied noninteractive/no-debug environment,
+  per-process deadline/output ceilings and payload-free errors. Raw responses
+  receive independent byte, fatal UTF8, JSON/duplicate-key and typed identity
+  checks. Trusted injected readers remain responsible for their own transport/
+  I/O limits; tests use synthetic bytes, not GitHub or credentials.
+- Kept source CI and publisher identity distinct: the existing publisher's
+  workflow-run head is not necessarily the triggering CI's checked-out source.
+  One run observation does not establish all required checks/review, currentness
+  after observation, branch protection/locks/ABA absence, rights/language truth,
+  publisher artifacts/deployment/status/receipt proof or activation permission.
+  No live workflow, source/hold/identity, setting, pin or state branch changed.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\github-source-run.test.ts` passed8/8
+  with no failures/skips/cancellations. Tests cover exact order/report/identities,
+  all source authority surfaces, branch advances, exact response ceiling/+1,
+  malformed/duplicate/escaped-duplicate/BOM/invalid UTF8 JSON, explicit redaction
+  and asynchronous caller isolation. Coverage: CI-01/03/06, GEN-02/05, ALG-07.
+- Separately inspected public metadata only, without logs/source/artifacts/writes.
+  Existing `gh`2.103.3 and the native reader observed main
+  `c2837ccf383b976a1e2d20928ff018256270551c`, repository1427592414,
+  hygiene workflow391051336, successful push run39681697398 attempt1 using
+  15,000ms/131,072-byte explicit per-read limits. The read-only three-request
+  observation passed. Native CLI calls with a1ms deadline and a1-byte output
+  ceiling both refused with the exact redacted read-failure error.
+  These diagnostic observations are not independently reviewed production pins,
+  source/rights approval, an initialization instruction or receipt evidence.
+- Full `npm run check` passed strict TypeScript and197/197 tests with zero
+  failures/skips/cancellations. Source validation retained871 imported/125 held
+  records; verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed957 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  Public diagnostic API observations and isolated synthetic tests do not activate
+  a source trust policy, initialize publication state or supply deployment proof.
+
 ## 2026-10-29: staged-file to native HTTPS round-trip
 
 - Continued directly from clean exact published `f9ed117` on a separate integration

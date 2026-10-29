@@ -187,6 +187,11 @@ that captured history is not proof the candidate is the latest tip or still
 current after a concurrent remote update. The caller remains responsible for
 supersession/current-tip rules before exposure and for trusted repository
 configuration/history (including local grafts and shallow history).
+The separate read-only [GitHub source-run observer](github-source-run.md) now
+checks one explicit successful push-CI run's identities between matching current
+branch-ref reads. It is not complete required-check/review verification, a branch
+lock, authenticated publishing-run evidence or permission to expose content;
+no live caller is automatically wired to its report.
 
 Capture caller state, options, dates/policy and bounds before awaits. Git runs
 without shell interpolation/interactive prompts, with object replacements and

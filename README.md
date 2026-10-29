@@ -115,6 +115,12 @@ byte/commit identity and requires containment in an explicitly supplied trusted
 source-history tip. The caller must independently authenticate that tip; ancestry
 does not establish review/rights approval or live deployment authorization.
 No live workflow is changed.
+The read-only [GitHub source-run observer](docs/github-source-run.md) now checks
+one explicitly identified successful push-CI run's repository/workflow/attempt/
+source identities between two matching current-branch observations. It uses
+bounded installed GitHub CLI reads, not publishing-run head-SHA assumptions.
+It is not approval, required-check completeness, a branch lock, a receipt or
+permission to generate/deploy, and no existing workflow invokes it.
 The [hosted snapshot read-back audit](docs/snapshot-producer.md#bounded-hosted-read-back)
 now verifies an explicitly started candidate's descriptor and every expected
 artifact over bounded single-attempt HTTPS requests, with a final descriptor
@@ -170,6 +176,9 @@ It also runs source/import metadata and canonical-publication tests and validate
 the imported source set/receipt and persisted provisional verse proposals.
 The isolated ledger Git suite requires installed Git and uses only disposable
 synthetic bare repositories; it does not contact the live Library remote.
+Source-run observer tests use synthetic injected byte responses and require no
+GitHub access. Its optional native reader requires existing authenticated `gh`;
+CLI/authentication/availability/bound failures are explicit, not success.
 The read-back suite also requires installed OpenSSL1.1.1+ (`openssl` on PATH,
 or the default Windows Git installation's `usr\bin\openssl.exe`). It generates
 a disposable self-signed loopback certificate/key in an owned temporary directory
