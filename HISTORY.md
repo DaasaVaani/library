@@ -1,5 +1,37 @@
 # Documentation history
 
+## 2026-10-29: observed source-tip to exact Git-blob integration
+
+- Continued directly from clean exact published `c211c86` on a separate integration
+  branch. Added a caller-style composition test rather than a new production
+  orchestration API or workflow activation.
+- Synthetic hosted source-run metadata is checked first; its observed tip is then
+  passed explicitly to real local Git source preparation. The actual history
+  contains an older permitted candidate, a later tip with different source text
+  and a still-newer unapproved descendant. The accepted older candidate retains
+  its complete original artifact map, source SHA, held/exception counts and ledger.
+  The declared older commit's bytes are not silently replaced by the observed tip.
+- Ref, run source, attempt, outcome and fork mismatches stop before preparation
+  attempts. Even a matching source-run observation cannot admit the unapproved
+  local descendant: the Git adapter independently rejects its ancestry. Checked
+  exact API request counts, immutable caller input/state and unchanged checkout/
+  HEAD around preparation. Mocked hosted responses are not authentic approval;
+  accepting contained bytes does not waive later supersession/exposure policy.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\github-source-run.test.ts tools\git-source-snapshot.test.ts`
+  passed21/21 with no failures/skips/cancellations. Coverage: CI-01/03/06,
+  GEN-02/05 and ALG-07 source identity/ancestry prerequisites. No runtime, setting,
+  workflow, source/hold/identity, pin, state initialization or deployment changed.
+- Full `npm run check` passed strict TypeScript and198/198 tests with zero
+  failures/skips/cancellations. Source validation retained871 imported/125 held
+  records; verse validation retained5,108 uncertain proposals unchanged.
+  `python tools\check_repository.py` passed957 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+  The new composition used only disposable local sources/history and synthetic
+  hosted metadata; no actual source artifacts, hosted state or deployment was made.
+
 ## 2026-10-29: bounded read-only GitHub source-run observations
 
 - Verified `fcd6f8d` was already clean and exactly pushed; continued without an

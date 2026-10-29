@@ -123,6 +123,17 @@ credentials/network and never contacts the live repository. It covers exact
 request order/identities/report shape, every authority mismatch, fork/event/
 attempt/outcome refusal, before/after branch changes, exact byte ceiling/+1,
 invalid JSON/UTF8/duplicate keys, redaction and asynchronous caller isolation.
+A separate [Git-source integration](../tools/git-source-snapshot.test.ts) composes
+the observer with real disposable local Git history: the observed tip becomes
+the explicit `trustedSourceTip`, while an older contained candidate still reads
+only its own committed receipt/Markdown bytes. Hosted ref/run/fork/attempt/outcome
+mismatches stop the caller-style composition before any preparation attempt;
+an unapproved local descendant fails the adapter's independent ancestry check.
+Artifacts, held/exception counts, source commit, ledger and checkout are checked,
+not inferred from a successful observation flag. This uses synthetic hosted
+responses, not live approval or an activated production orchestration helper.
+Accepting contained bytes still does not waive the caller's separate latest-source
+and exposure-currentness policy.
 Default-reader use separately requires installed/authenticated GitHub CLI;
 missing authentication/tooling/permissions, unavailable evidence and exceeded
 limits are failures, not permission to skip validation or fabricate success.

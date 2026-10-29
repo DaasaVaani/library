@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { importSources } from "./source-import.js";
 import { parseLyricSource } from "./lyric-source.js";
 import { prepareGitCanonicalSourceSnapshot, type GitSourceOptions } from "./git-source-snapshot.js";
+import { auditGitHubSourceRun, type GitHubApiReader } from "./github-source-run.js";
 import { emptyPublicationLedger, publicationLedgerFingerprint as fingerprint } from "./publication-ledger.js";
 import { prepareCanonicalSourceSnapshot, readSnapshotSettings } from "./snapshot-producer.js";
 
@@ -82,6 +83,69 @@ test("explicit commit bytes also work from an isolated bare clone with no checko
   git(f.repository, ["clone", "--bare", "--quiet", "--no-hardlinks", f.repository, bare]);
   assert.deepEqual(await prepareGitCanonicalSourceSnapshot({ ...f.options, repositoryDirectory: bare },
     sourceBounds, f.state, fingerprint(f.state), f.input, policy, bounds), expected);
+});
+
+test("observed source CI tip admits only contained exact committed bytes and hosted mismatches stop before preparation", async t => {
+  const f = await setup(t), expected = await f.prepare(), stateBefore = structuredClone(f.state);
+  const original = await readFile(f.permitted, "utf8");
+  await writeFile(f.permitted, original.replace("ಕನ್ನಡ", "ಕನ್ನಡ ಕನ್ನಡ"));
+  const trustedTip = f.commit(), sourceCommit = f.input.sourceCommit;
+  assert.notEqual(trustedTip, sourceCommit);
+  const authority = {
+    repository: "SyntheticOwner/synthetic-library", repositoryId: 101, workflowId: 202,
+    workflowPath: ".github/workflows/hygiene.yml", branch: "synthetic", sourceCommit: trustedTip,
+    runId: 303, runAttempt: 1, requestTimeoutMs: 10000, maxResponseBytes: 65536
+  };
+  const ref = { ref: "refs/heads/synthetic", object: { type: "commit", sha: trustedTip } };
+  const identity = { id: authority.repositoryId, full_name: authority.repository };
+  const run = { id: authority.runId, run_attempt: authority.runAttempt, workflow_id: authority.workflowId,
+    path: authority.workflowPath, head_branch: authority.branch, head_sha: trustedTip, event: "push",
+    status: "completed", conclusion: "success", repository: { ...identity }, head_repository: { ...identity } };
+  const requests: string[] = [];
+  const reader = (observedRef = ref, observedRun: unknown = run): GitHubApiReader => async endpoint => {
+    requests.push(endpoint);
+    return Buffer.from(JSON.stringify(endpoint.includes("/git/ref/") ? observedRef : observedRun));
+  };
+  let preparationAttempts = 0;
+  const observeAndPrepare = async (read: GitHubApiReader, candidate = sourceCommit) => {
+    const observed = await auditGitHubSourceRun(authority, read);
+    preparationAttempts++;
+    return prepareGitCanonicalSourceSnapshot({ ...f.options, trustedSourceTip: observed.sourceCommit },
+      sourceBounds, f.state, fingerprint(f.state), { ...f.input, sourceCommit: candidate }, policy, bounds);
+  };
+  const headBefore = git(f.repository, ["rev-parse", "HEAD"]), statusBefore = git(f.repository, ["status", "--porcelain"]);
+  const prepared = await observeAndPrepare(reader());
+  assert.deepEqual(prepared, expected);
+  assert.equal(prepared.prepared.plan.sourceCommit, sourceCommit);
+  assert.equal(preparationAttempts, 1);
+  assert.equal(requests.length, 3);
+  assert.equal(git(f.repository, ["rev-parse", "HEAD"]), headBefore);
+  assert.equal(git(f.repository, ["status", "--porcelain"]), statusBefore);
+
+  requests.length = 0;
+  await assert.rejects(observeAndPrepare(reader({ ...ref, object: { ...ref.object, sha: sourceCommit } })), /branch tip/);
+  assert.equal(requests.length, 1);
+  assert.equal(preparationAttempts, 1);
+  for (const mismatch of [
+    { head_sha: sourceCommit }, { run_attempt: 2 }, { conclusion: "failure" },
+    { head_repository: { id: 102, full_name: "ForkOwner/synthetic-library" } }
+  ]) {
+    requests.length = 0;
+    await assert.rejects(observeAndPrepare(reader(ref, { ...run, ...mismatch })), /expected successful push workflow/);
+    assert.equal(requests.length, 2);
+    assert.equal(preparationAttempts, 1);
+  }
+
+  await writeFile(f.permitted, original.replace("ಕನ್ನಡ", "ಕನ್ನಡ ಕನ್ನಡ ಕನ್ನಡ"));
+  const descendant = f.commit();
+  requests.length = 0;
+  await assert.rejects(observeAndPrepare(reader(), descendant), /Git source snapshot read failed/);
+  assert.equal(preparationAttempts, 2);
+  assert.equal(requests.length, 3);
+  assert.equal(git(f.repository, ["rev-parse", "HEAD"]), descendant);
+  assert.equal(git(f.repository, ["status", "--porcelain"]), statusBefore);
+  assert.equal(f.input.sourceCommit, sourceCommit);
+  assert.deepEqual(f.state, stateBefore);
 });
 
 test("committed unexpected files, nested directories, executable blobs, symlinks and missing receipts fail explicitly", async t => {
