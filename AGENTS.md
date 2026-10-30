@@ -71,3 +71,8 @@ traceability; history never overrides present rules or proves current success.
 - Passing checks is not permission to push. Respect authorization/protections,
   preserve unrelated work/staging and never reset/amend user changes. Report
   requirement coverage, actual checks, remaining gates and commit/push state.
+- Until final release, authorized implementation pushes go only to `main` after
+  full validation, using existing owner-approved administrator permission.
+  Follow [the temporary workflow](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/maintenance.md#current-operating-policy);
+  do not change protections or force-push. Source-review, post-merge generation
+  and production-activation gates remain unchanged.

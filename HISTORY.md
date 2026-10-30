@@ -1,5 +1,36 @@
 # Documentation history
 
+## 2026-10-30: owner-authorized completed-work integration into main
+
+- Fast-forwarded local main from c2837cc to df4689e, incorporating the completed
+  snapshot, ledger, source-run and artifact-byte implementation chain. Excluded
+  the explicitly deferred workflow branch and dependency-bot branches as directed.
+  No new source generation, hold release, Shared repin or production activation.
+- The artifact admission final-tree `npm run check` passed208/208 tests with no
+  failures/skips/cancellations before this policy update; TypeScript, source
+  validation871/125 and unchanged5,108 provisional verses also passed.
+- Recorded the owner's temporary main-only implementation push authorization in
+  the root AI entrypoint, preserving full validation, existing protections,
+  source-review/post-merge-generation and separate release gates.
+- Integrated-main `npm run check` passed strict TypeScript and208/208 tests
+  with no failures/skips/cancellations (1,627,287.395ms test duration), then
+  source validation871 imported/125 held and unchanged5,108 provisional uncertain
+  verses. The same full final-tree command follows this result-record update.
+- `python tools\check_repository.py` passed961 tracked files; strict
+  `yaml.parseDocument(...,{uniqueKeys:true})` parsed all11 workflow/settings YAML
+  files. Installed actionlint1.7.12 with ShellCheck0.11.0 and both
+  `git --no-pager diff --check` / `git --no-pager diff --cached --check` passed.
+  A fresh main fetch found no unintegrated remote updates.
+- The following full final-tree `npm run check` failed207/208 with no skips or
+  cancellations: the persisted-verse-proposals test hit Windows `EBUSY` while
+  removing its unique disposable `.cache/verse-tests-*` directory, despite the
+  existing bounded cleanup retries. Source/verse validators did not run after
+  that failing test command. This is not a pass or evidence of changed lyrics.
+- Unchanged `node_modules\.bin\tsx.cmd --test tools\verse-proposals.test.ts`
+  passed8/8 with no failures/skips/cancellations. No code, cleanup retry policy,
+  test assertions or timeouts were weakened. The full command must pass again
+  on this result-record tree before publication; focused recovery is insufficient.
+
 ## 2026-10-30: interrupted artifact-admission validation
 
 - The refined full `npm run check` failed:206/208 tests passed, with two existing
