@@ -10,7 +10,7 @@ const bounded = (value: number) => Number.isSafeInteger(value) && value >= 1 && 
 
 export const readGitHubApi: GitHubApiReader = async (endpoint, limits) => {
   const { requestTimeoutMs, maxResponseBytes } = limits;
-  if (!/^repos\/[A-Za-z0-9][A-Za-z0-9-]*\/[A-Za-z0-9_][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_][A-Za-z0-9._-]*)+$/.test(endpoint) ||
+  if (!/^repos\/[A-Za-z0-9][A-Za-z0-9-]*\/[A-Za-z0-9_][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_][A-Za-z0-9._-]*)*$/.test(endpoint) ||
       !bounded(requestTimeoutMs) || !bounded(maxResponseBytes)) throw new Error("Invalid GitHub API read options");
   return new Promise((accept, reject) => {
     const env: NodeJS.ProcessEnv = { ...process.env, GH_HOST: "github.com", GH_PROMPT_DISABLED: "1",
@@ -31,7 +31,7 @@ export const readGitHubApi: GitHubApiReader = async (endpoint, limits) => {
   });
 };
 
-export function decodeGitHubApiJson(bytes: Uint8Array, limit: number, label: "source-run" | "artifact"): unknown {
+export function decodeGitHubApiJson(bytes: Uint8Array, limit: number, label: "source-run" | "artifact" | "publisher-run" | "deployment"): unknown {
   if (!bounded(limit) || !(bytes instanceof Uint8Array) || bytes.length < 1 || bytes.length > limit) {
     throw new Error(`GitHub ${label} API response exceeds byte bounds`);
   }
