@@ -1,5 +1,89 @@
 # Documentation history
 
+## 2026-10-30: interrupted artifact-admission validation
+
+- The refined full `npm run check` failed:206/208 tests passed, with two existing
+  Git-ledger failures (`crash after deployment boundary` and `a server-rejected
+  boundary write`). Their Git blob/remote-tip reads failed explicitly after
+  recorded test durations of27,063,059ms and37,603,214ms. This is not a pass;
+  source/verse validation did not run after the failing test command.
+- A Windows sleep event was recorded at00:39 during the extended validation
+  window. The timing is consistent with host interruption, not proof of its exact
+  cause. No application/store code, test assertions, timeouts or suite selection
+  was weakened or changed to manufacture a pass.
+- `node_modules\.bin\tsx.cmd --test --test-name-pattern='crash after deployment boundary|a server-rejected boundary write' tools\publication-ledger-git.test.ts`
+  passed2/2 unchanged with no failures/skips/cancellations. This focused recovery
+  does not replace the required full rerun. Staging, source/settings/workflow/
+  Shared inputs remained unchanged; no commit/push or deployment occurred.
+- Stopped the following full recovery run at the owner's request to fetch/pull
+  remote updates; it is cancelled evidence, not a pass. Website main
+  fast-forwarded from5467c89 to remote `feb4f09` (workflow action pins and locked
+  dependencies), with a clean exact remote check. Library/Shared/Android main
+  had no incoming commits; separate Dependabot branches were fetched, not merged.
+  Library's staged work stayed intact. No Website build/test success is claimed
+  from a pull; the full Library validation must restart before any push.
+- After the remote sync, `npm run check` passed strict TypeScript and208/208
+  tests with no failures/skips/cancellations (935,144.6675ms test duration).
+  Source validation passed871 imported/125 held; verse validation preserved
+  5,108 provisional uncertain verses with `unchanged:true`. This complete rerun
+  supersedes neither the recorded failure nor the cancelled run.
+- `python tools\check_repository.py` passed961 tracked files;
+  `git --no-pager diff --check`, `git --no-pager diff --cached --check` and
+  `git --no-pager diff --exit-code HEAD -- shared library reviews settings .github`
+  passed. The result-record update is followed by the same full final-tree check
+  before commit/push; positive live artifact evidence remains unavailable.
+
+## 2026-10-29: bounded read-only GitHub artifact byte admission
+
+- Verified `7c4d2d9` was already clean and exactly pushed; continued on an isolated
+  artifact-byte review branch without an empty commit or production activation.
+- Added `auditGitHubArtifact`: explicit repository/artifact/publisher-head pins,
+  metadata identity/digest/non-expired/size checks, canonical derived `/zip`
+  download with the exact admitted declared-byte cap, actual body size/SHA256,
+  final full metadata recheck and payload-free report. Ignores metadata URL fields;
+  no retry, fallback, partial success, extraction, file/state write or receipt.
+- Extracted shared bounded authenticated CLI transport and JSON decoder without
+  changing the source observer's type imports, requests or error wording.
+  Added native relative-endpoint/limit guards. The artifact REST schema has no
+  run attempt; no attempt, checked-out source, container/member/candidate-content
+  or deployment/status proof is inferred from run/head/name/digest metadata.
+- Provider research used official REST artifacts schema and uploader/validation
+  documentation. The current CLI2.103.3 raw-body guard can refuse escape-bearing
+  binary output; artifact `/zip` reads therefore explicitly preserve raw captured
+  bytes with `--allow-escape-sequences`. No payload is terminal-displayed.
+- `node_modules\.bin\tsc.cmd --noEmit` passed;
+  `node_modules\.bin\tsx.cmd --test tools\github-source-run.test.ts tools\github-artifact.test.ts`
+  passed17/17 with no failures/skips/cancellations. Added nine artifact/transport
+  tests covering both observations, exact bounds/+1, binary corruption/truncation,
+  unsupported evidence, hostile URL fields, JSON errors, redaction and isolation.
+- A credential-isolated actual CLI loopback HTTP probe captured all14 synthetic
+  bytes exactly, including NUL/invalid UTF8/ESC, with a14-byte process-output cap.
+  It used an empty owned temporary CLI config, fake token only, no inherited real
+  auth/proxies, one loopback request and complete server/config cleanup. This
+  checks installed raw-output behavior, not GitHub/TLS/CDN artifact conformance.
+- Native shared-reader source-run observation still passed the previous explicit
+  public main/run pins with15,000ms/131,072-byte limits. Missing synthetic artifact
+  ID1 refused with the exact redacted artifact read error; not negative exposure
+  proof. `gh api --hostname github.com --method GET 'repos/DaasaVaani/library/actions/artifacts?per_page=1' --jq '{total_count,returned:(.artifacts|length)}'`
+  returned total0/returned0. Positive live archive/download evidence is unavailable,
+  not passed or replaced with invented evidence. Installed raw-byte flag support
+  was checked with `gh api --help`.
+- Coverage: CI-01/03/06 and ALG-07/08 isolated artifact-integrity prerequisites.
+  No new dependency/toolchain installation, actual source artifacts, source/hold/
+  identity, setting, workflow, independent Shared pin or hosted-state activation.
+- Initial full `npm run check` passed strict TypeScript and207/207 tests with no
+  failures/skips/cancellations before the additional exact native-command case.
+  Tightened the raw-mode route matcher to the full numeric artifact endpoint so
+  a branch suffix resembling an artifact path cannot enable it. Added an
+  isolated child executing the actual reader with mocked process execution:
+  exact flags, binary return bytes, copied/cleaned environment, process limits
+  and callback-error redaction are asserted without a real credential or request.
+  Corrected typecheck and focused source/artifact suites passed18/18.
+  `python tools\check_repository.py` passed961 tracked files; strict YAML passed11
+  workflow/settings files. Actionlint1.7.12 with ShellCheck0.11.0,
+  `git diff --check`, `git diff --cached --check` and
+  `git diff --exit-code HEAD -- shared library reviews settings .github` passed.
+
 ## 2026-10-29: observed source-tip to exact Git-blob integration
 
 - Continued directly from clean exact published `c211c86` on a separate integration

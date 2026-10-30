@@ -153,6 +153,10 @@ successful source push-CI identity and before/after source branch tip using
 bounded authenticated CLI reads. This is not the publisher's `workflow_run`
 identity or artifact/deployment/status/receipt verification. Neither its report
 nor a positive hosted byte audit authorizes confirmation.
+The [artifact byte observer](github-artifact.md) additionally checks pinned
+artifact/publisher-head metadata before and after an exact bounded body digest/
+size observation. It does not verify run attempts, archive members, candidate
+contents, deployment/status facts or a receipt, and cannot authorize confirmation.
 
 After a crash in `deploying`, retain the exact immutable candidate and reserved
 sequence. Inspect authenticated deployment history and reconcile that candidate;

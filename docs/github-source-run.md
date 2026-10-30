@@ -81,6 +81,10 @@ placeholders, query fields, pagination, CLI cache, log download or writes.
 The [workflow-run](https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run)
 and [Git-ref](https://docs.github.com/en/rest/git/refs#get-a-reference)
 REST endpoints own their provider response definitions.
+Its transport and JSON decoder are shared with the
+[artifact byte observer](github-artifact.md) in [github-api.ts](../tools/github-api.ts);
+existing source-module `GitHubApiReader`/`GitHubApiReadLimits` type imports remain
+available. Source JSON requests, validation and payload-free errors are unchanged.
 
 CLI executable/configuration, authentication and surrounding proxy/TLS environment
 must be runner-owned and trusted; this is not a sandbox or a new credential

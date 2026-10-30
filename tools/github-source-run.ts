@@ -1,6 +1,6 @@
-import { execFile } from "node:child_process";
 import Ajv2020 from "ajv/dist/2020.js";
-import { parseDocument } from "yaml";
+import { decodeGitHubApiJson, readGitHubApi, type GitHubApiReader } from "./github-api.js";
+export type { GitHubApiReadLimits, GitHubApiReader } from "./github-api.js";
 
 export interface GitHubSourceRunOptions {
   repository: string;
@@ -26,11 +26,6 @@ export interface GitHubSourceRunObservation {
   runAttempt: number;
   requestCount: 3;
 }
-export interface GitHubApiReadLimits {
-  requestTimeoutMs: number;
-  maxResponseBytes: number;
-}
-export type GitHubApiReader = (endpoint: string, limits: Readonly<GitHubApiReadLimits>) => Promise<Uint8Array>;
 interface RepositoryIdentity { id: number; full_name: string }
 interface SourceRun {
   id: number;
@@ -78,34 +73,6 @@ const validateRef = ajv.compile<SourceRef>({
   }
 });
 
-const readGitHubApi: GitHubApiReader = (endpoint, limits) => new Promise((accept, reject) => {
-  const env: NodeJS.ProcessEnv = { ...process.env, GH_HOST: "github.com", GH_PROMPT_DISABLED: "1",
-    GH_PAGER: "", GH_NO_UPDATE_NOTIFIER: "1", GH_NO_EXTENSION_UPDATE_NOTIFIER: "1" };
-  for (const key of ["GH_DEBUG", "GH_FORCE_TTY", "GH_HTTP_UNIX_SOCKET"]) delete env[key];
-  execFile("gh", ["api", "--hostname", "github.com", "--method", "GET",
-    "--header", "Accept: application/vnd.github+json", "--header", "X-GitHub-Api-Version: 2022-11-28",
-    "--header", "Cache-Control: no-cache, no-store", endpoint], {
-    env, encoding: "buffer", windowsHide: true, timeout: limits.requestTimeoutMs, maxBuffer: limits.maxResponseBytes
-  }, (error, stdout) => {
-    if (error) reject(new Error("GitHub source-run API read failed; verify authentication, availability and explicit limits"));
-    else accept(stdout);
-  });
-});
-
-function decodeResponse(bytes: Uint8Array, limit: number): unknown {
-  if (!(bytes instanceof Uint8Array) || bytes.length < 1 || bytes.length > limit) {
-    throw new Error("GitHub source-run API response exceeds byte bounds");
-  }
-  try {
-    const text = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(bytes);
-    const value: unknown = JSON.parse(text);
-    if (parseDocument(text, { schema: "json", uniqueKeys: true }).errors.length) throw new Error("Duplicate JSON keys");
-    return value;
-  } catch {
-    throw new Error("Invalid GitHub source-run API JSON");
-  }
-}
-
 export async function auditGitHubSourceRun(requested: GitHubSourceRunOptions,
   read: GitHubApiReader = readGitHubApi): Promise<GitHubSourceRunObservation> {
   const options = { ...requested };
@@ -116,7 +83,7 @@ export async function auditGitHubSourceRun(requested: GitHubSourceRunOptions,
     let bytes: Uint8Array;
     try { bytes = await read(endpoint, limits); }
     catch { throw new Error("GitHub source-run API read failed; verify authentication, availability and explicit limits"); }
-    return decodeResponse(bytes, limits.maxResponseBytes);
+    return decodeGitHubApiJson(bytes, limits.maxResponseBytes, "source-run");
   };
   const verifyRef = async () => {
     const value = await load(ref);

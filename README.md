@@ -126,6 +126,11 @@ now verifies an explicitly started candidate's descriptor and every expected
 artifact over bounded single-attempt HTTPS requests, with a final descriptor
 recheck. It is read-only and returns byte-observation accounting, not an
 authenticated deployment receipt or permission to confirm state.
+The read-only [GitHub artifact byte observer](docs/github-artifact.md) now checks
+one explicitly pinned artifact's identity/digest and actual bounded body bytes
+between metadata rereads, using the same CLI transport as source-run observation.
+It does not establish a run attempt, generated source, archive/member layout,
+reserved candidate contents or authenticated deployment/status/receipt evidence.
 
 Start with [AGENTS.md](AGENTS.md), [provider/content policy](docs/content-rights.md),
 [requirements](https://github.com/DaasaVaani/DaasaVaani.github.io/blob/main/docs/requirements.md)
@@ -179,6 +184,9 @@ synthetic bare repositories; it does not contact the live Library remote.
 Source-run observer tests use synthetic injected byte responses and require no
 GitHub access. Its optional native reader requires existing authenticated `gh`;
 CLI/authentication/availability/bound failures are explicit, not success.
+Artifact observer tests also use synthetic injected bytes. Its native binary
+reader additionally requires a CLI supporting `--allow-escape-sequences`;
+archive stdout is captured as raw bytes, never terminal-displayed or sanitized.
 The read-back suite also requires installed OpenSSL1.1.1+ (`openssl` on PATH,
 or the default Windows Git installation's `usr\bin\openssl.exe`). It generates
 a disposable self-signed loopback certificate/key in an owned temporary directory
