@@ -8,10 +8,12 @@ import { join } from "node:path";
 import { importSources, retryCreditFooters, validateSources } from "./source-import.js";
 import { parseDraft } from "./lyric-source.js";
 import { strictYaml } from "../shared/tools/generate-catalog.mjs";
+import Ajv2020 from "ajv/dist/2020.js";
 
 const options = { maxSourceFileBytes: 4096, maxTotalSourceBytes: 16384, reviewHoldReason: "source-import-review" };
 const permitted = "  ಕನ್ನಡ  \n\nಕನ್ನಡ \n\nSource Latin  \n\n";
 const creditFooter = { enabled: true, primaryLabel: "ಸಾಹಿತ್ಯ", companionLabel: "Kruti", additionalLabels: ["Singer", "ಗಾಯಕರು"] };
+const aliasedCreditFooter = { ...creditFooter, primaryLabelAliases: ["ರಚನೆ"], companionLabelAliases: ["Krithi", "Kriti", "Kruthi"] };
 const footer = "ಸಾಹಿತ್ಯ : Synthetic credit  \nKruti: Synthetic credit\nsynthetic, test, metadata,\n\n";
 async function setup(run: (root: string, input: string, output: string) => Promise<void>) {
   const root = await mkdtemp(join(tmpdir(), "daasavaani-source-import-"));
@@ -229,6 +231,120 @@ test("actual configured encoded-file and aggregate byte ceilings reject limit pl
         }
       }
       assert.equal(await readFile(join(input, "permitted.txt"), "utf8"), raw);
+    });
+  });
+  test("configured footer aliases preserve literal labels/layout with no inferred metadata or eligibility", async () => {
+    const settings = strictYaml(await readFile(new URL("../settings/source-import.yml", import.meta.url), "utf8"));
+    const schema = JSON.parse(await readFile(new URL("../settings/source-import.schema.json", import.meta.url), "utf8"));
+    const validate = new Ajv2020.default({ strict: true }).compile(schema);
+    assert.equal(validate(settings), true);
+    assert.ok(settings && typeof settings === "object" && "creditFooter" in settings);
+    assert.deepEqual(settings.creditFooter, aliasedCreditFooter);
+    for (const primary of [creditFooter.primaryLabel, ...aliasedCreditFooter.primaryLabelAliases]) {
+      for (const companion of [creditFooter.companionLabel, ...aliasedCreditFooter.companionLabelAliases]) {
+        await setup(async (_root, input, output) => {
+          const literal = ` \t${primary}\t: Synthetic credit  \n\n\t${companion} : Synthetic credit\t\nSinger: Synthetic\nsynthetic, test, metadata,\n1.2 - 3.4\n\n`;
+          const originals = { "latin.txt": permitted + literal, "canonical.txt": "ಕನ್ನಡ\n\n" + literal };
+          for (const [name, raw] of Object.entries(originals)) await writeFile(join(input, name), raw);
+          const configured = { ...options, creditFooter: aliasedCreditFooter };
+          const result = await importSources(input, output, configured);
+          assert.equal(result.imported, 2); assert.equal(result.held, 0);
+          for (const name of (await readdir(output)).filter(name => name.endsWith(".md"))) {
+            const source = parseDraft(await readFile(join(output, name), "utf8"));
+            assert.equal(source.header.provenance.description, literal);
+            assert.deepEqual(source.header.public.classification?.composerIds, []);
+            assert.deepEqual(source.header.review.holdReasons, ["source-import-review"]);
+            assert.deepEqual(source.header.review.sourceLatin, { readable: null, searchable: null, alignment: [] });
+            if (source.header.provenance.sourceFile === "latin.txt") {
+              assert.equal(source.canonical.map(line => line.text).join("\n"), "  ಕನ್ನಡ  \n\nಕನ್ನಡ \n");
+              assert.equal(source.sourceLatin, "Source Latin  \n");
+            } else {
+              assert.equal(source.canonical.map(line => line.text).join("\n"), "ಕನ್ನಡ\n");
+              assert.equal(source.sourceLatin, undefined);
+            }
+          }
+          assert.deepEqual(await tree(input), originals);
+          const before = await tree(output);
+          assert.equal((await importSources(input, output, configured)).unchanged, true);
+          assert.deepEqual(await tree(output), before);
+          assert.deepEqual(await validateSources(output), { imported: 2, held: 0 });
+        });
+      }
+    }
+  });
+  test("aliases remain opt-in for existing callers and disabled policies", async () => {
+    for (const policy of [creditFooter, { ...creditFooter, primaryLabelAliases: [], companionLabelAliases: [] },
+      { ...aliasedCreditFooter, enabled: false }]) {
+      await setup(async (_root, input, output) => {
+        await writeFile(join(input, "primary.txt"), permitted + "ರಚನೆ: Synthetic\nKruti: Synthetic\n");
+        await writeFile(join(input, "companion.txt"), permitted + "ಸಾಹಿತ್ಯ: Synthetic\nKriti: Synthetic\n");
+        const result = await importSources(input, output, { ...options, creditFooter: policy });
+        assert.equal(result.imported, 0); assert.equal(result.held, 2);
+        assert.ok(result.exceptions.every(entry => entry.reason === "kannada-after-latin-boundary"));
+      });
+    }
+  });
+  test("different primary aliases remain ambiguous; missing/unknown companions and unknown content stay held", async () => {
+    await setup(async (_root, input, output) => {
+      const suffixes = [
+        "ಸಾಹಿತ್ಯ: Synthetic\nKruti: Synthetic\nರಚನೆ: Synthetic\nKriti: Synthetic\n",
+        "ರಚನೆ: Synthetic\nKriti: Synthetic\nಸಾಹಿತ್ಯ: Synthetic\nKruti: Synthetic\n",
+        "ರಚನೆ: Synthetic\n",
+        "ರಚನೆ: Synthetic\nUnknown: Synthetic\n",
+        "ರಚನೆ: Synthetic\nKriti:\t\n",
+        "ರಚನೆ: Synthetic\nUnapproved: Synthetic\nKriti: Synthetic\n",
+        "ರಚನೆ: Synthetic\nKriti: Synthetic\nUnknown: Synthetic\n",
+        "ರಚನೆ: Synthetic\nKriti: Synthetic\nUnlabelled prose\n",
+        "ರಚನೆ: Synthetic\nKriti: Synthetic\nಕನ್ನಡ |೧|\n",
+        "ರಚನೆ: Synthetic\nkriti: Synthetic\n",
+      ];
+      for (const [index, suffix] of suffixes.entries()) await writeFile(join(input, `${index}.txt`), permitted + suffix);
+      const result = await importSources(input, output, { ...options, creditFooter: aliasedCreditFooter });
+      assert.equal(result.imported, 0); assert.equal(result.held, suffixes.length);
+      assert.ok(result.exceptions.every(entry => entry.reason === "kannada-after-latin-boundary"));
+    });
+  });
+  test("malformed alias settings fail existing schema/API validation before writes, including disabled policies", async () => {
+    const settings = strictYaml(await readFile(new URL("../settings/source-import.yml", import.meta.url), "utf8"));
+    assert.ok(settings && typeof settings === "object");
+    const schema = JSON.parse(await readFile(new URL("../settings/source-import.schema.json", import.meta.url), "utf8"));
+    const validate = new Ajv2020.default({ strict: true }).compile(schema);
+    await setup(async (root, input, output) => {
+      await writeFile(join(input, "synthetic.txt"), permitted + footer);
+      for (const field of ["primaryLabelAliases", "companionLabelAliases"]) {
+        for (const invalid of [null, "Label", {}, [1], [""], ["two words"], ["Label:"], ["Label\n"], ["Label", "Label"]]) {
+          for (const enabled of [true, false]) {
+            const policy = { ...aliasedCreditFooter, enabled, [field]: invalid } as unknown as typeof aliasedCreditFooter;
+            assert.equal(validate({ ...settings, creditFooter: policy }), false);
+            await assert.rejects(importSources(input, output, { ...options, creditFooter: policy }), /Invalid credit-footer policy/);
+            if (enabled) await assert.rejects(retryCreditFooters(input, output, { ...options, creditFooter: policy }), /Invalid credit-footer policy/);
+            assert.deepEqual(await readdir(root), ["originals"]);
+          }
+        }
+      }
+    });
+  });
+  test("explicit alias retry alone converts unchanged eligible holds and preserves existing sources", async () => {
+    await setup(async (_root, input, output) => {
+      await writeFile(join(input, "existing.txt"), permitted + footer);
+      await writeFile(join(input, "alias.txt"), permitted + "ರಚನೆ: Synthetic\nKruthi: Synthetic\n\n");
+      await writeFile(join(input, "unknown.txt"), permitted + "ರಚನೆ: Synthetic\nUnknown: Synthetic\n");
+      const legacy = { ...options, creditFooter };
+      const configured = { ...options, creditFooter: aliasedCreditFooter };
+      assert.equal((await importSources(input, output, legacy)).held, 2);
+      const existing = await onlyDraft(output), before = await readFile(existing);
+      const originals = await tree(input);
+      assert.equal((await importSources(input, output, configured)).unchanged, true);
+      assert.deepEqual(await readFile(existing), before);
+      const result = await retryCreditFooters(input, output, configured);
+      assert.equal(result.imported, 2); assert.equal(result.held, 1);
+      assert.equal(result.exceptions[0]?.sourceFile, "unknown.txt");
+      assert.deepEqual(await readFile(existing), before);
+      assert.deepEqual(await tree(input), originals);
+      const after = await tree(output);
+      assert.equal((await retryCreditFooters(input, output, configured)).unchanged, true);
+      assert.deepEqual(await tree(output), after);
+      assert.deepEqual(await validateSources(output), { imported: 2, held: 1 });
     });
   });
   test("ambiguous post-credit lyrics, incomplete labels and unknown footer content remain held", async () => {

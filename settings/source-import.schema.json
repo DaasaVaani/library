@@ -16,6 +16,8 @@
         "enabled": { "type": "boolean" },
         "primaryLabel": { "$ref": "#/$defs/label" },
         "companionLabel": { "$ref": "#/$defs/label" },
+        "primaryLabelAliases": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/label" } },
+        "companionLabelAliases": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/label" } },
         "additionalLabels": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/label" } }
       }
     }

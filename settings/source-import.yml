@@ -8,6 +8,12 @@ creditFooter:
   enabled: true
   primaryLabel: ಸಾಹಿತ್ಯ
   companionLabel: Kruti
+  primaryLabelAliases:
+    - ರಚನೆ
+  companionLabelAliases:
+    - Krithi
+    - Kriti
+    - Kruthi
   additionalLabels:
     - Singer
     - ಗಾಯಕರು

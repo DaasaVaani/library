@@ -9,6 +9,7 @@ import { completeSourceHeader, parseDraft, parseLyricSource, uuidPattern, type D
 
 interface CreditFooterPolicy {
   enabled: boolean; primaryLabel: string; companionLabel: string; additionalLabels: string[];
+  primaryLabelAliases?: string[]; companionLabelAliases?: string[];
 }
 interface ImportSettings {
   formatVersion: 1; sourceDirectory: string; outputDirectory: string;
@@ -84,12 +85,15 @@ function footerStart(lines: string[], policy?: CreditFooterPolicy) {
     const value = line.trimStart();
     return value.startsWith(label) && /^[ \t]*:[ \t]*\S/u.test(value.slice(label.length));
   };
-  const candidates = lines.flatMap((line, index) => labelled(line, policy.primaryLabel) ? [index] : []);
+  const primaryLabels = [policy.primaryLabel, ...(policy.primaryLabelAliases ?? [])];
+  const companionLabels = [policy.companionLabel, ...(policy.companionLabelAliases ?? [])];
+  const candidates = lines.flatMap((line, index) => primaryLabels.some(label => labelled(line, label)) ? [index] : []);
   if (candidates.length !== 1) return -1;
   const start = candidates[0];
   if (start === undefined || !lines.slice(0, start).some(line => /\p{Script=Kannada}/u.test(line))) return -1;
   const tail = lines.slice(start).filter(line => !/^[ \t]*$/u.test(line));
-  if (!tail[1] || !labelled(tail[1], policy.companionLabel)) return -1;
+  const companion = tail[1];
+  if (!companion || !companionLabels.some(label => labelled(companion, label))) return -1;
   const valid = tail.slice(2).every(line =>
     policy.additionalLabels.some(label => labelled(line, label)) ||
     (!line.includes("|") && line.split(",").filter(part => part.trim()).length >= 3) ||
