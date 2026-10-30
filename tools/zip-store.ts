@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { crc32 } from "./crc32.js";
 
 export interface ZipStoreLimits {
   maxMembers: number;
@@ -17,15 +18,6 @@ function limits(value: ZipStoreLimits) {
   if (!Number.isSafeInteger(value.maxMembers) || value.maxMembers < 1 || value.maxMembers >= 0xffff ||
       !Number.isSafeInteger(value.maxArchiveBytes) || value.maxArchiveBytes < endSize ||
       value.maxArchiveBytes >= zip32Max) throw new Error("Invalid classic ZIP limits; ZIP64 is not supported");
-}
-
-function crc32(bytes: Uint8Array): number {
-  let crc = 0xffffffff;
-  for (const byte of bytes) {
-    crc ^= byte;
-    for (let bit = 0; bit < 8; bit++) crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
-  }
-  return (crc ^ 0xffffffff) >>> 0;
 }
 
 function header(path: string, bytes: Uint8Array, offset?: number): Buffer {
