@@ -1,5 +1,76 @@
 # Documentation history
 
+## 2026-10-31: portable unfinished attribution review handoff
+
+- At the owner's request, paused further attribution questions and persisted a
+  metadata-only checkpoint plus the current resume guide. The checkpoint covers
+  995 logical items from996 raw originals:731 fully paired and264 not fully
+  paired. Partial categories are171 composer-only,1 ankita-only,2
+  composer-reference contradictions,17 unresolved signature-context cases and73
+  insufficient-evidence cases. These are review interpretations, not applied
+  registry classifications, source migration or publication approval.
+- Preserved24 owner decisions: eight initial reference/role approvals, fourteen
+  item approvals (reviews9-22), reference correction23 and name alias24.
+  The22 final reference groups use effective revision4. Automatic applications
+  remain57 Hayavadana and85 current general-charana applications (83 fully paired,
+  2 ankita-field-only updates retaining incompatible explicit composers).
+  Historical batch snapshots retain their original counts.
+- The remaining queue has263 entries:235 missing eligible final-charana ankitas,
+  1 multiple-signature case,25 boundary/alignment uncertainties and2
+  composer-reference contradictions. One separately confirmed unmapped
+  `ವರರಂಗ ವಿಠಲ` ankita has unknown composer and is not another ankita question.
+  Review25 has not been asked or approved; `neere torele.txt` is next, followed
+  by the other explicit-composer versus generic-Sri-Krishna case, `ರಾಮ ಹರೇ.txt`.
+- Preserved the item-only Kaayo correction to ordinary Jagannatha, rejected
+  Vijaya credit provenance, the Akka Guru Mahipati reference correction without
+  a Kakhandaki/Guru Mahipati alias, and the valid Badarayana/Savanuru name alias.
+  `Dasare Gatiyu.txt` remains without an inferred ankita. Original Sanskrit
+  composer and Kannada translator remain separate on the five explicitly
+  matching Dwadasha Stotra sources.
+- The owner-authorized removal of only an accidental `ac` prefix restored
+  `Dikku Dese Neene.txt` to its original UTF16LE-BOM bytes and SHA256
+  `4c23b603c187f3e45e0943dc6f5a67312b313c1404670f1da7d53b0a2ccb53db`.
+  No raw-original change is part of this commit. The receipt remains871
+  imported/125 held;124 preparation approvals and one supplemental association
+  are not applied migrations. All5,108 provisional verse proposals remain
+  uncertain; no IDs, source metadata, Shared pins or production state were changed.
+- Created a separate local-only transfer archive, not committed or uploaded:
+  1,037 files including all996 unchanged originals, complete literal reports,
+  immutable authority/audit inputs, original historical helper bytes and portable
+  analysis/export helpers. Verified every archived member's size/SHA256 and the
+  full raw-source inventory after ZIP creation. Archive size12,202,630 bytes,
+  SHA256 `b8328ca98adb44384142f1b039b82f03b96ba33dae96c030b734760f74ad733f`.
+  Public checkpoint data excludes lyric payloads, private conversation quotes
+  and machine-local absolute paths, retaining evidence locations and shared
+  supporting-credit sets without dropping their ordered IDs.
+- Portable regeneration passed against relocated review/source roots, then
+  twice against an isolated Library checkout at226b83d with its unchanged
+  Shared pin3a1627dea1eced148de203c08e86c025fc688200. Verified all996 raw and871
+  Markdown hashes, strict decoding/parsing and124 prepared canonical spans.
+  Compared all995 item records,7,421 evidence nodes,22 effective references and
+  the complete queue to the approved snapshot in the historical path namespace.
+  Portable export reproduced every committed metadata field; only the regenerated
+  full report's byte hash differed. Removed the owned relocation fixture/junction
+  and packaging scratch scripts; retained the transfer deliverables.
+- Initial portability checks correctly failed on path-dependent protected-item
+  checksums and an incomplete fixture missing Shared submodule contents.
+  Preserved the original checksum namespace instead of weakening preservation
+  assertions, initialized the fixture from the same committed Shared pin, and
+  verified native-path repeat runs. No dependency, source or protection changes.
+- Candidate `npm run check` passed strict TypeScript and306/306 tests, with
+  zero failures/cancellations/skips (2,252,049.9653ms test duration).
+  `sources:validate` reported871 imported/125 held; `verses:validate` reported
+  unchanged5,108 provisional uncertain verses. Documentation/projection were
+  refined during that candidate run, so it is not final-tree push evidence.
+- `python tools\check_repository.py` passed975 tracked files; the README's
+  strict `yaml.parseDocument` command parsed all11 workflow/settings YAML files.
+  Installed actionlint1.7.12 with ShellCheck0.11.0, `git --no-pager diff --check`
+  and `git --no-pager diff --cached --check` passed.
+  `git --no-pager diff --exit-code HEAD -- library reviews/verse-proposals.json settings tools .github shared`
+  confirmed all protected source/publisher/settings/workflow/verse/Shared inputs
+  unchanged. The same complete `npm run check` and hygiene checks follow this
+  result-record update on the frozen final tree before any authorized main push.
+
 ## 2026-10-30: owner-authorized completed-work integration into main
 
 - Fast-forwarded local main from c2837cc to df4689e, incorporating the completed

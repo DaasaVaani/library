@@ -42,6 +42,12 @@ copying lyrics or changing source text, IDs, metadata or publication eligibility
 `npm run verses:propose` creates once or validates unchanged; `verses:validate`
 preserves owner edits and fails on stale source hashes.
 
+The unfinished [composer/ankita review handoff](docs/source-attribution-review.md)
+preserves approved attribution decisions, reference corrections, valid aliases
+and the complete pending queue as portable metadata-only review data. Original
+sources and literal private reports remain outside Git; this checkpoint does not
+apply classifications, migrate sources or approve publication.
+
 The independent [ZIP STORE byte prerequisite](docs/zip-store.md) constructs and
 strictly verifies bounded deterministic archives of original gzip objects.
 It takes explicit caller limits, is not wired into either publisher and does not
