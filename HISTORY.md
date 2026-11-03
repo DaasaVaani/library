@@ -1,5 +1,166 @@
 # Documentation history
 
+## 2026-11-03: owner-approved attribution reviews48-55
+
+- Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference
+  group for `ಶ್ರೀ ವಾಸುದೇವ ವಿಠ್ಠಲ ದಾಸರು`, grounded in the ending and explicit
+  composer credit in `Banda Krishna Chandadinda.txt`. It matched one item;
+  source wording and explicit credit remain unchanged.
+- Established `ಕಮಲೇಶ ವಿಠಲ` as the preferred ankita for
+  `ಶ್ರೀ ಕಮಲೇಶ ವಿಠಲ ದಾಸರು`, with `ಕಮಲೇಶ ವಿಠ್ಠಲ` as a source-attested alias.
+  It resolved five reviewed songs and the additional compatible
+  `Venu Vinodhana Vaibhava.txt`; source wording and credits remain unchanged.
+- Established `ಶ್ರೀದವಿಠಲ` as the preferred ankita for
+  `ಶ್ರೀ ಶ್ರೀದವಿಠಲ ದಾಸರು`, with source-attested `ಶ್ರೀದ ವಿಠ್ಠಲ` as an alias.
+  It resolved five reviewed songs and three additional compatible matches.
+- Approved `ಪ್ರಸನ್ವೆಂಕಟ` as a general ankita alias for the existing
+  `ಪ್ರಸನ್ನ ವೇಂಕಟ` group. Six compatible items were fully paired; one item,
+  `Kandugorala Shiva Sundareshvarana.txt`, remains queued because its explicit
+  composer credit is incompatible without another owner-approved alias.
+- Approved `ಶ್ರೀ ಪ್ರಸನ್ವೆಂಕಟ ದಾಸರು` as a general composer-name alias for
+  `ಶ್ರೀ ಪ್ರಸನ್ನ ವೇಂಕಟ ದಾಸರು`, resolving that item while preserving its
+  original composer credit as provenance.
+- Established `ನರಹರಿ ವಿಠಲ` as a general ankita reference group for
+  `ಶ್ರೀ ನರಹರಿ ವಿಠಲ ದಾಸರು`, with geminated `ನರಹರಿ ವಿಠ್ಠಲ` as an alias. It
+  resolved two reviewed songs and `Ranga Ille Idda.txt`; the separate Karpura
+  Narahari group remains distinct.
+- Established `ವ್ಯಾಸ ವಿಠಲ` as a general ankita reference group for
+  `ಶ್ರೀ ವ್ಯಾಸ ವಿಠಲ ದಾಸರು`, with source-attested `ವ್ಯಾಸವಿಠ್ಠಲ` as a geminated
+  alias. It resolved two reviewed songs and the additional compatible
+  `Smarisi Badukiro.txt`; source wording and explicit credits remain unchanged.
+- Established `ಶ್ರೀಪತಿ ವಿಠಲ` as a general ankita reference group for
+  `ಶ್ರೀ ಶ್ರೀಪತಿ ವಿಠಲ ದಾಸರು`, with joined `ಶ್ರೀಪತಿವಿಠಲ` as a source-attested
+  alias. It resolved `Hare Venkatashyla Vallabha.txt` and
+  `jategaane jagadambe.txt`; source wording and credits remain unchanged.
+- Regenerated the private report and exported the metadata-only checkpoint:
+  870/995 fully paired, 125 not fully paired, 57 owner decisions, 33 effective
+  groups at revision32, and 7,595 connected evidence nodes. Final-charana
+  attribution has 221 applications (219 new pairings, 2 ankita-only updates).
+  The remaining queue has 124 items (99 missing eligible final-charana
+  ankitas, 25 boundary uncertainties) plus one separately confirmed unmapped
+  ankita whose composer remains unknown.
+- `npm run check` passed after Review54: strict TypeScript, 306/306 tests,
+  source validation (871 imported/125 held), and verse validation with all
+  5,108 proposals still provisional. Review55 changed only review metadata;
+  source-witness application and checkpoint export both passed.
+- No source text, product metadata, registry assignments or verse approvals
+  changed. No commit or push was made.
+
+## 2026-11-02: owner-approved attribution reviews28-47
+
+- Recorded the owner's item-specific composer and literal ankita confirmation
+  for `Aaduta Baaramma.txt`, then approved `ಹೆಳವನಕಟ್ಟೆ` as a short ankita alias
+  on the existing `ಹೆಳವನಕಟ್ಟೆ ರಂಗ` group. The full form remains preferred and
+  longer signatures take precedence.
+- Added the owner-approved general `ಪ್ರಸನ್ನ ವೇಂಕಟ` / `ಪ್ರಸನ್ವೇಂಕಟ` ankita
+  reference group for `ಶ್ರೀ ಪ್ರಸನ್ನ ವೇಂಕಟ ದಾಸರು`, witnessed by the final
+  signature and explicit composer credit in `Aane Bantaane Bantaane
+  Bantammamma.txt`. Separately approved `ಶ್ರೀ ಪ್ರಸನ್ನ ವೆಂಕಟ ದಾಸರು` as a
+  general composer-name alias for the preferred form. Existing source credits
+  and lyrics remain unchanged; composer aliases alone do not infer ankitas.
+- Approved `ವಿಜಯ ವಿಠ್ಠಲ` as an ankita alias for the existing
+  `ವಿಜಯ ವಿಠಲ` / `ಶ್ರೀ ವಿಜಯ ದಾಸರು` group. It matched40 established
+  final-charana applications;10 more occurrences remain queued because their
+  final-charana boundaries are uncertain.
+- Approved `ಶಾಮಸುಂದರ ವಿಠಲ` as a general ankita alias for the existing
+  `ಗುರುಶ್ಯಾಮಸುಂದರ` / `ಶ್ರೀ ಗುರು ಶ್ಯಾಮಸುಂದರ ವಿಠಲ ದಾಸರು` group. The approved
+  final-charana rule matched it across two adjacent lines in
+  `Adavinilaya Ninnadigeraguve.txt`; the source wording and preferred ankita
+  remain unchanged.
+- Established `ಮಧ್ವೇಶ ವಿಠಲ` as the preferred ankita and `ಮಧ್ವೇಶ ಕೃಷ್ಣ` as an
+  alias for `ಶ್ರೀ ಮಧ್ವೇಶ ವಿಠಲ ದಾಸರು`. The group matched three final-charana
+  items, including `Adhika Maasa Bandu.txt`; explicit credits and lyric text
+  remain unchanged.
+- Established `ವಿದ್ಯೇಶ ವಿಠಲ` as a general ankita reference for
+  `ಶ್ರೀ ವಿದ್ಯೇಶ ತೀರ್ಥರು`. The owner explicitly approved the association even
+  though the separate composer credit does not repeat the ankita; the group
+  matched two final-charana items without changing source text.
+- Approved `ಪ್ರಸನ್ನವೆಂಕಟ` as a general ankita alias for the existing
+  `ಪ್ರಸನ್ನ ವೇಂಕಟ` / `ಶ್ರೀ ಪ್ರಸನ್ನ ವೇಂಕಟ ದಾಸರು` group. It matched eight
+  established final-charana items, including `Aladiru Summaniramma.txt`;
+  source wording and the preferred form remain unchanged.
+- Merged the source-backed `ಕಾಗಿನೆಲೆ ಆದಿಕೇಶವ` and `ಕಾಗಿನೆಲೆಯಾದಿ ಕೇಶವ`
+  groups under preferred `ಕಾಗಿನೆಲೆ ಆದಿಕೇಶವ` for `ಶ್ರೀ ಕನಕದಾಸರು`.
+  `ಕಾಗಿನೆಲೆಯಾದಿ ಕೇಶವ` and `ಆದಿಕೇಶವ` are general aliases; the separate
+  `ನೆಲೆಯಾದಿಕೇಶವ` form remains unapproved. This resolves
+  `Angaladolu Ramanaadida.txt` without changing source text or explicit credits.
+- Approved `ಪ್ರಸನ್ವೆಂಕಟೇಶ` as a general ankita alias for the existing
+  `ಪ್ರಸನ್ನ ವೇಂಕಟ` / `ಶ್ರೀ ಪ್ರಸನ್ನ ವೇಂಕಟ ದಾಸರು` group. It resolves
+  `Ara makkalaara raaniu.txt` using its final-charana form and explicit
+  composer credit, without changing source text.
+- Approved `ಶ್ಯಾಮಸುಂದರ` as a general ankita alias for the existing
+  `ಶ್ಯಾಮಸುಂದರ ರಾಣಿ` / `ಶ್ರೀ ಶ್ಯಾಮಸುಂದರ ದಾಸರು` group. The distinct
+  `ಗುರುಶ್ಯಾಮಸುಂದರ` group remains separate.
+- Approved `ಶ್ಯಾಮಸುಂದರ ದಾಸರ` as a general composer-name alias for
+  `ಶ್ರೀ ಶ್ಯಾಮಸುಂದರ ದಾಸರು`, based on the heading `ಶ್ಯಾಮಸುಂದರ ದಾಸರ ಕೃತಿ`.
+  The original credit remains unchanged and is retained as provenance.
+- Confirmed `Rayare Gatiyu Namage.txt` as
+  `ಶ್ಯಾಮಸುಂದರ ರಾಣಿ` / `ಶ್ರೀ ಶ್ಯಾಮಸುಂದರ ದಾಸರು` for that item only. Its longer
+  `ಶ್ಯಾಮಸುಂದರವಿಠಲ` ending and `ಶ್ರೀ ಶ್ಯಾಮಸುಂದರವಿಠಲ ದಾಸರು` credit are not
+  general aliases; source text remains unchanged.
+- Approved `ಜಗನ್ನಾಥ ವಿಠ್ಠಲ` as a general ankita alias for the existing
+  `ಜಗನ್ನಾಥ ವಿಠಲ` / `ಶ್ರೀ ಜಗನ್ನಾಥ ದಾಸರು` group. It matched three established
+  final-charana items, including `Ati Shobhisutide Sripathiya vahana.txt`.
+- Established `ಗುರು ಶ್ರೀಶವಿಠಲ` as a general final-charana ankita reference
+  group for `ಶ್ರೀ ಗುರು ಶ್ರೀಶವಿಠಲ ದಾಸರು`, witnessed by the final-charana form
+  and explicit composer credit in `Baaro Guru Raghavendra.txt`. It matched that
+  song and `hottu hoyitalla hari ninna.txt`; source wording and explicit
+  composer credits remain unchanged.
+- Approved `ನೆಲೆಯಾದಿ ಕೇಶವ` as a general ankita alias for the existing
+  `ಕಾಗಿನೆಲೆ ಆದಿಕೇಶವ` / `ಶ್ರೀ ಕನಕದಾಸರು` group. It matched
+  `Baaro Krishnayya.txt`, `Kula Kula Kulavennutiharu.txt` and
+  `Nemavillada Homa.txt`; the whitespace-equivalent `ನೆಲೆಯಾದಿಕೇಶವ` form is
+  included. Original wording and composer credits remain unchanged.
+- Established `ವರದ ಗೋಪಾಲ ವಿಠಲ` as a distinct general ankita reference group
+  for `ಶ್ರೀ ವರದ ಗೋಪಾಲ ವಿಠಲ ದಾಸರು`, keeping the shorter `ಗೋಪಾಲ ವಿಠಲ` /
+  `ಶ್ರೀ ಗೋಪಾಲ ದಾಸರು` group separate. Four compatible items were resolved;
+  two items with the shorter explicit credit `ಶ್ರೀ ವರದ ಗೋಪಾಲ ದಾಸರು` were
+  held for owner review.
+- Approved `ಶ್ರೀ ವರದ ಗೋಪಾಲ ದಾಸರು` as a general composer-name alias for
+  `ಶ್ರೀ ವರದ ಗೋಪಾಲ ವಿಠಲ ದಾಸರು`, resolving `sharana janarannella.txt` and
+  `Smarisu Gurugala.txt`. Both source credits remain unchanged and preserved.
+- Established `ಪ್ರಾಣೇಶ ವಿಠಲ` as a general ankita reference group for
+  `ಶ್ರೀ ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು`. It matched five final-charana items, including
+  `banda govinda mukunda.txt`, without changing source wording or composer
+  credits.
+- Regenerated the private report after verifying all996 raw originals,871
+  canonical Markdown hashes, strict decoding/parsing and124 prepared spans.
+  The report records840 fully paired/155 pending,49 review decisions,26
+  effective reference groups,57 Hayavadana applications and191 final-charana
+  applications (189 newly paired,2 ankita-only updates). Exported the
+  metadata-only checkpoint with7,557 connected evidence nodes and154 queued
+  items plus1 separately confirmed unmapped ankita with unknown composer.
+  Queue reasons are129 missing eligible final-charana ankitas and25 uncertain
+  boundaries; there are no active signature-group conflicts or composer-map
+  contradictions. The receipt remains871 imported/125 held and all5,108 verse
+  proposals remain provisional.
+- The Library `npm run check` completed successfully: strict TypeScript,
+ 306/306 tests, source validation (871 imported/125 held) and unchanged
+  provisional verse validation (5,108 proposals).
+- No source text, product metadata, registry assignments or verse approvals
+  were changed. No commit or push was made.
+
+## 2026-11-02: owner-confirmed attribution reviews25-27
+
+- Recorded three item-specific owner decisions in the private review inputs:
+  the explicit composer credits for `neere torele.txt` and `ರಾಮ ಹರೇ.txt`
+  supersede only their incompatible generic Sri Krishna reference associations;
+  `Yamanello Kaanenendu.txt` selects Purandara Vitthala from two distinct
+  approved final-charana groups. No global alias, identity claim or broader
+  signature rule was added. Original sources and lyrics remain unchanged.
+- Regenerated the private attribution report successfully after verifying all
+  996 raw originals,871 canonical Markdown hashes, strict decoding/parsing and
+  124 prepared canonical spans. Exported the metadata-only checkpoint with
+  7,424 connected evidence nodes and no lyric payloads or local absolute paths.
+  Current totals are734 fully paired/261 pending; the queue has260 items plus
+  one separately confirmed unmapped ankita with unknown composer. The receipt
+  remains871 imported/125 held and all5,108 verse proposals remain provisional.
+- The Library `npm run check` passed strict TypeScript,306/306 tests with no
+  failures, skips or cancellations, source validation871/125 and unchanged
+  5,108 uncertain verse proposals. Repository hygiene passed975 tracked files;
+  `git diff --check` passed. The final-tree rerun after these checkpoint and
+  documentation updates also passed. No commit or push was made.
+
 ## 2026-10-31: portable unfinished attribution review handoff
 
 - At the owner's request, paused further attribution questions and persisted a
