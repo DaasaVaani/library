@@ -2,28 +2,28 @@
   "schema": "source-attribution-review-checkpoint",
   "version": 1,
   "scope": "Owner-approved review interpretations only; no applied product metadata, registry IDs, source migration, verse approval or publication authorization.",
-  "sourceReportSha256": "eb94fc6133fa8ac9f619b3f216a6ff3d03d749e1a32cab9ec80a5c9bf8ef1590",
+  "sourceReportSha256": "4588e97a8795f7844e931994fd65f7a240da222a9ff4a16ae75386731b8f23dd",
   "counts": {
-    "full-composer-and-ankita-resolved": 880,
-    "composer-only": 60,
+    "full-composer-and-ankita-resolved": 886,
+    "composer-only": 58,
     "ankita-only": 1,
     "real-conflicting-attribution": 0,
     "signature-only-candidates-needing-context": 13,
-    "missing-sufficient-evidence": 41
+    "missing-sufficient-evidence": 37
   },
-  "done": 880,
-  "pendingFullPair": 115,
-  "ownerReviewDecisionsApplied": 61,
-  "effectiveMasterRevision": 36,
+  "done": 886,
+  "pendingFullPair": 109,
+  "ownerReviewDecisionsApplied": 63,
+  "effectiveMasterRevision": 38,
   "finalReferenceGroups": 37,
   "automaticApplications": {
     "hayavadana": 57,
-    "finalCharana": 231,
-    "finalCharanaFullyPaired": 229,
+    "finalCharana": 237,
+    "finalCharanaFullyPaired": 235,
     "finalCharanaFieldOnly": 2
   },
   "pendingReviewQueueCounts": {
-    "no-approved-final-charana-ankita": 89,
+    "no-approved-final-charana-ankita": 83,
     "conflicting-final-charana-signature-groups": 0,
     "boundary-uncertainty": 25,
     "composer-map-contradiction": 0
@@ -869,6 +869,52 @@
       "confirmationComposerEvidenceIds": [
         "e-003531"
       ]
+    },
+    {
+      "id": "purandara-vitthala-geminated-alias",
+      "reviewNumber": 60,
+      "kind": "ankita-alias",
+      "composerPreferred": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+      "ankitaPreferred": "ಪುರಂದರ ವಿಠಲ",
+      "ankitaAlias": "ಪುರಂದರ ವಿಠ್ಠಲ",
+      "signatureKey": "ಪುರಂದರವಿಠಲ",
+      "supportingSourceFile": "Angi Tottene.txt",
+      "supportingRawSha256": "a6518109b19eaeab1dd8918fc915886031fb792262ccf9d04312ad6b0851eeb8",
+      "signatureLine": 37,
+      "composerCreditLine": 37,
+      "referenceEvidenceIds": [
+        "e-000118",
+        "e-000122"
+      ],
+      "confirmationSourceFile": "Karunanidhiye Isha.txt",
+      "confirmationRawSha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5",
+      "confirmationLine": 28,
+      "confirmationComposerEvidenceIds": [
+        "e-001475"
+      ]
+    },
+    {
+      "id": "purandara-vittala-short-i-spelling-alias",
+      "reviewNumber": 60,
+      "kind": "ankita-alias",
+      "composerPreferred": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+      "ankitaPreferred": "ಪುರಂದರ ವಿಠಲ",
+      "ankitaAlias": "ಪುರಂದರ ವಿಟ್ಠಲ",
+      "signatureKey": "ಪುರಂದರವಿಠಲ",
+      "supportingSourceFile": "Angi Tottene.txt",
+      "supportingRawSha256": "a6518109b19eaeab1dd8918fc915886031fb792262ccf9d04312ad6b0851eeb8",
+      "signatureLine": 37,
+      "composerCreditLine": 37,
+      "referenceEvidenceIds": [
+        "e-000118",
+        "e-000122"
+      ],
+      "confirmationSourceFile": "Narayana Ninna Namada.txt",
+      "confirmationRawSha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b",
+      "confirmationLine": 36,
+      "confirmationComposerEvidenceIds": [
+        "e-001991"
+      ]
     }
   ],
   "ownerAnkitaReferenceDecisions": [
@@ -1196,7 +1242,10 @@
       "composerPreferred": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
       "composerAliases": [],
       "ankitaPreferred": "ಪುರಂದರ ವಿಠಲ",
-      "ankitaAliases": [],
+      "ankitaAliases": [
+        "ಪುರಂದರ ವಿಠ್ಠಲ",
+        "ಪುರಂದರ ವಿಟ್ಠಲ"
+      ],
       "rawComposerForms": [
         "ಶ್ರೀ ಪುರಂದರ ದಾಸರು"
       ],
@@ -1204,6 +1253,20 @@
         "ಪುರಂದರ ವಿಠಲ"
       ],
       "ownerDecisionIds": [],
+      "ankitaAliasDecisionIds": [
+        "purandara-vitthala-geminated-alias",
+        "purandara-vittala-short-i-spelling-alias"
+      ],
+      "ankitaAliasDecisionForms": [
+        {
+          "decisionId": "purandara-vitthala-geminated-alias",
+          "ankitaAlias": "ಪುರಂದರ ವಿಠ್ಠಲ"
+        },
+        {
+          "decisionId": "purandara-vittala-short-i-spelling-alias",
+          "ankitaAlias": "ಪುರಂದರ ವಿಟ್ಠಲ"
+        }
+      ],
       "references": [
         {
           "evidenceId": "e-000002",
@@ -7424,6 +7487,50 @@
               "path": "text_files_from_source/ಶ್ರೀನಿವಾಸ ನೀನೇ.txt",
               "line": 43,
               "sha256": "3d7bfea5d0682861f410cf4376fb05a0c3041b69f982d7053566f6fadb87f518"
+            }
+          ]
+        },
+        {
+          "evidenceId": "owner-approved-ankita-alias-purandara-vitthala-geminated-alias",
+          "sourceFile": "Karunanidhiye Isha.txt",
+          "line": 28,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+          "ankita": "ಪುರಂದರ ವಿಠ್ಠಲ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/Karunanidhiye Isha.txt",
+              "line": 28,
+              "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+            },
+            {
+              "path": "text_files_from_source/Karunanidhiye Isha.txt",
+              "line": 59,
+              "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+            }
+          ]
+        },
+        {
+          "evidenceId": "owner-approved-ankita-alias-purandara-vittala-short-i-spelling-alias",
+          "sourceFile": "Narayana Ninna Namada.txt",
+          "line": 36,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+          "ankita": "ಪುರಂದರ ವಿಟ್ಠಲ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/Narayana Ninna Namada.txt",
+              "line": 36,
+              "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+            },
+            {
+              "path": "text_files_from_source/Narayana Ninna Namada.txt",
+              "line": 77,
+              "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
             }
           ]
         }
@@ -23649,17 +23756,70 @@
       "sourceFile": "Bandu Nintiha Nodi.txt",
       "rawSha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb",
       "markdownSha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f",
-      "category": "missing-sufficient-evidence",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vitthala-geminated-alias"
+      ],
       "explicitComposerRawForms": [],
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
-      "composer": null,
-      "ankita": null,
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
+      "composer": {
+        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-d4f31e3a-93ad-4691-b7a5-8b351b7faf3b"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
+            "line": 41,
+            "canonicalLine": 41,
+            "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
+          }
+        ]
+      },
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-d4f31e3a-93ad-4691-b7a5-8b351b7faf3b"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
+            "line": 41,
+            "canonicalLine": 41,
+            "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -34558,17 +34718,70 @@
       "sourceFile": "Harinamadaraginiyu.txt",
       "rawSha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd",
       "markdownSha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63",
-      "category": "missing-sufficient-evidence",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vitthala-geminated-alias"
+      ],
       "explicitComposerRawForms": [],
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
-      "composer": null,
-      "ankita": null,
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
+      "composer": {
+        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-8ccffd9c-43a7-4147-9b69-3069313ddaa0"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Harinamadaraginiyu.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
+          }
+        ]
+      },
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-8ccffd9c-43a7-4147-9b69-3069313ddaa0"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Harinamadaraginiyu.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -39670,17 +39883,70 @@
       "sourceFile": "Kanakadasaru endu samanya.txt",
       "rawSha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0",
       "markdownSha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0",
-      "category": "missing-sufficient-evidence",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vittala-short-i-spelling-alias"
+      ],
       "explicitComposerRawForms": [],
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
-      "composer": null,
-      "ankita": null,
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
+      "composer": {
+        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-cdba9a66-1ee2-47b3-8181-ab62ce41526e"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vittala-short-i-spelling-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
+          }
+        ]
+      },
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-cdba9a66-1ee2-47b3-8181-ab62ce41526e"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vittala-short-i-spelling-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -41131,9 +41397,11 @@
       "sourceFile": "Karunanidhiye Isha.txt",
       "rawSha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5",
       "markdownSha256": null,
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vitthala-geminated-alias"
+      ],
       "explicitComposerRawForms": [
         "Sri Purandara Dasaru",
         "ಶ್ರೀ ಪುರಂದರ ದಾಸರು"
@@ -41141,8 +41409,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
         "status": "final-source-backed",
@@ -41160,7 +41431,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-raw:Karunanidhiye Isha.txt"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 28,
+            "canonicalLine": 28,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -48518,9 +48813,11 @@
       "sourceFile": "Narayana Ninna Namada.txt",
       "rawSha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b",
       "markdownSha256": null,
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vittala-short-i-spelling-alias"
+      ],
       "explicitComposerRawForms": [
         "Sri Purandara Dasaru",
         "ಶ್ರೀ ಪುರಂದರ ದಾಸರು"
@@ -48528,8 +48825,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
         "status": "final-source-backed",
@@ -48547,7 +48847,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-raw:Narayana Ninna Namada.txt"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vittala-short-i-spelling-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 36,
+            "canonicalLine": 36,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -62836,17 +63160,70 @@
       "sourceFile": "Vandisuvudadiyalli.txt",
       "rawSha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15",
       "markdownSha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9",
-      "category": "missing-sufficient-evidence",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "purandara-vitthala-geminated-alias"
+      ],
       "explicitComposerRawForms": [],
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
-      "composer": null,
-      "ankita": null,
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
+      "composer": {
+        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-d12befa5-e18d-464a-9d46-a4cb0175ec07"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Vandisuvudadiyalli.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
+          }
+        ]
+      },
+      "ankita": {
+        "value": "ಪುರಂದರ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-d12befa5-e18d-464a-9d46-a4cb0175ec07"
+        ],
+        "referenceSignatureKeys": [
+          "ಪುರಂದರವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "purandara-vitthala-geminated-alias"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Vandisuvudadiyalli.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -279723,6 +280100,90 @@
       "finalCharanaBoundary": null
     },
     {
+      "id": "owner-approved-ankita-alias-purandara-vitthala-geminated-alias",
+      "itemKey": "raw:Karunanidhiye Isha.txt",
+      "sourceFile": "Karunanidhiye Isha.txt",
+      "role": "attribution",
+      "value": "ಪುರಂದರ ವಿಠ್ಠಲ",
+      "kind": "owner-approved-ankita-alias-reference",
+      "referenceSignatureKey": "ಪುರಂದರವಿಠಲ",
+      "ownerDecisionId": "purandara-vitthala-geminated-alias",
+      "composer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+      "ankita": "ಪುರಂದರ ವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-001475"
+      ],
+      "authorityNote": "The owner approves geminated ಪುರಂದರ ವಿಠ್ಠಲ as a general ankita alias for the existing ಪುರಂದರ ವಿಠಲ group associated with ಶ್ರೀ ಪುರಂದರ ದಾಸರು. It is attested in the established final charana of Karunanidhiye Isha.txt alongside the matching explicit composer credit. Apply only through the approved final-charana rule; preserve source wording and explicit credits.",
+      "referenceEvidenceIds": [
+        "e-000118",
+        "e-000122"
+      ],
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Karunanidhiye Isha.txt",
+          "line": 28,
+          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+        },
+        {
+          "path": "text_files_from_source/Karunanidhiye Isha.txt",
+          "line": 59,
+          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [
+        {
+          "path": "text_files_from_source/Angi Tottene.txt",
+          "line": 37,
+          "sha256": "a6518109b19eaeab1dd8918fc915886031fb792262ccf9d04312ad6b0851eeb8"
+        }
+      ],
+      "finalCharanaBoundary": null
+    },
+    {
+      "id": "owner-approved-ankita-alias-purandara-vittala-short-i-spelling-alias",
+      "itemKey": "raw:Narayana Ninna Namada.txt",
+      "sourceFile": "Narayana Ninna Namada.txt",
+      "role": "attribution",
+      "value": "ಪುರಂದರ ವಿಟ್ಠಲ",
+      "kind": "owner-approved-ankita-alias-reference",
+      "referenceSignatureKey": "ಪುರಂದರವಿಠಲ",
+      "ownerDecisionId": "purandara-vittala-short-i-spelling-alias",
+      "composer": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
+      "ankita": "ಪುರಂದರ ವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-001991"
+      ],
+      "authorityNote": "The owner approves the source-spelled ಪುರಂದರ ವಿಟ್ಠಲ as a separate general ankita alias for the existing ಪುರಂದರ ವಿಠಲ group associated with ಶ್ರೀ ಪುರಂದರ ದಾಸರು. It is attested in the established final charana of Narayana Ninna Namada.txt alongside the matching explicit composer credit. Preserve the source distinction between ವಿಠ್ಠಲ and ವಿಟ್ಠಲ; apply only through the approved final-charana rule and preserve source wording and explicit credits.",
+      "referenceEvidenceIds": [
+        "e-000118",
+        "e-000122"
+      ],
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Narayana Ninna Namada.txt",
+          "line": 36,
+          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+        },
+        {
+          "path": "text_files_from_source/Narayana Ninna Namada.txt",
+          "line": 77,
+          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [
+        {
+          "path": "text_files_from_source/Angi Tottene.txt",
+          "line": 37,
+          "sha256": "a6518109b19eaeab1dd8918fc915886031fb792262ccf9d04312ad6b0851eeb8"
+        }
+      ],
+      "finalCharanaBoundary": null
+    },
+    {
       "id": "owner-approved-ankita-reference-merge-kanaka-adikeshava-reference-group-merge",
       "itemKey": "dd7e8de8-9c2a-449a-8c93-1cf2f0e112e7",
       "sourceFile": "Isha Ninna Charana.txt",
@@ -282799,6 +283260,127 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-d4f31e3a-93ad-4691-b7a5-8b351b7faf3b",
+      "itemKey": "d4f31e3a-93ad-4691-b7a5-8b351b7faf3b",
+      "sourceFile": "Bandu Nintiha Nodi.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb",
+      "markdownSha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
+          "line": 41,
+          "canonicalLine": 41,
+          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": null,
+            "canonicalLine": 31,
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 71,
+            "canonicalLine": 32,
+            "id": "d419cbc8-ca95-41df-b1a5-2d7d454cb9bb",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 72,
+            "canonicalLine": 33,
+            "id": "067902ad-2a4f-465d-a35d-4e8ee1292da5",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 73,
+            "canonicalLine": 34,
+            "id": "607423fd-cce4-418e-80eb-e911df9a4a55",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 74,
+            "canonicalLine": 35,
+            "id": "09f64dcd-779e-4b14-883d-41e83b9cf7e2",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 75,
+            "canonicalLine": 36,
+            "id": "82a6b2b8-f33e-4dbd-a093-772fc5b26271",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 76,
+            "canonicalLine": 37,
+            "id": "46c98d3c-7644-4e9a-8858-00b708fcd13b",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 77,
+            "canonicalLine": 38,
+            "id": "d5fbdb97-3070-4fdf-9d3e-1a35950066a5",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 78,
+            "canonicalLine": 39,
+            "id": "91847f47-92ed-4bb6-9d83-21f1020adc20",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 79,
+            "canonicalLine": 40,
+            "id": "8cd71ffc-fb80-4a71-a7c6-456543147a08",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          },
+          {
+            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
+            "line": 80,
+            "canonicalLine": 41,
+            "id": "ee5a7f42-4d49-4269-b352-cd8efd26a2ca",
+            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 19,
+            "number": 1
+          },
+          {
+            "canonicalLine": 30,
+            "number": 2
+          },
+          {
+            "canonicalLine": 41,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-e6c582f1-0a03-4a5f-9033-b96c1837bf51",
       "itemKey": "e6c582f1-0a03-4a5f-9033-b96c1837bf51",
       "sourceFile": "Baramma Parvathi Namma Manege.txt",
@@ -285811,6 +286393,85 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-8ccffd9c-43a7-4147-9b69-3069313ddaa0",
+      "itemKey": "8ccffd9c-43a7-4147-9b69-3069313ddaa0",
+      "sourceFile": "Harinamadaraginiyu.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd",
+      "markdownSha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Harinamadaraginiyu.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
+            "line": null,
+            "canonicalLine": 13,
+            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
+          },
+          {
+            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
+            "line": 53,
+            "canonicalLine": 14,
+            "id": "bd2fb37f-9954-4915-b33e-2a237a499f4c",
+            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
+          },
+          {
+            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
+            "line": 54,
+            "canonicalLine": 15,
+            "id": "fe5cc53e-8baa-4446-b868-e8c4ea7652fb",
+            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
+          },
+          {
+            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
+            "line": 55,
+            "canonicalLine": 16,
+            "id": "ffa651be-82f5-4d31-b9f4-0828b4d6e4cf",
+            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
+          },
+          {
+            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
+            "line": 56,
+            "canonicalLine": 17,
+            "id": "89c73657-d53b-40fa-9c88-30d525b2a161",
+            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-64a7e652-6df8-4f6a-89cf-3fd1a458ea6b",
       "itemKey": "64a7e652-6df8-4f6a-89cf-3fd1a458ea6b",
       "sourceFile": "Harushadindali Kaayo Hanuma.txt",
@@ -286591,6 +287252,85 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-cdba9a66-1ee2-47b3-8181-ab62ce41526e",
+      "itemKey": "cdba9a66-1ee2-47b3-8181-ab62ce41526e",
+      "sourceFile": "Kanakadasaru endu samanya.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0",
+      "markdownSha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
+            "line": null,
+            "canonicalLine": 13,
+            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
+          },
+          {
+            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
+            "line": 53,
+            "canonicalLine": 14,
+            "id": "548f0473-9d8e-4362-8417-7bccb3088181",
+            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
+          },
+          {
+            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
+            "line": 54,
+            "canonicalLine": 15,
+            "id": "749f4448-74dd-4578-9eac-1d8804fcbab0",
+            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
+          },
+          {
+            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
+            "line": 55,
+            "canonicalLine": 16,
+            "id": "197d5371-7dd5-444b-ac24-ff9fd028cb86",
+            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
+          },
+          {
+            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
+            "line": 56,
+            "canonicalLine": 17,
+            "id": "d8a6e651-fcd5-43f9-8bf7-3ff3f54ba1fa",
+            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-8b7e796e-30a6-4424-83eb-9768265643dc",
       "itemKey": "8b7e796e-30a6-4424-83eb-9768265643dc",
       "sourceFile": "Kande Kande Swamiya.txt",
@@ -287147,6 +287887,89 @@
             "canonicalLine": 28,
             "id": "c52bf9b2-b77a-46a9-a11c-e9d72f1b46ca",
             "sha256": "7f03597e3e0982772a11629a7c682a508c2c4201be2310d6e8769a36283ced08"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 8,
+            "number": 1
+          },
+          {
+            "canonicalLine": 13,
+            "number": 2
+          },
+          {
+            "canonicalLine": 18,
+            "number": 3
+          },
+          {
+            "canonicalLine": 23,
+            "number": 4
+          },
+          {
+            "canonicalLine": 28,
+            "number": 5
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-raw:Karunanidhiye Isha.txt",
+      "itemKey": "raw:Karunanidhiye Isha.txt",
+      "sourceFile": "Karunanidhiye Isha.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5",
+      "markdownSha256": null,
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Karunanidhiye Isha.txt",
+          "line": 28,
+          "canonicalLine": 28,
+          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 24,
+            "canonicalLine": 24,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+          },
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 25,
+            "canonicalLine": 25,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+          },
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 26,
+            "canonicalLine": 26,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+          },
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 27,
+            "canonicalLine": 27,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
+          },
+          {
+            "path": "text_files_from_source/Karunanidhiye Isha.txt",
+            "line": 28,
+            "canonicalLine": 28,
+            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
           }
         ],
         "numberedEndings": [
@@ -288897,6 +289720,97 @@
           {
             "canonicalLine": 17,
             "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-raw:Narayana Ninna Namada.txt",
+      "itemKey": "raw:Narayana Ninna Namada.txt",
+      "sourceFile": "Narayana Ninna Namada.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b",
+      "markdownSha256": null,
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Narayana Ninna Namada.txt",
+          "line": 36,
+          "canonicalLine": 36,
+          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 33,
+            "canonicalLine": 33,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          },
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 34,
+            "canonicalLine": 34,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          },
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 35,
+            "canonicalLine": 35,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          },
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 36,
+            "canonicalLine": 36,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          },
+          {
+            "path": "text_files_from_source/Narayana Ninna Namada.txt",
+            "line": 37,
+            "canonicalLine": 37,
+            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          },
+          {
+            "canonicalLine": 22,
+            "number": 4
+          },
+          {
+            "canonicalLine": 27,
+            "number": 5
+          },
+          {
+            "canonicalLine": 32,
+            "number": 6
+          },
+          {
+            "canonicalLine": 37,
+            "number": 7
           }
         ],
         "sectionHeadingWitnesses": []
@@ -294759,6 +295673,85 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-d12befa5-e18d-464a-9d46-a4cb0175ec07",
+      "itemKey": "d12befa5-e18d-464a-9d46-a4cb0175ec07",
+      "sourceFile": "Vandisuvudadiyalli.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15",
+      "markdownSha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Vandisuvudadiyalli.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
+            "line": null,
+            "canonicalLine": 13,
+            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
+          },
+          {
+            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
+            "line": 53,
+            "canonicalLine": 14,
+            "id": "4749a3bd-2615-405c-95e4-39591ab701b9",
+            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
+          },
+          {
+            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
+            "line": 54,
+            "canonicalLine": 15,
+            "id": "a077af5f-3b31-4275-8f90-62b5baddea56",
+            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
+          },
+          {
+            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
+            "line": 55,
+            "canonicalLine": 16,
+            "id": "160ddfd2-9fa8-4f4b-9d78-6c2314620f93",
+            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
+          },
+          {
+            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
+            "line": 56,
+            "canonicalLine": 17,
+            "id": "fa0951f8-c267-48a8-9290-90c5c14e957c",
+            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-e9c62ebe-1a75-43c7-a705-70fde7e8c34c",
       "itemKey": "e9c62ebe-1a75-43c7-a705-70fde7e8c34c",
       "sourceFile": "Venkata Ramana Vedantha.txt",
@@ -300103,183 +301096,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "d4f31e3a-93ad-4691-b7a5-8b351b7faf3b",
-      "sourceFile": "Bandu Nintiha Nodi.txt",
-      "rawSha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb",
-      "markdownSha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f",
-      "previousCategory": "missing-sufficient-evidence",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": null,
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": null,
-            "canonicalLine": 31,
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 71,
-            "canonicalLine": 32,
-            "id": "d419cbc8-ca95-41df-b1a5-2d7d454cb9bb",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 72,
-            "canonicalLine": 33,
-            "id": "067902ad-2a4f-465d-a35d-4e8ee1292da5",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 73,
-            "canonicalLine": 34,
-            "id": "607423fd-cce4-418e-80eb-e911df9a4a55",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 74,
-            "canonicalLine": 35,
-            "id": "09f64dcd-779e-4b14-883d-41e83b9cf7e2",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 75,
-            "canonicalLine": 36,
-            "id": "82a6b2b8-f33e-4dbd-a093-772fc5b26271",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 76,
-            "canonicalLine": 37,
-            "id": "46c98d3c-7644-4e9a-8858-00b708fcd13b",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 77,
-            "canonicalLine": 38,
-            "id": "d5fbdb97-3070-4fdf-9d3e-1a35950066a5",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 78,
-            "canonicalLine": 39,
-            "id": "91847f47-92ed-4bb6-9d83-21f1020adc20",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 79,
-            "canonicalLine": 40,
-            "id": "8cd71ffc-fb80-4a71-a7c6-456543147a08",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          },
-          {
-            "path": "library/d4f31e3a-93ad-4691-b7a5-8b351b7faf3b.md",
-            "line": 80,
-            "canonicalLine": 41,
-            "id": "ee5a7f42-4d49-4269-b352-cd8efd26a2ca",
-            "sha256": "bc492c40cd52271bc1d8b33664272fa7b190c063a3f06f21b26116413be25c4f"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 19,
-            "number": 1
-          },
-          {
-            "canonicalLine": 30,
-            "number": 2
-          },
-          {
-            "canonicalLine": 41,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 32,
-          "canonicalLine": 32,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 33,
-          "canonicalLine": 33,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 34,
-          "canonicalLine": 34,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 35,
-          "canonicalLine": 35,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 36,
-          "canonicalLine": 36,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 37,
-          "canonicalLine": 37,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 38,
-          "canonicalLine": 38,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 39,
-          "canonicalLine": 39,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 40,
-          "canonicalLine": 40,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        },
-        {
-          "path": "text_files_from_source/Bandu Nintiha Nodi.txt",
-          "line": 41,
-          "canonicalLine": 41,
-          "sha256": "2be14ad73f8b7ea1a1df847180e719867a81d1340521ba4bc4c3e350b1694deb"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "18dd7588-6df9-4887-abb0-d1e2f7b65ab4",
       "sourceFile": "Bhajisabaarade Manave.txt",
       "rawSha256": "272dbb3df150a7715dbb60b13632375d22f8fd6facadbd9fbecf024991f3e2c7",
@@ -302051,105 +302867,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "8ccffd9c-43a7-4147-9b69-3069313ddaa0",
-      "sourceFile": "Harinamadaraginiyu.txt",
-      "rawSha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd",
-      "markdownSha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63",
-      "previousCategory": "missing-sufficient-evidence",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": null,
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
-            "line": null,
-            "canonicalLine": 13,
-            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
-          },
-          {
-            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
-            "line": 53,
-            "canonicalLine": 14,
-            "id": "bd2fb37f-9954-4915-b33e-2a237a499f4c",
-            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
-          },
-          {
-            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
-            "line": 54,
-            "canonicalLine": 15,
-            "id": "fe5cc53e-8baa-4446-b868-e8c4ea7652fb",
-            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
-          },
-          {
-            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
-            "line": 55,
-            "canonicalLine": 16,
-            "id": "ffa651be-82f5-4d31-b9f4-0828b4d6e4cf",
-            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
-          },
-          {
-            "path": "library/8ccffd9c-43a7-4147-9b69-3069313ddaa0.md",
-            "line": 56,
-            "canonicalLine": 17,
-            "id": "89c73657-d53b-40fa-9c88-30d525b2a161",
-            "sha256": "1125dbfbefdcc2b61dc4a8b496843f9fe5e36cea6f6160310e2b394d57c67f63"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Harinamadaraginiyu.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
-        },
-        {
-          "path": "text_files_from_source/Harinamadaraginiyu.txt",
-          "line": 15,
-          "canonicalLine": 15,
-          "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
-        },
-        {
-          "path": "text_files_from_source/Harinamadaraginiyu.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
-        },
-        {
-          "path": "text_files_from_source/Harinamadaraginiyu.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "51cf6bc8c6c10903b4dd8d31140f5f916300f3c7967766d8fa69164c168ed5fd"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "1f4540ee-3b36-4ab8-b0b3-1f2fb4f7e404",
       "sourceFile": "Hattu Avataaradi Bhaktara Salahuva.txt",
       "rawSha256": "5c4e40fae60c4d504ac897c3a200ac016d4e73226c247828fde562b8bbdb5cae",
@@ -303303,105 +304020,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "cdba9a66-1ee2-47b3-8181-ab62ce41526e",
-      "sourceFile": "Kanakadasaru endu samanya.txt",
-      "rawSha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0",
-      "markdownSha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0",
-      "previousCategory": "missing-sufficient-evidence",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": null,
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
-            "line": null,
-            "canonicalLine": 13,
-            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
-          },
-          {
-            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
-            "line": 53,
-            "canonicalLine": 14,
-            "id": "548f0473-9d8e-4362-8417-7bccb3088181",
-            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
-          },
-          {
-            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
-            "line": 54,
-            "canonicalLine": 15,
-            "id": "749f4448-74dd-4578-9eac-1d8804fcbab0",
-            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
-          },
-          {
-            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
-            "line": 55,
-            "canonicalLine": 16,
-            "id": "197d5371-7dd5-444b-ac24-ff9fd028cb86",
-            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
-          },
-          {
-            "path": "library/cdba9a66-1ee2-47b3-8181-ab62ce41526e.md",
-            "line": 56,
-            "canonicalLine": 17,
-            "id": "d8a6e651-fcd5-43f9-8bf7-3ff3f54ba1fa",
-            "sha256": "d57da8bbb81cbce20045a58c352a22d695247bbc7ed34e035e59dbd9745ec3e0"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
-        },
-        {
-          "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
-          "line": 15,
-          "canonicalLine": 15,
-          "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
-        },
-        {
-          "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
-        },
-        {
-          "path": "text_files_from_source/Kanakadasaru endu samanya.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "2cd1be02c36adac146512cccc679fb036ff7a8f9d939fe8663a09a567a2e0dc0"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "afb75d80-1620-4cab-bdc2-2a925f9c2648",
       "sourceFile": "Kandu Dhanyanaade Gurugala.txt",
       "rawSha256": "7a38874fc75a2489101eef52647082f37703a295f5b569b887f80b0d9e1af372",
@@ -303898,125 +304516,6 @@
           "line": 19,
           "canonicalLine": 19,
           "sha256": "c05ccabc92ae09b6d37bb2d28253f260331a0d847455c147d6108fd1df0b9630"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "raw:Karunanidhiye Isha.txt",
-      "sourceFile": "Karunanidhiye Isha.txt",
-      "rawSha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5",
-      "markdownSha256": null,
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-001475"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 59,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 24,
-            "canonicalLine": 24,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          },
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 25,
-            "canonicalLine": 25,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          },
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 26,
-            "canonicalLine": 26,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          },
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 27,
-            "canonicalLine": 27,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          },
-          {
-            "path": "text_files_from_source/Karunanidhiye Isha.txt",
-            "line": 28,
-            "canonicalLine": 28,
-            "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 8,
-            "number": 1
-          },
-          {
-            "canonicalLine": 13,
-            "number": 2
-          },
-          {
-            "canonicalLine": 18,
-            "number": 3
-          },
-          {
-            "canonicalLine": 23,
-            "number": 4
-          },
-          {
-            "canonicalLine": 28,
-            "number": 5
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Karunanidhiye Isha.txt",
-          "line": 25,
-          "canonicalLine": 25,
-          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-        },
-        {
-          "path": "text_files_from_source/Karunanidhiye Isha.txt",
-          "line": 26,
-          "canonicalLine": 26,
-          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-        },
-        {
-          "path": "text_files_from_source/Karunanidhiye Isha.txt",
-          "line": 27,
-          "canonicalLine": 27,
-          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
-        },
-        {
-          "path": "text_files_from_source/Karunanidhiye Isha.txt",
-          "line": 28,
-          "canonicalLine": 28,
-          "sha256": "a90019ae04f0576e3d8d9d8ac0691210a26f57782da3e022dd9d6cbb7e8eddd5"
         }
       ],
       "originalSignatureWitnesses": [],
@@ -305405,133 +305904,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "raw:Narayana Ninna Namada.txt",
-      "sourceFile": "Narayana Ninna Namada.txt",
-      "rawSha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b",
-      "markdownSha256": null,
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಪುರಂದರ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-001991"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 77,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 33,
-            "canonicalLine": 33,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          },
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 34,
-            "canonicalLine": 34,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          },
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 35,
-            "canonicalLine": 35,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          },
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 36,
-            "canonicalLine": 36,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          },
-          {
-            "path": "text_files_from_source/Narayana Ninna Namada.txt",
-            "line": 37,
-            "canonicalLine": 37,
-            "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          },
-          {
-            "canonicalLine": 22,
-            "number": 4
-          },
-          {
-            "canonicalLine": 27,
-            "number": 5
-          },
-          {
-            "canonicalLine": 32,
-            "number": 6
-          },
-          {
-            "canonicalLine": 37,
-            "number": 7
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Narayana Ninna Namada.txt",
-          "line": 34,
-          "canonicalLine": 34,
-          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-        },
-        {
-          "path": "text_files_from_source/Narayana Ninna Namada.txt",
-          "line": 35,
-          "canonicalLine": 35,
-          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-        },
-        {
-          "path": "text_files_from_source/Narayana Ninna Namada.txt",
-          "line": 36,
-          "canonicalLine": 36,
-          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-        },
-        {
-          "path": "text_files_from_source/Narayana Ninna Namada.txt",
-          "line": 37,
-          "canonicalLine": 37,
-          "sha256": "ad00a71cea545af3e7e4baf55d9e07c91aff07de3121cec22a2b2cc2c8cf683b"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "5055c73a-5b4a-40da-8af4-73aca2f6ce73",
       "sourceFile": "Nee Daya Maalpanu.txt",
       "rawSha256": "5599bb6a6f23dba571ea1e2d5eabefc4912acd55bf65bf8457f6864869a392f5",
@@ -306062,7 +306434,7 @@
       "ruleId": "unique-last-charana-ankita",
       "queueCategory": "no-approved-final-charana-ankita",
       "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
+        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
       ],
       "existingComposer": null,
       "existingAnkita": null,
@@ -308709,105 +309081,6 @@
           "line": 24,
           "canonicalLine": 24,
           "sha256": "de015a28aa680d6a898c36e41ca414daeb1ca56a81023f596518835fecf666ac"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "d12befa5-e18d-464a-9d46-a4cb0175ec07",
-      "sourceFile": "Vandisuvudadiyalli.txt",
-      "rawSha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15",
-      "markdownSha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9",
-      "previousCategory": "missing-sufficient-evidence",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": null,
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
-            "line": null,
-            "canonicalLine": 13,
-            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
-          },
-          {
-            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
-            "line": 53,
-            "canonicalLine": 14,
-            "id": "4749a3bd-2615-405c-95e4-39591ab701b9",
-            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
-          },
-          {
-            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
-            "line": 54,
-            "canonicalLine": 15,
-            "id": "a077af5f-3b31-4275-8f90-62b5baddea56",
-            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
-          },
-          {
-            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
-            "line": 55,
-            "canonicalLine": 16,
-            "id": "160ddfd2-9fa8-4f4b-9d78-6c2314620f93",
-            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
-          },
-          {
-            "path": "library/d12befa5-e18d-464a-9d46-a4cb0175ec07.md",
-            "line": 56,
-            "canonicalLine": 17,
-            "id": "fa0951f8-c267-48a8-9290-90c5c14e957c",
-            "sha256": "37156679dd245d138b8251971be183e63c86a449b72633fe355d5e185f2336b9"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Vandisuvudadiyalli.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
-        },
-        {
-          "path": "text_files_from_source/Vandisuvudadiyalli.txt",
-          "line": 15,
-          "canonicalLine": 15,
-          "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
-        },
-        {
-          "path": "text_files_from_source/Vandisuvudadiyalli.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
-        },
-        {
-          "path": "text_files_from_source/Vandisuvudadiyalli.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "d61bbb63b851c2b368ca0e9f5792bce4c5c3a9d4a8eba5a5764034bba6b66b15"
         }
       ],
       "originalSignatureWitnesses": [],

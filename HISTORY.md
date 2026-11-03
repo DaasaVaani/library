@@ -1,6 +1,6 @@
 # Documentation history
 
-## 2026-11-03: owner-approved attribution reviews48-59
+## 2026-11-03: owner-approved attribution reviews48-60
 
 - Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference
   group for `ಶ್ರೀ ವಾಸುದೇವ ವಿಠ್ಠಲ ದಾಸರು`, grounded in the ending and explicit
@@ -48,20 +48,25 @@
 - Established `ಶೇಷ ವಿಠಲ` as the preferred ankita for
   `ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು`, with geminated `ಶೇಷ ವಿಠ್ಠಲ` as a source-attested
   alias. It resolved two verified final-charana items.
+- Added the separately source-confirmed aliases `ಪುರಂದರ ವಿಠ್ಠಲ` and
+  `ಪುರಂದರ ವಿಟ್ಠಲ` to the existing `ಪುರಂದರ ವಿಠಲ` group for
+  `ಶ್ರೀ ಪುರಂದರ ದಾಸರು`. The distinct spellings matched six compatible
+  final-charana items; the preferred ankita and existing attributions remain
+  unchanged.
 - Regenerated the private report and exported the metadata-only checkpoint:
-  880/995 fully paired, 115 not fully paired, 61 owner decisions, 37 effective
-  groups at revision36, and 7,609 connected evidence nodes. Final-charana
-  attribution has 231 applications (229 new pairings, 2 ankita-only updates).
-  The remaining queue has 114 items (89 missing eligible final-charana
+  886/995 fully paired, 109 not fully paired, 63 owner decisions, 37 effective
+  groups at revision38, and 7,617 connected evidence nodes. Final-charana
+  attribution has 237 applications (235 new pairings, 2 ankita-only updates).
+  The remaining queue has 108 items (83 missing eligible final-charana
   ankitas, 25 boundary uncertainties) plus one separately confirmed unmapped
   ankita whose composer remains unknown.
 - `npm run check` passed after Review54: strict TypeScript, 306/306 tests,
   source validation (871 imported/125 held), and verse validation with all
-  5,108 proposals still provisional. Reviews55-59 changed only review
+  5,108 proposals still provisional. Reviews55-60 changed only review
   metadata; source-witness application and checkpoint export passed for all
-  five.
+  six.
 - No source text, product metadata, registry assignments or verse approvals
-  changed. No push was made.
+  changed.
 
 ## 2026-11-02: owner-approved attribution reviews28-47
 

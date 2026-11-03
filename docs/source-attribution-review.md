@@ -366,18 +366,26 @@ Review59 establishes `ಶೇಷ ವಿಠಲ` as the preferred ankita for
 alias. It resolves `Rama Samudrana.txt` and `Sundara sri ramachandira.txt`;
 source wording and explicit composer credits remain unchanged.
 
-The checkpoint now has 880 fully paired and 115 not fully paired items. Its
-remaining queue has 114 entries: 89 missing eligible final-charana ankitas
+Review60 adds the separately source-confirmed aliases `ಪುರಂದರ ವಿಠ್ಠಲ` and
+`ಪುರಂದರ ವಿಟ್ಠಲ` to the existing `ಪುರಂದರ ವಿಠಲ` group for
+`ಶ್ರೀ ಪುರಂದರ ದಾಸರು`. The spellings remain distinct aliases; the preferred
+ankita and existing attributions are unchanged. The aliases matched
+`Bandu Nintiha Nodi.txt`, `Harinamadaraginiyu.txt`,
+`Kanakadasaru endu samanya.txt`, `Karunanidhiye Isha.txt`,
+`Narayana Ninna Namada.txt`, and `Vandisuvudadiyalli.txt`.
+
+The checkpoint now has 886 fully paired and 109 not fully paired items. Its
+remaining queue has 108 entries: 83 missing eligible final-charana ankitas
 and 25 boundary/alignment uncertainties. There are no active multiple-signature
 cases or composer-map contradictions. One separately confirmed unmapped
 `ವರರಂಗ ವಿಠಲ` ankita has unknown composer and is not another ankita question.
-The effective reference graph has 37 groups at revision36 and 7,609 connected
-evidence nodes; there are 61 owner review decisions. The automatic
-final-charana rule has 231 applications (229 new pairings and 2 ankita-only
+The effective reference graph has 37 groups at revision38 and 7,617 connected
+evidence nodes; there are 63 owner review decisions. The automatic
+final-charana rule has 237 applications (235 new pairings and 2 ankita-only
 updates). Present related cases in concise batches when the evidence supports
 the same decision scope; keep distinct or conflicting cases separate. Report
 done/pending counts and do not turn absence of evidence into a contradiction.
-Select the next batch from the refreshed 114-item queue.
+Select the next batch from the refreshed 108-item queue.
 
 ## Resume on another device
 
