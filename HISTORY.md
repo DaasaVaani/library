@@ -1,6 +1,6 @@
 # Documentation history
 
-## 2026-11-03: owner-approved attribution reviews48-55
+## 2026-11-03: owner-approved attribution reviews48-56
 
 - Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference
   group for `ಶ್ರೀ ವಾಸುದೇವ ವಿಠ್ಠಲ ದಾಸರು`, grounded in the ending and explicit
@@ -32,19 +32,23 @@
   `ಶ್ರೀ ಶ್ರೀಪತಿ ವಿಠಲ ದಾಸರು`, with joined `ಶ್ರೀಪತಿವಿಠಲ` as a source-attested
   alias. It resolved `Hare Venkatashyla Vallabha.txt` and
   `jategaane jagadambe.txt`; source wording and credits remain unchanged.
+- Established `ವೇಣುಗೋಪಾಲ ವಿಠಲ` as a general ankita reference group for
+  `ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು`, with joined `ವೇಣುಗೋಪಾಲವಿಠಲ` as a
+  source-attested alias. It resolved four verified final-charana items while
+  preserving their source wording and explicit composer credits.
 - Regenerated the private report and exported the metadata-only checkpoint:
-  870/995 fully paired, 125 not fully paired, 57 owner decisions, 33 effective
-  groups at revision32, and 7,595 connected evidence nodes. Final-charana
-  attribution has 221 applications (219 new pairings, 2 ankita-only updates).
-  The remaining queue has 124 items (99 missing eligible final-charana
+  874/995 fully paired, 121 not fully paired, 58 owner decisions, 34 effective
+  groups at revision33, and 7,600 connected evidence nodes. Final-charana
+  attribution has 225 applications (223 new pairings, 2 ankita-only updates).
+  The remaining queue has 120 items (95 missing eligible final-charana
   ankitas, 25 boundary uncertainties) plus one separately confirmed unmapped
   ankita whose composer remains unknown.
 - `npm run check` passed after Review54: strict TypeScript, 306/306 tests,
   source validation (871 imported/125 held), and verse validation with all
-  5,108 proposals still provisional. Review55 changed only review metadata;
-  source-witness application and checkpoint export both passed.
+  5,108 proposals still provisional. Reviews55-56 changed only review
+  metadata; source-witness application and checkpoint export passed for both.
 - No source text, product metadata, registry assignments or verse approvals
-  changed. No commit or push was made.
+  changed. No push was made.
 
 ## 2026-11-02: owner-approved attribution reviews28-47
 

@@ -2,28 +2,28 @@
   "schema": "source-attribution-review-checkpoint",
   "version": 1,
   "scope": "Owner-approved review interpretations only; no applied product metadata, registry IDs, source migration, verse approval or publication authorization.",
-  "sourceReportSha256": "ad44b3b6b0d0651a116ca5bb9a145bf5410964400ef69b7afb958ffe2428932b",
+  "sourceReportSha256": "c2b7c96a6ed5a9ef7cb89ea8fad2295af7493e6cc997d83489b504376296c925",
   "counts": {
-    "full-composer-and-ankita-resolved": 870,
-    "composer-only": 70,
+    "full-composer-and-ankita-resolved": 874,
+    "composer-only": 66,
     "ankita-only": 1,
     "real-conflicting-attribution": 0,
     "signature-only-candidates-needing-context": 13,
     "missing-sufficient-evidence": 41
   },
-  "done": 870,
-  "pendingFullPair": 125,
-  "ownerReviewDecisionsApplied": 57,
-  "effectiveMasterRevision": 32,
-  "finalReferenceGroups": 33,
+  "done": 874,
+  "pendingFullPair": 121,
+  "ownerReviewDecisionsApplied": 58,
+  "effectiveMasterRevision": 33,
+  "finalReferenceGroups": 34,
   "automaticApplications": {
     "hayavadana": 57,
-    "finalCharana": 221,
-    "finalCharanaFullyPaired": 219,
+    "finalCharana": 225,
+    "finalCharanaFullyPaired": 223,
     "finalCharanaFieldOnly": 2
   },
   "pendingReviewQueueCounts": {
-    "no-approved-final-charana-ankita": 99,
+    "no-approved-final-charana-ankita": 95,
     "conflicting-final-charana-signature-groups": 0,
     "boundary-uncertainty": 25,
     "composer-map-contradiction": 0
@@ -1084,6 +1084,25 @@
       ],
       "signatureLine": 11,
       "composerCreditLine": 25
+    },
+    {
+      "id": "venugopala-vithala-ankita-composer-reference",
+      "reviewNumber": 56,
+      "kind": "owner-approved-ankita-composer-reference",
+      "sourceFile": "maramanana toro maaruti.txt",
+      "rawSha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0",
+      "composerPreferred": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
+      "ankitaPreferred": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+      "ankitaAliases": [
+        "ವೇಣುಗೋಪಾಲವಿಠಲ"
+      ],
+      "signatureKey": "ವೇಣುಗೋಪಾಲವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-003613",
+        "e-003615"
+      ],
+      "signatureLine": 14,
+      "composerCreditLine": 31
     }
   ],
   "ownerAnkitaReferenceMergeDecisions": [
@@ -17672,6 +17691,52 @@
               "path": "text_files_from_source/Hare Venkatashyla Vallabha.txt",
               "line": 25,
               "sha256": "fca935ea0176c91b25f0af28f3bc4eee8c41f48cd0634a42bad8745295c4cfc9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "signatureKey": "ವೇಣುಗೋಪಾಲವಿಠಲ",
+      "status": "final-source-backed-reference",
+      "composerPreferred": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
+      "composerAliases": [],
+      "ankitaPreferred": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+      "ankitaAliases": [
+        "ವೇಣುಗೋಪಾಲವಿಠಲ"
+      ],
+      "rawComposerForms": [
+        "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು"
+      ],
+      "rawAnkitaForms": [
+        "ವೇಣುಗೋಪಾಲವಿಠಲ"
+      ],
+      "ownerDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
+      "ankitaReferenceDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
+      "references": [
+        {
+          "evidenceId": "owner-approved-ankita-reference-venugopala-vithala-ankita-composer-reference",
+          "sourceFile": "maramanana toro maaruti.txt",
+          "line": 14,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
+          "ankita": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/maramanana toro maaruti.txt",
+              "line": 14,
+              "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+            },
+            {
+              "path": "text_files_from_source/maramanana toro maaruti.txt",
+              "line": 31,
+              "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
             }
           ]
         }
@@ -51612,9 +51677,11 @@
       "sourceFile": "Paarvati Paalisenna.txt",
       "rawSha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df",
       "markdownSha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Venugopala Vittala Dasaru",
         "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು"
@@ -51626,10 +51693,13 @@
         "e-005773",
         "e-005774"
       ],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [
         "e-005773",
         "e-005774"
+      ],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
       ],
       "composer": {
         "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
@@ -51649,7 +51719,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-23e476a1-65ff-46b8-947a-0a7b886d9f1c"
+        ],
+        "referenceSignatureKeys": [
+          "ವೇಣುಗೋಪಾಲವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "venugopala-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Paarvati Paalisenna.txt",
+            "line": 9,
+            "canonicalLine": 9,
+            "sha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -62188,9 +62282,11 @@
       "sourceFile": "Vadirajane Ninna Padakkeragi.txt",
       "rawSha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3",
       "markdownSha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Venugopala Vithala Dasaru",
         "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು"
@@ -62202,10 +62298,13 @@
         "e-006251",
         "e-006252"
       ],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [
         "e-006251",
         "e-006252"
+      ],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
       ],
       "composer": {
         "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
@@ -62225,7 +62324,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-b87eda42-3b48-48bf-9ae3-8f07606fca72"
+        ],
+        "referenceSignatureKeys": [
+          "ವೇಣುಗೋಪಾಲವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "venugopala-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -71766,9 +71889,11 @@
       "sourceFile": "maramanana toro maaruti.txt",
       "rawSha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0",
       "markdownSha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Venugopala vittala Dasaru",
         "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು"
@@ -71780,10 +71905,13 @@
         "e-006596",
         "e-006597"
       ],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [
         "e-006596",
         "e-006597"
+      ],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
       ],
       "composer": {
         "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
@@ -71803,7 +71931,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-36203f10-6384-44bd-9157-3ac313f7465d"
+        ],
+        "referenceSignatureKeys": [
+          "ವೇಣುಗೋಪಾಲವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "venugopala-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/maramanana toro maaruti.txt",
+            "line": 14,
+            "canonicalLine": 14,
+            "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -76915,9 +77067,11 @@
       "sourceFile": "vandipe purandara.txt",
       "rawSha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0",
       "markdownSha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "venugopala-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Venu Goapala Vithala Dasaru",
         "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು"
@@ -76929,10 +77083,13 @@
         "e-006770",
         "e-006771"
       ],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [
         "e-006770",
         "e-006771"
+      ],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
       ],
       "composer": {
         "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
@@ -76952,7 +77109,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-89a7c855-2635-4534-b861-e3a0bea5d316"
+        ],
+        "referenceSignatureKeys": [
+          "ವೇಣುಗೋಪಾಲವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "venugopala-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/vandipe purandara.txt",
+            "line": 18,
+            "canonicalLine": 18,
+            "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -278173,6 +278354,41 @@
       "finalCharanaBoundary": null
     },
     {
+      "id": "owner-approved-ankita-reference-venugopala-vithala-ankita-composer-reference",
+      "itemKey": "36203f10-6384-44bd-9157-3ac313f7465d",
+      "sourceFile": "maramanana toro maaruti.txt",
+      "role": "attribution",
+      "value": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+      "kind": "owner-approved-ankita-composer-reference",
+      "referenceSignatureKey": "ವೇಣುಗೋಪಾಲವಿಠಲ",
+      "ownerDecisionId": "venugopala-vithala-ankita-composer-reference",
+      "composer": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
+      "ankita": "ವೇಣುಗೋಪಾಲ ವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-003613",
+        "e-003615"
+      ],
+      "authorityNote": "The owner approves ವೇಣುಗೋಪಾಲ ವಿಠಲ as a general final-charana ankita reference group for ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು, with joined ವೇಣುಗೋಪಾಲವಿಠಲ as a source-attested spelling alias. The four reviewed songs maramanana toro maaruti.txt, Paarvati Paalisenna.txt, Vadirajane Ninna Padakkeragi.txt, and vandipe purandara.txt share this explicit composer credit and contain the full ankita in their established final charanas. Apply only through the approved final-charana rule; preserve source wording, explicit credits, and distinct shorter identities.",
+      "signatureKey": "ವೇಣುಗೋಪಾಲವಿಠಲ",
+      "rawSha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/maramanana toro maaruti.txt",
+          "line": 14,
+          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+        },
+        {
+          "path": "text_files_from_source/maramanana toro maaruti.txt",
+          "line": 31,
+          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": null
+    },
+    {
       "id": "owner-composer-name-alias-badarayana-vithala-savanuru-approved-name-alias-24bb2c67-9357-4891-9f13-509861ade855",
       "itemKey": "24bb2c67-9357-4891-9f13-509861ade855",
       "sourceFile": "Dasare Gatiyu.txt",
@@ -289332,6 +289548,64 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-23e476a1-65ff-46b8-947a-0a7b886d9f1c",
+      "itemKey": "23e476a1-65ff-46b8-947a-0a7b886d9f1c",
+      "sourceFile": "Paarvati Paalisenna.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df",
+      "markdownSha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Paarvati Paalisenna.txt",
+          "line": 9,
+          "canonicalLine": 9,
+          "sha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/23e476a1-65ff-46b8-947a-0a7b886d9f1c.md",
+            "line": null,
+            "canonicalLine": 8,
+            "sha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a"
+          },
+          {
+            "path": "library/23e476a1-65ff-46b8-947a-0a7b886d9f1c.md",
+            "line": 53,
+            "canonicalLine": 9,
+            "id": "8f784239-e9af-47fa-a428-1c5cdd3414eb",
+            "sha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 5,
+            "number": 1
+          },
+          {
+            "canonicalLine": 7,
+            "number": 2
+          },
+          {
+            "canonicalLine": 9,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-87f5e60c-6f59-48e7-bde4-21954fadfca1",
       "itemKey": "87f5e60c-6f59-48e7-bde4-21954fadfca1",
       "sourceFile": "Pampapurada Linga.txt",
@@ -293658,6 +293932,85 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-b87eda42-3b48-48bf-9ae3-8f07606fca72",
+      "itemKey": "b87eda42-3b48-48bf-9ae3-8f07606fca72",
+      "sourceFile": "Vadirajane Ninna Padakkeragi.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3",
+      "markdownSha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
+            "line": null,
+            "canonicalLine": 13,
+            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
+          },
+          {
+            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
+            "line": 57,
+            "canonicalLine": 14,
+            "id": "ed8b8410-7a95-467d-baf5-e10e70df334d",
+            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
+          },
+          {
+            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
+            "line": 58,
+            "canonicalLine": 15,
+            "id": "53580e2e-59d5-48e2-9e1a-011831f25078",
+            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
+          },
+          {
+            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
+            "line": 59,
+            "canonicalLine": 16,
+            "id": "d536a20e-aaf3-421a-9321-b479ef180adf",
+            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
+          },
+          {
+            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
+            "line": 60,
+            "canonicalLine": 17,
+            "id": "cf287652-3bae-437a-aa4c-d06872fc921f",
+            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-e9c62ebe-1a75-43c7-a705-70fde7e8c34c",
       "itemKey": "e9c62ebe-1a75-43c7-a705-70fde7e8c34c",
       "sourceFile": "Venkata Ramana Vedantha.txt",
@@ -295830,6 +296183,78 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-36203f10-6384-44bd-9157-3ac313f7465d",
+      "itemKey": "36203f10-6384-44bd-9157-3ac313f7465d",
+      "sourceFile": "maramanana toro maaruti.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0",
+      "markdownSha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/maramanana toro maaruti.txt",
+          "line": 14,
+          "canonicalLine": 14,
+          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
+            "line": null,
+            "canonicalLine": 11,
+            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
+          },
+          {
+            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
+            "line": 56,
+            "canonicalLine": 12,
+            "id": "7e751675-5ef4-49c2-9c37-d8c956d0734b",
+            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
+          },
+          {
+            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
+            "line": 57,
+            "canonicalLine": 13,
+            "id": "f82a4a25-f17c-43b8-a2b4-8755d42e954b",
+            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
+          },
+          {
+            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
+            "line": 58,
+            "canonicalLine": 14,
+            "id": "381e3e80-469b-476f-b65c-b008fb91dfca",
+            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 6,
+            "number": 1
+          },
+          {
+            "canonicalLine": 10,
+            "number": 2
+          },
+          {
+            "canonicalLine": 14,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-72fb779d-8d68-4152-ac77-675474ed564c",
       "itemKey": "72fb779d-8d68-4152-ac77-675474ed564c",
       "sourceFile": "marutatmaja madhwamuniraya.txt",
@@ -297009,6 +297434,85 @@
           },
           {
             "canonicalLine": 10,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-89a7c855-2635-4534-b861-e3a0bea5d316",
+      "itemKey": "89a7c855-2635-4534-b861-e3a0bea5d316",
+      "sourceFile": "vandipe purandara.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0",
+      "markdownSha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/vandipe purandara.txt",
+          "line": 18,
+          "canonicalLine": 18,
+          "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
+            "line": null,
+            "canonicalLine": 16,
+            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
+          },
+          {
+            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
+            "line": 60,
+            "canonicalLine": 17,
+            "id": "159f116d-97b9-408d-a94e-96b7eb622820",
+            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
+          },
+          {
+            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
+            "line": 61,
+            "canonicalLine": 18,
+            "id": "1720c373-4f6c-48a1-97b3-cae5e4e8adee",
+            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
+          },
+          {
+            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
+            "line": 62,
+            "canonicalLine": 19,
+            "id": "334d7aad-31d9-4aac-a4e1-d82ce7218dd8",
+            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
+          },
+          {
+            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
+            "line": 63,
+            "canonicalLine": 20,
+            "id": "45ecde45-1fd7-4d14-a51b-54936acde92b",
+            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 10,
+            "number": 1
+          },
+          {
+            "canonicalLine": 15,
+            "number": 2
+          },
+          {
+            "canonicalLine": 20,
             "number": 3
           }
         ],
@@ -303493,109 +303997,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "36203f10-6384-44bd-9157-3ac313f7465d",
-      "sourceFile": "maramanana toro maaruti.txt",
-      "rawSha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0",
-      "markdownSha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-003613",
-          "e-003615"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/maramanana toro maaruti.txt",
-            "line": 31,
-            "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
-            "line": null,
-            "canonicalLine": 11,
-            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
-          },
-          {
-            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
-            "line": 56,
-            "canonicalLine": 12,
-            "id": "7e751675-5ef4-49c2-9c37-d8c956d0734b",
-            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
-          },
-          {
-            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
-            "line": 57,
-            "canonicalLine": 13,
-            "id": "f82a4a25-f17c-43b8-a2b4-8755d42e954b",
-            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
-          },
-          {
-            "path": "library/36203f10-6384-44bd-9157-3ac313f7465d.md",
-            "line": 58,
-            "canonicalLine": 14,
-            "id": "381e3e80-469b-476f-b65c-b008fb91dfca",
-            "sha256": "b3a39a8b7da2e02dc58cb17e56d241579f84eb85325cd3edaa2285abc24eabb3"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 6,
-            "number": 1
-          },
-          {
-            "canonicalLine": 10,
-            "number": 2
-          },
-          {
-            "canonicalLine": 14,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/maramanana toro maaruti.txt",
-          "line": 12,
-          "canonicalLine": 12,
-          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
-        },
-        {
-          "path": "text_files_from_source/maramanana toro maaruti.txt",
-          "line": 13,
-          "canonicalLine": 13,
-          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
-        },
-        {
-          "path": "text_files_from_source/maramanana toro maaruti.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "05d6ba51-04ad-4c2e-bdb4-1ffa7c0c2ed6",
       "sourceFile": "Mareyadiru Mareyadiru Marulu Manuja.txt",
       "rawSha256": "ee690b11ea440e6aad542c4eb6db842143e488d301e2ea26efc2e7d4e64b3330",
@@ -305361,83 +305762,6 @@
           "line": 98,
           "canonicalLine": 94,
           "sha256": "ae2d54b26b62bf92f80ef84014ffbc8f81a03cf52a039f8b302c38853540a906"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "23e476a1-65ff-46b8-947a-0a7b886d9f1c",
-      "sourceFile": "Paarvati Paalisenna.txt",
-      "rawSha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df",
-      "markdownSha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-002221",
-          "e-002223"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Paarvati Paalisenna.txt",
-            "line": 21,
-            "sha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/23e476a1-65ff-46b8-947a-0a7b886d9f1c.md",
-            "line": null,
-            "canonicalLine": 8,
-            "sha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a"
-          },
-          {
-            "path": "library/23e476a1-65ff-46b8-947a-0a7b886d9f1c.md",
-            "line": 53,
-            "canonicalLine": 9,
-            "id": "8f784239-e9af-47fa-a428-1c5cdd3414eb",
-            "sha256": "cc7b20148bf0a4f8fb93d9ecd8dfffb4c4103d63b1acd14c4b29ba155dbd9a8a"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 5,
-            "number": 1
-          },
-          {
-            "canonicalLine": 7,
-            "number": 2
-          },
-          {
-            "canonicalLine": 9,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Paarvati Paalisenna.txt",
-          "line": 9,
-          "canonicalLine": 9,
-          "sha256": "7938b5cf2e6e9714ac518b421d25af398b6102b23156efcd00167bc084d772df"
         }
       ],
       "originalSignatureWitnesses": [],
@@ -307988,238 +308312,6 @@
           "line": 24,
           "canonicalLine": 24,
           "sha256": "de015a28aa680d6a898c36e41ca414daeb1ca56a81023f596518835fecf666ac"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "b87eda42-3b48-48bf-9ae3-8f07606fca72",
-      "sourceFile": "Vadirajane Ninna Padakkeragi.txt",
-      "rawSha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3",
-      "markdownSha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-002835",
-          "e-002837"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
-            "line": 37,
-            "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
-            "line": null,
-            "canonicalLine": 13,
-            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
-          },
-          {
-            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
-            "line": 57,
-            "canonicalLine": 14,
-            "id": "ed8b8410-7a95-467d-baf5-e10e70df334d",
-            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
-          },
-          {
-            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
-            "line": 58,
-            "canonicalLine": 15,
-            "id": "53580e2e-59d5-48e2-9e1a-011831f25078",
-            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
-          },
-          {
-            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
-            "line": 59,
-            "canonicalLine": 16,
-            "id": "d536a20e-aaf3-421a-9321-b479ef180adf",
-            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
-          },
-          {
-            "path": "library/b87eda42-3b48-48bf-9ae3-8f07606fca72.md",
-            "line": 60,
-            "canonicalLine": 17,
-            "id": "cf287652-3bae-437a-aa4c-d06872fc921f",
-            "sha256": "7c1f6d6163273df14e814c027614caadb11e593808a785e66b9a412463c74da6"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
-        },
-        {
-          "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
-          "line": 15,
-          "canonicalLine": 15,
-          "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
-        },
-        {
-          "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
-        },
-        {
-          "path": "text_files_from_source/Vadirajane Ninna Padakkeragi.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "c4d403612c940aadd0ef6a989480d15054a80cc4647797197892ca3bcdab58c3"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "89a7c855-2635-4534-b861-e3a0bea5d316",
-      "sourceFile": "vandipe purandara.txt",
-      "rawSha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0",
-      "markdownSha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-004071",
-          "e-004073"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/vandipe purandara.txt",
-            "line": 43,
-            "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
-            "line": null,
-            "canonicalLine": 16,
-            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
-          },
-          {
-            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
-            "line": 60,
-            "canonicalLine": 17,
-            "id": "159f116d-97b9-408d-a94e-96b7eb622820",
-            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
-          },
-          {
-            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
-            "line": 61,
-            "canonicalLine": 18,
-            "id": "1720c373-4f6c-48a1-97b3-cae5e4e8adee",
-            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
-          },
-          {
-            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
-            "line": 62,
-            "canonicalLine": 19,
-            "id": "334d7aad-31d9-4aac-a4e1-d82ce7218dd8",
-            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
-          },
-          {
-            "path": "library/89a7c855-2635-4534-b861-e3a0bea5d316.md",
-            "line": 63,
-            "canonicalLine": 20,
-            "id": "45ecde45-1fd7-4d14-a51b-54936acde92b",
-            "sha256": "7e3f95eada96377498122e954bc88d5c071d33f8494ec788455434fdf12a36fd"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 10,
-            "number": 1
-          },
-          {
-            "canonicalLine": 15,
-            "number": 2
-          },
-          {
-            "canonicalLine": 20,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/vandipe purandara.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
-        },
-        {
-          "path": "text_files_from_source/vandipe purandara.txt",
-          "line": 18,
-          "canonicalLine": 18,
-          "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
-        },
-        {
-          "path": "text_files_from_source/vandipe purandara.txt",
-          "line": 19,
-          "canonicalLine": 19,
-          "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
-        },
-        {
-          "path": "text_files_from_source/vandipe purandara.txt",
-          "line": 20,
-          "canonicalLine": 20,
-          "sha256": "7da47956eca610da6fcbc9f457facfcb47852c6525b3d30a6ddc103e265442f0"
         }
       ],
       "originalSignatureWitnesses": [],

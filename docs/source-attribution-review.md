@@ -341,18 +341,25 @@ alias. It resolved `Hare Venkatashyla Vallabha.txt` and
 `jategaane jagadambe.txt`; source wording and explicit composer credits remain
 unchanged.
 
-The checkpoint now has 870 fully paired and 125 not fully paired items. Its
-remaining queue has 124 entries: 99 missing eligible final-charana ankitas
+Review56 establishes `ವೇಣುಗೋಪಾಲ ವಿಠಲ` as a general ankita group for
+`ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು`, with joined `ವೇಣುಗೋಪಾಲವಿಠಲ` as a
+source-attested alias. It resolves `maramanana toro maaruti.txt`,
+`Paarvati Paalisenna.txt`, `Vadirajane Ninna Padakkeragi.txt`, and
+`vandipe purandara.txt`; all four preserve their explicit composer credit and
+source wording.
+
+The checkpoint now has 874 fully paired and 121 not fully paired items. Its
+remaining queue has 120 entries: 95 missing eligible final-charana ankitas
 and 25 boundary/alignment uncertainties. There are no active multiple-signature
 cases or composer-map contradictions. One separately confirmed unmapped
 `ವರರಂಗ ವಿಠಲ` ankita has unknown composer and is not another ankita question.
-The effective reference graph has 33 groups at revision32 and 7,595 connected
-evidence nodes; there are 57 owner review decisions. The automatic
-final-charana rule has 221 applications (219 new pairings and 2 ankita-only
+The effective reference graph has 34 groups at revision33 and 7,600 connected
+evidence nodes; there are 58 owner review decisions. The automatic
+final-charana rule has 225 applications (223 new pairings and 2 ankita-only
 updates). Present related cases in concise batches when the evidence supports
 the same decision scope; keep distinct or conflicting cases separate. Report
 done/pending counts and do not turn absence of evidence into a contradiction.
-Select the next batch from the refreshed 124-item queue.
+Select the next batch from the refreshed 120-item queue.
 
 ## Resume on another device
 
