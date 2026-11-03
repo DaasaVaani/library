@@ -2,28 +2,28 @@
   "schema": "source-attribution-review-checkpoint",
   "version": 1,
   "scope": "Owner-approved review interpretations only; no applied product metadata, registry IDs, source migration, verse approval or publication authorization.",
-  "sourceReportSha256": "c2b7c96a6ed5a9ef7cb89ea8fad2295af7493e6cc997d83489b504376296c925",
+  "sourceReportSha256": "a009232c1d18d1594650459764cead9e549d3757e02a77c752c8aae82b20432c",
   "counts": {
-    "full-composer-and-ankita-resolved": 874,
-    "composer-only": 66,
+    "full-composer-and-ankita-resolved": 876,
+    "composer-only": 64,
     "ankita-only": 1,
     "real-conflicting-attribution": 0,
     "signature-only-candidates-needing-context": 13,
     "missing-sufficient-evidence": 41
   },
-  "done": 874,
-  "pendingFullPair": 121,
-  "ownerReviewDecisionsApplied": 58,
-  "effectiveMasterRevision": 33,
-  "finalReferenceGroups": 34,
+  "done": 876,
+  "pendingFullPair": 119,
+  "ownerReviewDecisionsApplied": 59,
+  "effectiveMasterRevision": 34,
+  "finalReferenceGroups": 35,
   "automaticApplications": {
     "hayavadana": 57,
-    "finalCharana": 225,
-    "finalCharanaFullyPaired": 223,
+    "finalCharana": 227,
+    "finalCharanaFullyPaired": 225,
     "finalCharanaFieldOnly": 2
   },
   "pendingReviewQueueCounts": {
-    "no-approved-final-charana-ankita": 95,
+    "no-approved-final-charana-ankita": 93,
     "conflicting-final-charana-signature-groups": 0,
     "boundary-uncertainty": 25,
     "composer-map-contradiction": 0
@@ -1103,6 +1103,23 @@
       ],
       "signatureLine": 14,
       "composerCreditLine": 31
+    },
+    {
+      "id": "guru-pranesha-vithala-ankita-composer-reference",
+      "reviewNumber": 57,
+      "kind": "owner-approved-ankita-composer-reference",
+      "sourceFile": "Pavana Sambhoota.txt",
+      "rawSha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746",
+      "composerPreferred": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
+      "ankitaPreferred": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+      "ankitaAliases": [],
+      "signatureKey": "ಗುರುಪ್ರಾಣೇಶವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-002269",
+        "e-002271"
+      ],
+      "signatureLine": 16,
+      "composerCreditLine": 38
     }
   ],
   "ownerAnkitaReferenceMergeDecisions": [
@@ -17737,6 +17754,50 @@
               "path": "text_files_from_source/maramanana toro maaruti.txt",
               "line": 31,
               "sha256": "b1f5ca43144847b5c53f3fb8fbfcb9d80707ca9f4bd0e641dcfb7115b10034b0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "signatureKey": "ಗುರುಪ್ರಾಣೇಶವಿಠಲ",
+      "status": "final-source-backed-reference",
+      "composerPreferred": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
+      "composerAliases": [],
+      "ankitaPreferred": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+      "ankitaAliases": [],
+      "rawComposerForms": [
+        "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು"
+      ],
+      "rawAnkitaForms": [
+        "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ"
+      ],
+      "ownerDecisionIds": [
+        "guru-pranesha-vithala-ankita-composer-reference"
+      ],
+      "ankitaReferenceDecisionIds": [
+        "guru-pranesha-vithala-ankita-composer-reference"
+      ],
+      "references": [
+        {
+          "evidenceId": "owner-approved-ankita-reference-guru-pranesha-vithala-ankita-composer-reference",
+          "sourceFile": "Pavana Sambhoota.txt",
+          "line": 16,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
+          "ankita": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/Pavana Sambhoota.txt",
+              "line": 16,
+              "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+            },
+            {
+              "path": "text_files_from_source/Pavana Sambhoota.txt",
+              "line": 38,
+              "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
             }
           ]
         }
@@ -52429,9 +52490,11 @@
       "sourceFile": "Pavana Sambhoota.txt",
       "rawSha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746",
       "markdownSha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "guru-pranesha-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Guru Pranesha Vithala Dasaru",
         "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು"
@@ -52439,8 +52502,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
         "status": "final-source-backed",
@@ -52459,7 +52525,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-70b63b58-874b-46bd-ab4f-f3b0b9390e5d"
+        ],
+        "referenceSignatureKeys": [
+          "ಗುರುಪ್ರಾಣೇಶವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "guru-pranesha-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Pavana Sambhoota.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -78351,9 +78441,11 @@
       "sourceFile": "ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
       "rawSha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925",
       "markdownSha256": null,
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "guru-pranesha-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Guru Pranesha Vithala Dasaru",
         "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು"
@@ -78361,8 +78453,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
         "status": "final-source-backed",
@@ -78380,7 +78475,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-raw:ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt"
+        ],
+        "referenceSignatureKeys": [
+          "ಗುರುಪ್ರಾಣೇಶವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "guru-pranesha-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -278389,6 +278508,41 @@
       "finalCharanaBoundary": null
     },
     {
+      "id": "owner-approved-ankita-reference-guru-pranesha-vithala-ankita-composer-reference",
+      "itemKey": "70b63b58-874b-46bd-ab4f-f3b0b9390e5d",
+      "sourceFile": "Pavana Sambhoota.txt",
+      "role": "attribution",
+      "value": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+      "kind": "owner-approved-ankita-composer-reference",
+      "referenceSignatureKey": "ಗುರುಪ್ರಾಣೇಶವಿಠಲ",
+      "ownerDecisionId": "guru-pranesha-vithala-ankita-composer-reference",
+      "composer": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
+      "ankita": "ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-002269",
+        "e-002271"
+      ],
+      "authorityNote": "The owner approves ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ as a distinct general final-charana ankita reference group for ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು. It remains distinct from the shorter ಪ್ರಾಣೇಶ ವಿಠಲ group associated with ಶ್ರೀ ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು. The two reviewed items Pavana Sambhoota.txt and ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt have established final-charana boundaries and the same explicit composer credit. Apply only when the full qualified name occurs in an established final charana; preserve source wording and explicit credits. Do not infer the third boundary-uncertain item.",
+      "signatureKey": "ಗುರುಪ್ರಾಣೇಶವಿಠಲ",
+      "rawSha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Pavana Sambhoota.txt",
+          "line": 16,
+          "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+        },
+        {
+          "path": "text_files_from_source/Pavana Sambhoota.txt",
+          "line": 38,
+          "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": null
+    },
+    {
       "id": "owner-composer-name-alias-badarayana-vithala-savanuru-approved-name-alias-24bb2c67-9357-4891-9f13-509861ade855",
       "itemKey": "24bb2c67-9357-4891-9f13-509861ade855",
       "sourceFile": "Dasare Gatiyu.txt",
@@ -290037,6 +290191,79 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-70b63b58-874b-46bd-ab4f-f3b0b9390e5d",
+      "itemKey": "70b63b58-874b-46bd-ab4f-f3b0b9390e5d",
+      "sourceFile": "Pavana Sambhoota.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746",
+      "markdownSha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Pavana Sambhoota.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
+            "line": null,
+            "canonicalLine": 15,
+            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
+          },
+          {
+            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
+            "line": 59,
+            "canonicalLine": 16,
+            "id": "0f5baac0-8067-4523-bd69-c684dc44cf6c",
+            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
+          },
+          {
+            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
+            "line": 60,
+            "canonicalLine": 17,
+            "id": "71b45a6c-6a64-48f9-b1fd-d46daf106695",
+            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 5,
+            "number": 1
+          },
+          {
+            "canonicalLine": 8,
+            "number": 2
+          },
+          {
+            "canonicalLine": 11,
+            "number": 3
+          },
+          {
+            "canonicalLine": 14,
+            "number": 4
+          },
+          {
+            "canonicalLine": 17,
+            "number": 5
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-754850f4-3ff3-4e03-8119-a3dc25e4769e",
       "itemKey": "754850f4-3ff3-4e03-8119-a3dc25e4769e",
       "sourceFile": "Pore Emma Swaami.txt",
@@ -297786,6 +298013,77 @@
           {
             "canonicalLine": 27,
             "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-raw:ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+      "itemKey": "raw:ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+      "sourceFile": "ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925",
+      "markdownSha256": null,
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+            "line": 15,
+            "canonicalLine": 15,
+            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
+          },
+          {
+            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
+          },
+          {
+            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
+            "line": 17,
+            "canonicalLine": 17,
+            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 5,
+            "number": 1
+          },
+          {
+            "canonicalLine": 8,
+            "number": 2
+          },
+          {
+            "canonicalLine": 11,
+            "number": 3
+          },
+          {
+            "canonicalLine": 14,
+            "number": 4
+          },
+          {
+            "canonicalLine": 17,
+            "number": 5
           }
         ],
         "sectionHeadingWitnesses": []
@@ -305983,104 +306281,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "70b63b58-874b-46bd-ab4f-f3b0b9390e5d",
-      "sourceFile": "Pavana Sambhoota.txt",
-      "rawSha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746",
-      "markdownSha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-002269",
-          "e-002271"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Pavana Sambhoota.txt",
-            "line": 38,
-            "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
-            "line": null,
-            "canonicalLine": 15,
-            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
-          },
-          {
-            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
-            "line": 59,
-            "canonicalLine": 16,
-            "id": "0f5baac0-8067-4523-bd69-c684dc44cf6c",
-            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
-          },
-          {
-            "path": "library/70b63b58-874b-46bd-ab4f-f3b0b9390e5d.md",
-            "line": 60,
-            "canonicalLine": 17,
-            "id": "71b45a6c-6a64-48f9-b1fd-d46daf106695",
-            "sha256": "7b4fa3a847dcec03e2e7833ebd3af98bb57dc7e11464fd38b761788314d715cc"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 5,
-            "number": 1
-          },
-          {
-            "canonicalLine": 8,
-            "number": 2
-          },
-          {
-            "canonicalLine": 11,
-            "number": 3
-          },
-          {
-            "canonicalLine": 14,
-            "number": 4
-          },
-          {
-            "canonicalLine": 17,
-            "number": 5
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Pavana Sambhoota.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
-        },
-        {
-          "path": "text_files_from_source/Pavana Sambhoota.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "da25d99d-884b-4949-8fab-52cf85332183",
       "sourceFile": "Phalavidu Baldudake.txt",
       "rawSha256": "5ba3826a8b267b191fe6bf439bc0ce8f8132b157606fab4fe1747bfa8486351a",
@@ -308714,101 +308914,6 @@
           "line": 26,
           "canonicalLine": 26,
           "sha256": "7dbbfea149f67266f5906aec3f5ba076571afeb7725364d12a89243de0e07047"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "raw:ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-      "sourceFile": "ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-      "rawSha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925",
-      "markdownSha256": null,
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "qualified-signature-must-not-be-shortened-to-another-approved-identity"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-004173"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-            "line": 37,
-            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-            "line": 15,
-            "canonicalLine": 15,
-            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
-          },
-          {
-            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-            "line": 16,
-            "canonicalLine": 16,
-            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
-          },
-          {
-            "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-            "line": 17,
-            "canonicalLine": 17,
-            "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 5,
-            "number": 1
-          },
-          {
-            "canonicalLine": 8,
-            "number": 2
-          },
-          {
-            "canonicalLine": 11,
-            "number": 3
-          },
-          {
-            "canonicalLine": 14,
-            "number": 4
-          },
-          {
-            "canonicalLine": 17,
-            "number": 5
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
-        },
-        {
-          "path": "text_files_from_source/ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "6134b98e49c12d1a9c93ba20859889e659b40f4d22cafc3abbb4785a551f5925"
         }
       ],
       "originalSignatureWitnesses": [],
@@ -312009,7 +312114,11 @@
         }
       ],
       "originalSignatureWitnesses": [],
-      "signatureGroups": []
+      "signatureGroups": [
+        {
+          "signatureKey": "ಗುರುಪ್ರಾಣೇಶವಿಠಲ"
+        }
+      ]
     },
     {
       "itemKey": "75591c45-924e-4b1a-854e-c31257450097",

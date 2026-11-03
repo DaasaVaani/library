@@ -348,18 +348,26 @@ source-attested alias. It resolves `maramanana toro maaruti.txt`,
 `vandipe purandara.txt`; all four preserve their explicit composer credit and
 source wording.
 
-The checkpoint now has 874 fully paired and 121 not fully paired items. Its
-remaining queue has 120 entries: 95 missing eligible final-charana ankitas
+Review57 establishes `ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ` as a distinct general ankita group for
+`ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು`, keeping it separate from the shorter
+`ಪ್ರಾಣೇಶ ವಿಠಲ` group for `ಶ್ರೀ ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು`. It resolves
+`Pavana Sambhoota.txt` and
+`ಆನಂದ ತೀರ್ಥರೆಂಬೊ ಅರ್ಥೀಯ ಪೆಸರುಳ್ಳ ಗುರು ಮಧ್ವ ಮುನಿರಾಯ.txt`. The similar
+`mahadEva mahadEva.txt` remains queued because its final-charana boundary is
+uncertain.
+
+The checkpoint now has 876 fully paired and 119 not fully paired items. Its
+remaining queue has 118 entries: 93 missing eligible final-charana ankitas
 and 25 boundary/alignment uncertainties. There are no active multiple-signature
 cases or composer-map contradictions. One separately confirmed unmapped
 `ವರರಂಗ ವಿಠಲ` ankita has unknown composer and is not another ankita question.
-The effective reference graph has 34 groups at revision33 and 7,600 connected
-evidence nodes; there are 58 owner review decisions. The automatic
-final-charana rule has 225 applications (223 new pairings and 2 ankita-only
+The effective reference graph has 35 groups at revision34 and 7,603 connected
+evidence nodes; there are 59 owner review decisions. The automatic
+final-charana rule has 227 applications (225 new pairings and 2 ankita-only
 updates). Present related cases in concise batches when the evidence supports
 the same decision scope; keep distinct or conflicting cases separate. Report
 done/pending counts and do not turn absence of evidence into a contradiction.
-Select the next batch from the refreshed 120-item queue.
+Select the next batch from the refreshed 118-item queue.
 
 ## Resume on another device
 

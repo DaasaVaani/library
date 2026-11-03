@@ -1,6 +1,6 @@
 # Documentation history
 
-## 2026-11-03: owner-approved attribution reviews48-56
+## 2026-11-03: owner-approved attribution reviews48-57
 
 - Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference
   group for `ಶ್ರೀ ವಾಸುದೇವ ವಿಠ್ಠಲ ದಾಸರು`, grounded in the ending and explicit
@@ -36,17 +36,23 @@
   `ಶ್ರೀ ವೇಣುಗೋಪಾಲ ವಿಠಲ ದಾಸರು`, with joined `ವೇಣುಗೋಪಾಲವಿಠಲ` as a
   source-attested alias. It resolved four verified final-charana items while
   preserving their source wording and explicit composer credits.
+- Established `ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ` as a distinct general ankita reference
+  group for `ಶ್ರೀ ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ ದಾಸರು`, keeping it separate from the
+  shorter `ಪ್ರಾಣೇಶ ವಿಠಲ` group. It resolved two verified items;
+  `mahadEva mahadEva.txt` remains queued because its charana boundary is
+  uncertain.
 - Regenerated the private report and exported the metadata-only checkpoint:
-  874/995 fully paired, 121 not fully paired, 58 owner decisions, 34 effective
-  groups at revision33, and 7,600 connected evidence nodes. Final-charana
-  attribution has 225 applications (223 new pairings, 2 ankita-only updates).
-  The remaining queue has 120 items (95 missing eligible final-charana
+  876/995 fully paired, 119 not fully paired, 59 owner decisions, 35 effective
+  groups at revision34, and 7,603 connected evidence nodes. Final-charana
+  attribution has 227 applications (225 new pairings, 2 ankita-only updates).
+  The remaining queue has 118 items (93 missing eligible final-charana
   ankitas, 25 boundary uncertainties) plus one separately confirmed unmapped
   ankita whose composer remains unknown.
 - `npm run check` passed after Review54: strict TypeScript, 306/306 tests,
   source validation (871 imported/125 held), and verse validation with all
-  5,108 proposals still provisional. Reviews55-56 changed only review
-  metadata; source-witness application and checkpoint export passed for both.
+  5,108 proposals still provisional. Reviews55-57 changed only review
+  metadata; source-witness application and checkpoint export passed for all
+  three.
 - No source text, product metadata, registry assignments or verse approvals
   changed. No push was made.
 
