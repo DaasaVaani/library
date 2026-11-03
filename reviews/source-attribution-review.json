@@ -2,28 +2,28 @@
   "schema": "source-attribution-review-checkpoint",
   "version": 1,
   "scope": "Owner-approved review interpretations only; no applied product metadata, registry IDs, source migration, verse approval or publication authorization.",
-  "sourceReportSha256": "31069875647ec19c9cf9624d443517b3df4fbca72a69ff8f6413b472979c979b",
+  "sourceReportSha256": "eb94fc6133fa8ac9f619b3f216a6ff3d03d749e1a32cab9ec80a5c9bf8ef1590",
   "counts": {
-    "full-composer-and-ankita-resolved": 878,
-    "composer-only": 62,
+    "full-composer-and-ankita-resolved": 880,
+    "composer-only": 60,
     "ankita-only": 1,
     "real-conflicting-attribution": 0,
     "signature-only-candidates-needing-context": 13,
     "missing-sufficient-evidence": 41
   },
-  "done": 878,
-  "pendingFullPair": 117,
-  "ownerReviewDecisionsApplied": 60,
-  "effectiveMasterRevision": 35,
-  "finalReferenceGroups": 36,
+  "done": 880,
+  "pendingFullPair": 115,
+  "ownerReviewDecisionsApplied": 61,
+  "effectiveMasterRevision": 36,
+  "finalReferenceGroups": 37,
   "automaticApplications": {
     "hayavadana": 57,
-    "finalCharana": 229,
-    "finalCharanaFullyPaired": 227,
+    "finalCharana": 231,
+    "finalCharanaFullyPaired": 229,
     "finalCharanaFieldOnly": 2
   },
   "pendingReviewQueueCounts": {
-    "no-approved-final-charana-ankita": 91,
+    "no-approved-final-charana-ankita": 89,
     "conflicting-final-charana-signature-groups": 0,
     "boundary-uncertainty": 25,
     "composer-map-contradiction": 0
@@ -1138,6 +1138,25 @@
       ],
       "signatureLine": 25,
       "composerCreditLine": 53
+    },
+    {
+      "id": "shesha-vithala-ankita-composer-reference",
+      "reviewNumber": 59,
+      "kind": "owner-approved-ankita-composer-reference",
+      "sourceFile": "Rama Samudrana.txt",
+      "rawSha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8",
+      "composerPreferred": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
+      "ankitaPreferred": "ಶೇಷ ವಿಠಲ",
+      "ankitaAliases": [
+        "ಶೇಷ ವಿಠ್ಠಲ"
+      ],
+      "signatureKey": "ಶೇಷವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-002357",
+        "e-002359"
+      ],
+      "signatureLine": 11,
+      "composerCreditLine": 28
     }
   ],
   "ownerAnkitaReferenceMergeDecisions": [
@@ -17862,6 +17881,52 @@
               "path": "text_files_from_source/Kori Kareve Guru.txt",
               "line": 53,
               "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "signatureKey": "ಶೇಷವಿಠಲ",
+      "status": "final-source-backed-reference",
+      "composerPreferred": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
+      "composerAliases": [],
+      "ankitaPreferred": "ಶೇಷ ವಿಠಲ",
+      "ankitaAliases": [
+        "ಶೇಷ ವಿಠ್ಠಲ"
+      ],
+      "rawComposerForms": [
+        "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು"
+      ],
+      "rawAnkitaForms": [
+        "ಶೇಷ ವಿಠಲ"
+      ],
+      "ownerDecisionIds": [
+        "shesha-vithala-ankita-composer-reference"
+      ],
+      "ankitaReferenceDecisionIds": [
+        "shesha-vithala-ankita-composer-reference"
+      ],
+      "references": [
+        {
+          "evidenceId": "owner-approved-ankita-reference-shesha-vithala-ankita-composer-reference",
+          "sourceFile": "Rama Samudrana.txt",
+          "line": 11,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
+          "ankita": "ಶೇಷ ವಿಠಲ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/Rama Samudrana.txt",
+              "line": 11,
+              "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
+            },
+            {
+              "path": "text_files_from_source/Rama Samudrana.txt",
+              "line": 28,
+              "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
             }
           ]
         }
@@ -54087,9 +54152,11 @@
       "sourceFile": "Rama Samudrana.txt",
       "rawSha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8",
       "markdownSha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "shesha-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Shesha Vittala Dasaru",
         "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು"
@@ -54097,8 +54164,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
         "status": "final-source-backed",
@@ -54117,7 +54187,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಶೇಷ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-e3e98a6c-14c4-4736-9961-0318c9039579"
+        ],
+        "referenceSignatureKeys": [
+          "ಶೇಷವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "shesha-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Rama Samudrana.txt",
+            "line": 11,
+            "canonicalLine": 11,
+            "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -60431,9 +60525,11 @@
       "sourceFile": "Sundara sri ramachandira.txt",
       "rawSha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203",
       "markdownSha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "shesha-vithala-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Shesha Vittala Dasaru",
         "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು"
@@ -60441,8 +60537,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
         "status": "final-source-backed",
@@ -60461,7 +60560,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಶೇಷ ವಿಠಲ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-40751fa8-6418-49bf-b573-3bf41e08c502"
+        ],
+        "referenceSignatureKeys": [
+          "ಶೇಷವಿಠಲ"
+        ],
+        "ownerDecisionIds": [
+          "shesha-vithala-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Sundara sri ramachandira.txt",
+            "line": 10,
+            "canonicalLine": 10,
+            "sha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -278699,6 +278822,41 @@
       "finalCharanaBoundary": null
     },
     {
+      "id": "owner-approved-ankita-reference-shesha-vithala-ankita-composer-reference",
+      "itemKey": "e3e98a6c-14c4-4736-9961-0318c9039579",
+      "sourceFile": "Rama Samudrana.txt",
+      "role": "attribution",
+      "value": "ಶೇಷ ವಿಠಲ",
+      "kind": "owner-approved-ankita-composer-reference",
+      "referenceSignatureKey": "ಶೇಷವಿಠಲ",
+      "ownerDecisionId": "shesha-vithala-ankita-composer-reference",
+      "composer": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
+      "ankita": "ಶೇಷ ವಿಠಲ",
+      "composerEvidenceIds": [
+        "e-002357",
+        "e-002359"
+      ],
+      "authorityNote": "The owner approves ಶೇಷ ವಿಠಲ as the preferred general final-charana ankita for ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು, with geminated ಶೇಷ ವಿಠ್ಠಲ as a source-attested spelling alias. The two reviewed items Rama Samudrana.txt and Sundara sri ramachandira.txt have established final-charana boundaries and the same explicit composer credit. Apply only through the approved final-charana rule; preserve source wording and explicit credits.",
+      "signatureKey": "ಶೇಷವಿಠಲ",
+      "rawSha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Rama Samudrana.txt",
+          "line": 11,
+          "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
+        },
+        {
+          "path": "text_files_from_source/Rama Samudrana.txt",
+          "line": 28,
+          "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": null
+    },
+    {
       "id": "owner-composer-name-alias-badarayana-vithala-savanuru-approved-name-alias-24bb2c67-9357-4891-9f13-509861ade855",
       "itemKey": "24bb2c67-9357-4891-9f13-509861ade855",
       "sourceFile": "Dasare Gatiyu.txt",
@@ -291064,6 +291222,71 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-e3e98a6c-14c4-4736-9961-0318c9039579",
+      "itemKey": "e3e98a6c-14c4-4736-9961-0318c9039579",
+      "sourceFile": "Rama Samudrana.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8",
+      "markdownSha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Rama Samudrana.txt",
+          "line": 11,
+          "canonicalLine": 11,
+          "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
+            "line": null,
+            "canonicalLine": 10,
+            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
+          },
+          {
+            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
+            "line": 54,
+            "canonicalLine": 11,
+            "id": "19a06122-c897-4b47-81ca-3696e4983b94",
+            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
+          },
+          {
+            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
+            "line": 55,
+            "canonicalLine": 12,
+            "id": "7a14780c-c22f-4dc2-8593-630c1937051f",
+            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 5,
+            "number": 1
+          },
+          {
+            "canonicalLine": 9,
+            "number": 2
+          },
+          {
+            "canonicalLine": 12,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-9d29d9bf-fd6d-4af6-bf0f-24efbd2f1259",
       "itemKey": "9d29d9bf-fd6d-4af6-bf0f-24efbd2f1259",
       "sourceFile": "Ramanama Bhajisidavage.txt",
@@ -293397,6 +293620,71 @@
           },
           {
             "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-40751fa8-6418-49bf-b573-3bf41e08c502",
+      "itemKey": "40751fa8-6418-49bf-b573-3bf41e08c502",
+      "sourceFile": "Sundara sri ramachandira.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203",
+      "markdownSha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Sundara sri ramachandira.txt",
+          "line": 10,
+          "canonicalLine": 10,
+          "sha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
+            "line": null,
+            "canonicalLine": 8,
+            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
+          },
+          {
+            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
+            "line": 52,
+            "canonicalLine": 9,
+            "id": "287beea1-497f-4702-afbb-74f93cf7b509",
+            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
+          },
+          {
+            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
+            "line": 53,
+            "canonicalLine": 10,
+            "id": "58270dd2-c962-4d8b-a888-df5df6f34775",
+            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 4,
+            "number": 1
+          },
+          {
+            "canonicalLine": 7,
+            "number": 2
+          },
+          {
+            "canonicalLine": 10,
             "number": 3
           }
         ],
@@ -306806,96 +307094,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "e3e98a6c-14c4-4736-9961-0318c9039579",
-      "sourceFile": "Rama Samudrana.txt",
-      "rawSha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8",
-      "markdownSha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-002357",
-          "e-002359"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Rama Samudrana.txt",
-            "line": 28,
-            "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
-            "line": null,
-            "canonicalLine": 10,
-            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
-          },
-          {
-            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
-            "line": 54,
-            "canonicalLine": 11,
-            "id": "19a06122-c897-4b47-81ca-3696e4983b94",
-            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
-          },
-          {
-            "path": "library/e3e98a6c-14c4-4736-9961-0318c9039579.md",
-            "line": 55,
-            "canonicalLine": 12,
-            "id": "7a14780c-c22f-4dc2-8593-630c1937051f",
-            "sha256": "20fdc0bbfa073b1875fdd6bc78ed66ca034246e0772c8975e55786f05b41ca1e"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 5,
-            "number": 1
-          },
-          {
-            "canonicalLine": 9,
-            "number": 2
-          },
-          {
-            "canonicalLine": 12,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Rama Samudrana.txt",
-          "line": 11,
-          "canonicalLine": 11,
-          "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
-        },
-        {
-          "path": "text_files_from_source/Rama Samudrana.txt",
-          "line": 12,
-          "canonicalLine": 12,
-          "sha256": "a216d4373fc09fe7d20cb7604f448fe503c084d6426a318ff32b15cb1a7a91f8"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "raw:Rayara Nodirai.txt",
       "sourceFile": "Rayara Nodirai.txt",
       "rawSha256": "864a313d53ce2fae6c7a772bf3a63dd4ea7808d44ca3a6de772fcc8b340c1302",
@@ -308162,96 +308360,6 @@
           "line": 43,
           "canonicalLine": 43,
           "sha256": "85f22bcbe08ce52d30d277cc7ec01d50ea31adeb5571531c4b92414e2a3f68b7"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "40751fa8-6418-49bf-b573-3bf41e08c502",
-      "sourceFile": "Sundara sri ramachandira.txt",
-      "rawSha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203",
-      "markdownSha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-002755",
-          "e-002757"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Sundara sri ramachandira.txt",
-            "line": 23,
-            "sha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
-            "line": null,
-            "canonicalLine": 8,
-            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
-          },
-          {
-            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
-            "line": 52,
-            "canonicalLine": 9,
-            "id": "287beea1-497f-4702-afbb-74f93cf7b509",
-            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
-          },
-          {
-            "path": "library/40751fa8-6418-49bf-b573-3bf41e08c502.md",
-            "line": 53,
-            "canonicalLine": 10,
-            "id": "58270dd2-c962-4d8b-a888-df5df6f34775",
-            "sha256": "fc4787e572170c05627f4acb43e10f1443a71a46c72b6b29da60b29f7331e61c"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 4,
-            "number": 1
-          },
-          {
-            "canonicalLine": 7,
-            "number": 2
-          },
-          {
-            "canonicalLine": 10,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Sundara sri ramachandira.txt",
-          "line": 9,
-          "canonicalLine": 9,
-          "sha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203"
-        },
-        {
-          "path": "text_files_from_source/Sundara sri ramachandira.txt",
-          "line": 10,
-          "canonicalLine": 10,
-          "sha256": "9b0f87471b805e92fdb4bed913ab389fd9234889ca480d1dd51edd3ae7ca5203"
         }
       ],
       "originalSignatureWitnesses": [],

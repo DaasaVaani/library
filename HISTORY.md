@@ -1,6 +1,6 @@
 # Documentation history
 
-## 2026-11-03: owner-approved attribution reviews48-58
+## 2026-11-03: owner-approved attribution reviews48-59
 
 - Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference
   group for `ಶ್ರೀ ವಾಸುದೇವ ವಿಠ್ಠಲ ದಾಸರು`, grounded in the ending and explicit
@@ -45,18 +45,21 @@
   `ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು`, with vocative `ವಿಠಲೇಶಾ` as a source-attested alias.
   The Sri-qualified preferred form avoids overlap with distinct Purandara
   `ವಿಠಲ` endings; it resolved two verified items.
+- Established `ಶೇಷ ವಿಠಲ` as the preferred ankita for
+  `ಶ್ರೀ ಶೇಷ ವಿಠಲ ದಾಸರು`, with geminated `ಶೇಷ ವಿಠ್ಠಲ` as a source-attested
+  alias. It resolved two verified final-charana items.
 - Regenerated the private report and exported the metadata-only checkpoint:
-  878/995 fully paired, 117 not fully paired, 60 owner decisions, 36 effective
-  groups at revision35, and 7,606 connected evidence nodes. Final-charana
-  attribution has 229 applications (227 new pairings, 2 ankita-only updates).
-  The remaining queue has 116 items (91 missing eligible final-charana
+  880/995 fully paired, 115 not fully paired, 61 owner decisions, 37 effective
+  groups at revision36, and 7,609 connected evidence nodes. Final-charana
+  attribution has 231 applications (229 new pairings, 2 ankita-only updates).
+  The remaining queue has 114 items (89 missing eligible final-charana
   ankitas, 25 boundary uncertainties) plus one separately confirmed unmapped
   ankita whose composer remains unknown.
 - `npm run check` passed after Review54: strict TypeScript, 306/306 tests,
   source validation (871 imported/125 held), and verse validation with all
-  5,108 proposals still provisional. Reviews55-58 changed only review
+  5,108 proposals still provisional. Reviews55-59 changed only review
   metadata; source-witness application and checkpoint export passed for all
-  four.
+  five.
 - No source text, product metadata, registry assignments or verse approvals
   changed. No push was made.
 
