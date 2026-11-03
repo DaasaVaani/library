@@ -356,18 +356,23 @@ Review57 establishes `ಗುರು ಪ್ರಾಣೇಶ ವಿಠಲ` as a dist
 `mahadEva mahadEva.txt` remains queued because its final-charana boundary is
 uncertain.
 
-The checkpoint now has 876 fully paired and 119 not fully paired items. Its
-remaining queue has 118 entries: 93 missing eligible final-charana ankitas
+Review58 establishes `ಶ್ರೀ ವಿಠಲೇಶ` as the preferred ankita for
+`ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು`, with vocative `ವಿಠಲೇಶಾ` as a source-attested alias.
+It resolves `Kori Kareve Guru.txt` and `muneendra nodi.txt`. The Sri-qualified
+preferred form avoids overlap with the separate Purandara `ವಿಠಲ` signature.
+
+The checkpoint now has 878 fully paired and 117 not fully paired items. Its
+remaining queue has 116 entries: 91 missing eligible final-charana ankitas
 and 25 boundary/alignment uncertainties. There are no active multiple-signature
 cases or composer-map contradictions. One separately confirmed unmapped
 `ವರರಂಗ ವಿಠಲ` ankita has unknown composer and is not another ankita question.
-The effective reference graph has 35 groups at revision34 and 7,603 connected
-evidence nodes; there are 59 owner review decisions. The automatic
-final-charana rule has 227 applications (225 new pairings and 2 ankita-only
+The effective reference graph has 36 groups at revision35 and 7,606 connected
+evidence nodes; there are 60 owner review decisions. The automatic
+final-charana rule has 229 applications (227 new pairings and 2 ankita-only
 updates). Present related cases in concise batches when the evidence supports
 the same decision scope; keep distinct or conflicting cases separate. Report
 done/pending counts and do not turn absence of evidence into a contradiction.
-Select the next batch from the refreshed 118-item queue.
+Select the next batch from the refreshed 116-item queue.
 
 ## Resume on another device
 

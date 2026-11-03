@@ -2,28 +2,28 @@
   "schema": "source-attribution-review-checkpoint",
   "version": 1,
   "scope": "Owner-approved review interpretations only; no applied product metadata, registry IDs, source migration, verse approval or publication authorization.",
-  "sourceReportSha256": "a009232c1d18d1594650459764cead9e549d3757e02a77c752c8aae82b20432c",
+  "sourceReportSha256": "31069875647ec19c9cf9624d443517b3df4fbca72a69ff8f6413b472979c979b",
   "counts": {
-    "full-composer-and-ankita-resolved": 876,
-    "composer-only": 64,
+    "full-composer-and-ankita-resolved": 878,
+    "composer-only": 62,
     "ankita-only": 1,
     "real-conflicting-attribution": 0,
     "signature-only-candidates-needing-context": 13,
     "missing-sufficient-evidence": 41
   },
-  "done": 876,
-  "pendingFullPair": 119,
-  "ownerReviewDecisionsApplied": 59,
-  "effectiveMasterRevision": 34,
-  "finalReferenceGroups": 35,
+  "done": 878,
+  "pendingFullPair": 117,
+  "ownerReviewDecisionsApplied": 60,
+  "effectiveMasterRevision": 35,
+  "finalReferenceGroups": 36,
   "automaticApplications": {
     "hayavadana": 57,
-    "finalCharana": 227,
-    "finalCharanaFullyPaired": 225,
+    "finalCharana": 229,
+    "finalCharanaFullyPaired": 227,
     "finalCharanaFieldOnly": 2
   },
   "pendingReviewQueueCounts": {
-    "no-approved-final-charana-ankita": 93,
+    "no-approved-final-charana-ankita": 91,
     "conflicting-final-charana-signature-groups": 0,
     "boundary-uncertainty": 25,
     "composer-map-contradiction": 0
@@ -1120,6 +1120,24 @@
       ],
       "signatureLine": 16,
       "composerCreditLine": 38
+    },
+    {
+      "id": "vithalesha-ankita-composer-reference",
+      "reviewNumber": 58,
+      "kind": "owner-approved-ankita-composer-reference",
+      "sourceFile": "Kori Kareve Guru.txt",
+      "rawSha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b",
+      "composerPreferred": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
+      "ankitaPreferred": "ಶ್ರೀ ವಿಠಲೇಶ",
+      "ankitaAliases": [
+        "ವಿಠಲೇಶಾ"
+      ],
+      "signatureKey": "ಶ್ರೀವಿಠಲೇಶ",
+      "composerEvidenceIds": [
+        "e-001545"
+      ],
+      "signatureLine": 25,
+      "composerCreditLine": 53
     }
   ],
   "ownerAnkitaReferenceMergeDecisions": [
@@ -17798,6 +17816,52 @@
               "path": "text_files_from_source/Pavana Sambhoota.txt",
               "line": 38,
               "sha256": "0ffd9b3f1ed4f2ba624f91b7fd71e38370bb610ab34ef38f9f6672466349c746"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "signatureKey": "ಶ್ರೀವಿಠಲೇಶ",
+      "status": "final-source-backed-reference",
+      "composerPreferred": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
+      "composerAliases": [],
+      "ankitaPreferred": "ಶ್ರೀ ವಿಠಲೇಶ",
+      "ankitaAliases": [
+        "ವಿಠಲೇಶಾ"
+      ],
+      "rawComposerForms": [
+        "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು"
+      ],
+      "rawAnkitaForms": [
+        "ವಿಠಲೇಶಾ"
+      ],
+      "ownerDecisionIds": [
+        "vithalesha-ankita-composer-reference"
+      ],
+      "ankitaReferenceDecisionIds": [
+        "vithalesha-ankita-composer-reference"
+      ],
+      "references": [
+        {
+          "evidenceId": "owner-approved-ankita-reference-vithalesha-ankita-composer-reference",
+          "sourceFile": "Kori Kareve Guru.txt",
+          "line": 25,
+          "explicitAnkita": false,
+          "composer": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
+          "ankita": "ಶ್ರೀ ವಿಠಲೇಶ",
+          "disposition": "accepted",
+          "resolvedComposer": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
+          "originalLocations": [
+            {
+              "path": "text_files_from_source/Kori Kareve Guru.txt",
+              "line": 25,
+              "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+            },
+            {
+              "path": "text_files_from_source/Kori Kareve Guru.txt",
+              "line": 53,
+              "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
             }
           ]
         }
@@ -42247,9 +42311,11 @@
       "sourceFile": "Kori Kareve Guru.txt",
       "rawSha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b",
       "markdownSha256": null,
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "vithalesha-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Vithalesha Dasaru",
         "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು"
@@ -42257,8 +42323,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
         "status": "final-source-backed",
@@ -42276,7 +42345,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಶ್ರೀ ವಿಠಲೇಶ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-raw:Kori Kareve Guru.txt"
+        ],
+        "referenceSignatureKeys": [
+          "ಶ್ರೀವಿಠಲೇಶ"
+        ],
+        "ownerDecisionIds": [
+          "vithalesha-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/Kori Kareve Guru.txt",
+            "line": 25,
+            "canonicalLine": 25,
+            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -72559,9 +72652,11 @@
       "sourceFile": "muneendra nodi.txt",
       "rawSha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7",
       "markdownSha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7",
-      "category": "composer-only",
-      "fullyResolved": false,
-      "ownerDecisionIds": [],
+      "category": "full-composer-and-ankita-resolved",
+      "fullyResolved": true,
+      "ownerDecisionIds": [
+        "vithalesha-ankita-composer-reference"
+      ],
       "explicitComposerRawForms": [
         "Sri Vithalesha Dasaru",
         "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು"
@@ -72569,8 +72664,11 @@
       "explicitAnkitaRawForms": [],
       "translatorRawForms": [],
       "candidateEvidenceIds": [],
-      "candidateStatus": "Unapproved lexical/body/parenthetical evidence unless specifically cited by a final field.",
+      "candidateStatus": "Final-charana attribution authorized by the exact owner rule. Earlier body signatures alone do not defeat a unique ending; wording, line identities and product verse metadata are unchanged.",
       "nonOverridingOtherComposerCandidateEvidenceIds": [],
+      "automaticAttributionRuleIds": [
+        "unique-last-charana-ankita"
+      ],
       "composer": {
         "value": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
         "status": "final-source-backed",
@@ -72589,7 +72687,31 @@
           }
         ]
       },
-      "ankita": null,
+      "ankita": {
+        "value": "ಶ್ರೀ ವಿಠಲೇಶ",
+        "status": "final-owner-rule-authorized",
+        "method": "owner-authorized-unique-final-charana",
+        "evidenceIds": [
+          "owner-rule-final-charana-9c3f3c5c-22af-4701-b6c5-729f0465369a"
+        ],
+        "referenceSignatureKeys": [
+          "ಶ್ರೀವಿಠಲೇಶ"
+        ],
+        "ownerDecisionIds": [
+          "vithalesha-ankita-composer-reference"
+        ],
+        "ownerRuleIds": [
+          "unique-last-charana-ankita"
+        ],
+        "originalSourceWitnesses": [
+          {
+            "path": "text_files_from_source/muneendra nodi.txt",
+            "line": 16,
+            "canonicalLine": 16,
+            "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
+          }
+        ]
+      },
       "translator": null,
       "supplementalSources": [],
       "rejectedEvidence": []
@@ -278543,6 +278665,40 @@
       "finalCharanaBoundary": null
     },
     {
+      "id": "owner-approved-ankita-reference-vithalesha-ankita-composer-reference",
+      "itemKey": "raw:Kori Kareve Guru.txt",
+      "sourceFile": "Kori Kareve Guru.txt",
+      "role": "attribution",
+      "value": "ಶ್ರೀ ವಿಠಲೇಶ",
+      "kind": "owner-approved-ankita-composer-reference",
+      "referenceSignatureKey": "ಶ್ರೀವಿಠಲೇಶ",
+      "ownerDecisionId": "vithalesha-ankita-composer-reference",
+      "composer": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
+      "ankita": "ಶ್ರೀ ವಿಠಲೇಶ",
+      "composerEvidenceIds": [
+        "e-001545"
+      ],
+      "authorityNote": "The owner approves ಶ್ರೀ ವಿಠಲೇಶ as the preferred general final-charana ankita for ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು, with vocative ವಿಠಲೇಶಾ as a source-attested alias. The two reviewed items Kori Kareve Guru.txt and muneendra nodi.txt have established final-charana boundaries and the same explicit composer credit. The Sri-qualified preferred form avoids matching the suffix inside distinct Purandara Vithaleshana signatures; apply only through the approved final-charana rule and preserve source wording and explicit credits.",
+      "signatureKey": "ಶ್ರೀವಿಠಲೇಶ",
+      "rawSha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Kori Kareve Guru.txt",
+          "line": 25,
+          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+        },
+        {
+          "path": "text_files_from_source/Kori Kareve Guru.txt",
+          "line": 53,
+          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": null
+    },
+    {
       "id": "owner-composer-name-alias-badarayana-vithala-savanuru-approved-name-alias-24bb2c67-9357-4891-9f13-509861ade855",
       "itemKey": "24bb2c67-9357-4891-9f13-509861ade855",
       "sourceFile": "Dasare Gatiyu.txt",
@@ -287425,6 +287581,83 @@
           {
             "canonicalLine": 58,
             "number": 11
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
+      "id": "owner-rule-final-charana-raw:Kori Kareve Guru.txt",
+      "itemKey": "raw:Kori Kareve Guru.txt",
+      "sourceFile": "Kori Kareve Guru.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b",
+      "markdownSha256": null,
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/Kori Kareve Guru.txt",
+          "line": 25,
+          "canonicalLine": 25,
+          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "text_files_from_source/Kori Kareve Guru.txt",
+            "line": 22,
+            "canonicalLine": 22,
+            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+          },
+          {
+            "path": "text_files_from_source/Kori Kareve Guru.txt",
+            "line": 23,
+            "canonicalLine": 23,
+            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+          },
+          {
+            "path": "text_files_from_source/Kori Kareve Guru.txt",
+            "line": 24,
+            "canonicalLine": 24,
+            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+          },
+          {
+            "path": "text_files_from_source/Kori Kareve Guru.txt",
+            "line": 25,
+            "canonicalLine": 25,
+            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 9,
+            "number": 1
+          },
+          {
+            "canonicalLine": 13,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          },
+          {
+            "canonicalLine": 21,
+            "number": 4
+          },
+          {
+            "canonicalLine": 25,
+            "number": 5
           }
         ],
         "sectionHeadingWitnesses": []
@@ -296640,6 +296873,85 @@
       }
     },
     {
+      "id": "owner-rule-final-charana-9c3f3c5c-22af-4701-b6c5-729f0465369a",
+      "itemKey": "9c3f3c5c-22af-4701-b6c5-729f0465369a",
+      "sourceFile": "muneendra nodi.txt",
+      "role": "attribution",
+      "kind": "owner-authorized-unique-final-charana-application",
+      "ruleId": "unique-last-charana-ankita",
+      "authorityNote": "New source-backed contextual evidence, not a fabricated historical extraction row or approved product verse identity.",
+      "rawSha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7",
+      "markdownSha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7",
+      "originalSourceWitnesses": [
+        {
+          "path": "text_files_from_source/muneendra nodi.txt",
+          "line": 16,
+          "canonicalLine": 16,
+          "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
+        }
+      ],
+      "verifiedOriginalLocations": [],
+      "canonicalWitnesses": [],
+      "aliasAuthorityWitnesses": [],
+      "finalCharanaBoundary": {
+        "status": "established-report-only-charana",
+        "method": "after-previous-numbered-ending-through-final-numbered-ending",
+        "reasons": [],
+        "productVerseIdentitiesApproved": false,
+        "rows": [
+          {
+            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
+            "line": null,
+            "canonicalLine": 13,
+            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
+          },
+          {
+            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
+            "line": 57,
+            "canonicalLine": 14,
+            "id": "24f18551-d4f9-4bd0-8ca6-0c9a117163f1",
+            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
+          },
+          {
+            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
+            "line": 58,
+            "canonicalLine": 15,
+            "id": "625e4c32-300c-4ab1-82f1-7372172b4a6e",
+            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
+          },
+          {
+            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
+            "line": 59,
+            "canonicalLine": 16,
+            "id": "c96d8362-e004-42aa-b693-e495fc06a2c8",
+            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
+          },
+          {
+            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
+            "line": 60,
+            "canonicalLine": 17,
+            "id": "40f0f3ef-bbfe-492a-a50e-8fde05f135b4",
+            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
+          }
+        ],
+        "numberedEndings": [
+          {
+            "canonicalLine": 7,
+            "number": 1
+          },
+          {
+            "canonicalLine": 12,
+            "number": 2
+          },
+          {
+            "canonicalLine": 17,
+            "number": 3
+          }
+        ],
+        "sectionHeadingWitnesses": []
+      }
+    },
+    {
       "id": "owner-rule-final-charana-456f9d88-8178-4b1e-b2ba-245b06fad0ba",
       "itemKey": "456f9d88-8178-4b1e-b2ba-245b06fad0ba",
       "sourceFile": "namo namo venkatesha.txt",
@@ -303530,113 +303842,6 @@
       "signatureGroups": []
     },
     {
-      "itemKey": "raw:Kori Kareve Guru.txt",
-      "sourceFile": "Kori Kareve Guru.txt",
-      "rawSha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b",
-      "markdownSha256": null,
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-001545"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/Kori Kareve Guru.txt",
-            "line": 53,
-            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "text_files_from_source/Kori Kareve Guru.txt",
-            "line": 22,
-            "canonicalLine": 22,
-            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-          },
-          {
-            "path": "text_files_from_source/Kori Kareve Guru.txt",
-            "line": 23,
-            "canonicalLine": 23,
-            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-          },
-          {
-            "path": "text_files_from_source/Kori Kareve Guru.txt",
-            "line": 24,
-            "canonicalLine": 24,
-            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-          },
-          {
-            "path": "text_files_from_source/Kori Kareve Guru.txt",
-            "line": 25,
-            "canonicalLine": 25,
-            "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 9,
-            "number": 1
-          },
-          {
-            "canonicalLine": 13,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          },
-          {
-            "canonicalLine": 21,
-            "number": 4
-          },
-          {
-            "canonicalLine": 25,
-            "number": 5
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/Kori Kareve Guru.txt",
-          "line": 23,
-          "canonicalLine": 23,
-          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-        },
-        {
-          "path": "text_files_from_source/Kori Kareve Guru.txt",
-          "line": 24,
-          "canonicalLine": 24,
-          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-        },
-        {
-          "path": "text_files_from_source/Kori Kareve Guru.txt",
-          "line": 25,
-          "canonicalLine": 25,
-          "sha256": "02e59399f3e09f355a9b83e1a52bfe0a658ef553fa22abde424dfba23829454b"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
       "itemKey": "ea43bf23-e2c9-49d0-8a3c-4f8fb240bb1f",
       "sourceFile": "Kundanadaaruti Tandu Belagire.txt",
       "rawSha256": "672e2967e75c0a78064ffc1bb91124902ec970591c91b1ce73508c34086760bf",
@@ -304405,122 +304610,6 @@
           "line": 17,
           "canonicalLine": 17,
           "sha256": "ee690b11ea440e6aad542c4eb6db842143e488d301e2ea26efc2e7d4e64b3330"
-        }
-      ],
-      "originalSignatureWitnesses": [],
-      "signatureGroups": []
-    },
-    {
-      "itemKey": "9c3f3c5c-22af-4701-b6c5-729f0465369a",
-      "sourceFile": "muneendra nodi.txt",
-      "rawSha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7",
-      "markdownSha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7",
-      "previousCategory": "composer-only",
-      "ruleId": "unique-last-charana-ankita",
-      "queueCategory": "no-approved-final-charana-ankita",
-      "reasons": [
-        "no-approved-exact-reference-form-in-actual-final-charana"
-      ],
-      "existingComposer": {
-        "value": "ಶ್ರೀ ವಿಠಲೇಶ ದಾಸರು",
-        "status": "final-source-backed",
-        "method": "explicit-Kannada-composer-credit",
-        "evidenceIds": [
-          "e-003665",
-          "e-003667"
-        ],
-        "referenceSignatureKeys": [],
-        "ownerDecisionIds": [],
-        "originalSourceWitnesses": [
-          {
-            "path": "text_files_from_source/muneendra nodi.txt",
-            "line": 38,
-            "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
-          }
-        ]
-      },
-      "existingAnkita": null,
-      "finalCharanaBoundary": {
-        "status": "established-report-only-charana",
-        "method": "after-previous-numbered-ending-through-final-numbered-ending",
-        "reasons": [],
-        "productVerseIdentitiesApproved": false,
-        "rows": [
-          {
-            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
-            "line": null,
-            "canonicalLine": 13,
-            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
-          },
-          {
-            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
-            "line": 57,
-            "canonicalLine": 14,
-            "id": "24f18551-d4f9-4bd0-8ca6-0c9a117163f1",
-            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
-          },
-          {
-            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
-            "line": 58,
-            "canonicalLine": 15,
-            "id": "625e4c32-300c-4ab1-82f1-7372172b4a6e",
-            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
-          },
-          {
-            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
-            "line": 59,
-            "canonicalLine": 16,
-            "id": "c96d8362-e004-42aa-b693-e495fc06a2c8",
-            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
-          },
-          {
-            "path": "library/9c3f3c5c-22af-4701-b6c5-729f0465369a.md",
-            "line": 60,
-            "canonicalLine": 17,
-            "id": "40f0f3ef-bbfe-492a-a50e-8fde05f135b4",
-            "sha256": "f532bd8a5cc14c2db41ffb4b78827d522c1fbc3c210e3b191ee646a1b90105f7"
-          }
-        ],
-        "numberedEndings": [
-          {
-            "canonicalLine": 7,
-            "number": 1
-          },
-          {
-            "canonicalLine": 12,
-            "number": 2
-          },
-          {
-            "canonicalLine": 17,
-            "number": 3
-          }
-        ],
-        "sectionHeadingWitnesses": []
-      },
-      "originalFinalCharanaWitnesses": [
-        {
-          "path": "text_files_from_source/muneendra nodi.txt",
-          "line": 14,
-          "canonicalLine": 14,
-          "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
-        },
-        {
-          "path": "text_files_from_source/muneendra nodi.txt",
-          "line": 15,
-          "canonicalLine": 15,
-          "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
-        },
-        {
-          "path": "text_files_from_source/muneendra nodi.txt",
-          "line": 16,
-          "canonicalLine": 16,
-          "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
-        },
-        {
-          "path": "text_files_from_source/muneendra nodi.txt",
-          "line": 17,
-          "canonicalLine": 17,
-          "sha256": "93b2b499a09c146fe91a3ff5966ec0ae31001182f58709e6ffa91a81c02f30e7"
         }
       ],
       "originalSignatureWitnesses": [],
