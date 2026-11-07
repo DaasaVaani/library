@@ -94,6 +94,10 @@ create a real state branch or replace an existing ledger.
 
 Before activation, review the actual baseline, define trusted
 anchor/branch protection/job permissions and authenticate the deployment adapter.
+The [approved infrastructure setup](publication-ledger.md#approved-infrastructure-setup)
+now protects the dedicated state namespace without creating a branch or granting
+automation access. Setup approval is not approval of the actual review/anchor;
+those still need separate explicit owner review before real initialization.
 The selected protocol is an explicit unsequenced baseline with projection/review
 binding; the first new reservation starts at1, with gaps retained on cancellation.
 Full multilingual/metadata projections and migration remain separate gates.

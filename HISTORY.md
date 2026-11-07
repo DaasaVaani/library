@@ -1,5 +1,52 @@
 # Documentation history
 
+## 2026-11-07: authorized ledger namespace protections and renewed baseline review
+
+- Owner explicitly authorized dedicated ledger infrastructure setup, keeping
+  actual pinned baseline/independent trusted anchor approval separate from real
+  initialization/deployment. This is a state-namespace exception to source main-only
+  work, not permission to create development branches or weaken main protections.
+- Created active state rules26756014 (deletion/non-fast-forward, no bypass) and
+  26756015 (creation/update, repository-admin role5 setup exception only).
+  Both include the root and nested publication-state namespace without exclusions.
+  Authenticated API read-back verified applicability to both root and nested refs,
+  no existing state branch and byte-identical existing main rules25526637/25526643.
+  No automation actor, real ledger initialization, source/hold/identity change or
+  live sequenced deployment was performed.
+- Refreshed read-only evidence from all nine available successful canonical
+  publication runs/attempts, exact source/job/upload/deployment/status relationships,
+  genuine logged archive identities/digests, preserved original encoded catalogs
+  and all 871 original item bytes. Latest legacy observation is run41595024980,
+  source697069e9e2f7e8e1d260dd8e730f6ba91815b9c0, confirmed
+  2026-11-03T07:15:43.000Z. Catalog remains
+  0b48b8b5ce5c1c1546f19746eae73c0a9248c65ff3dba97ff0b57db2ff8c0a7d.
+  Complete replay/pin verification confirmed zero missing/unresolved identities,
+  871 present items/no tombstones and unchanged original semantic/date candidates:
+  229 observed first/change dates2026-10-21T21:08:22.000Z and
+  642 dates2026-10-21T21:49:28.000Z.
+- This preliminary nine-publication review remains `review-required`, sequence:null,
+  204478 canonical JSON-plus-LF bytes, SHA256
+  49253fe9d811597be937b40f372759a596a867f340309eae7dd734e72574f7f0;
+  audit SHA25614d2e663e16df92b5a3376a3462ceb5130cb55e5bef3a7c23633239068236485.
+  Stored metadata-only review/audit/authentication/summary outside disposable output.
+  A documentation main publication may add another legacy receipt: reauthenticate
+  after all current checks/deployment settle before presenting the final pin.
+  Expired/purged archives were not represented as downloaded/available; retained
+  actual catalogs matched authenticated original log/upload/deploy chains.
+- Initial scratch verification correctly failed on absent historical whole-host
+  preflight logs (those two old workflows predate that check), an incorrect
+  descriptor filename (404), and HTTP content coding. Verified historical evidence
+  separately without inventing a past preflight; used the owning Website
+  `lyricPreview.descriptorUrl` (`latest.json`) and explicit Node-only identity
+  negotiation after checking actual host headers. Final complete replay passed
+  with bounded identity-coded original fetches, before/after descriptor/history
+  checks, exact baseline-pin replay and no network/readiness/release claim.
+- Final `npm run check` passed strict TypeScript and all306 tests (266 top-level
+  cases, 257.2s), with unchanged source/import and verse-proposal validation.
+  `python tools\check_repository.py` passed975 tracked files; strict YAML parsed
+  all11 current workflow/settings files; actionlint/ShellCheck and staged/unstaged
+  whitespace passed. No new dependency or Shared pin change was needed.
+
 ## 2026-11-03: owner-approved attribution reviews48-60
 
 - Established `ವಾಸುದೇವ ವಿಠ್ಠಲ` as a general final-charana ankita reference

@@ -85,6 +85,11 @@ now constructs an inactive private version2 ledger with the complete pinned
 baseline and projection identity. Legacy content stays unsequenced; new
 reservations start at1, preserving cancellation gaps. Actual review approval,
 protected state-branch creation/anchor and hosted activation remain gates.
+The separately [approved ledger infrastructure setup](docs/publication-ledger.md#approved-infrastructure-setup)
+protects the root/nested state namespace against force/deletion with no bypass
+and restricts creation/update to setup administrators. Main protection is
+unchanged; no state branch, initialized ledger or automation permission is
+created. Actual pinned baseline/independent anchor approval remains separate.
 
 The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
 the published Shared descriptor/manifest/transfer-policy contract to real logical

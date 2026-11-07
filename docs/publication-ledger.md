@@ -245,6 +245,38 @@ required: ancestry checks cannot detect delete/recreate-at-the-same-tip (ABA),
 and trusted Git history alone cannot authenticate deployment evidence or prevent
 an independently authorized writer from appending fabricated state.
 
+### Approved infrastructure setup
+
+The owner authorizes setup of a dedicated publication-state infrastructure
+namespace, separate from source/development branches. Source implementation
+continues only on `main`; its existing protections are not weakened.
+
+| State namespace protection | Ruleset | Bypass |
+| --- | --- | --- |
+| No deletion or non-fast-forward history replacement | 26756014 | None, including administrators |
+| Restrict creation and updates during setup | 26756015 | Repository-admin role5 only |
+
+Both active rulesets include `refs/heads/publication-state` and
+`refs/heads/publication-state/**`, with no exclusions. The creation/update
+exception is setup authority, not baseline approval or a publisher-bot exemption.
+No automation actor is authorized by these rules. Do not weaken the independent
+no-bypass history guard when adding a separately reviewed least-privilege writer.
+Verify actual rule applicability to the chosen root/nested ref before any write.
+Current configuration does not create a state branch, initialize a ledger,
+select production Git bounds/ref/remote or activate either publisher.
+
+Before actual initialization, the owner must separately approve the refreshed
+complete pinned baseline review and independently trusted initial commit anchor.
+Authenticate the available successful publication history, retained original
+catalog/item evidence and latest live catalog after current main checks/
+deployment settle. Never substitute a freshly fetched remote tip for an anchor.
+The review remains `review-required` even when its pin verifies; preserve the
+explicit approval outside generated data. A changed admitted catalog, evidence
+scope, receipt, date, projection or item invalidates the review pin. Recheck the
+approved evidence at the initialization boundary and stop on changes, rather than
+silently regenerate or approve a replacement. Hosted deployment/job wiring,
+whole-publication validation and genuine confirmation remain separate gates.
+
 ## Serialization and checks
 
 Encoding is canonical safe-integer JSON plus one LF, hashed over those exact
