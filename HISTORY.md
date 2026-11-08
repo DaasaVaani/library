@@ -1,5 +1,49 @@
 # Documentation history
 
+## 2026-11-08: native credential-separated App metadata transport
+
+- Writer metadata4319abac4a24b82d2e722e72ed050846e4e4e977 passed exact hosted
+  hygiene42452884232 and publisher/deployment42452941114, each with326 actual
+  tests. Complete serial live verification matched all873 files/1198465 bytes
+  against artifact13606317700, original descriptor SHA256
+  2dd6fd40448d97356e348924115fecb68bfb6609270001e6c4b48b67cb47682c.
+  Downloaded named tar/empty owned directory were cleaned; main exact/clean.
+- Owner reiterated independent consecutive implementation/full validation/main
+  publication without routine prompts. Actual organization App installations
+  remained0 and protected environment secret inventory empty. Continued with
+  explicit-credential native transport, not owner-admin credential substitution,
+  real state initialization, automation permission or new feed activation.
+- Added native scoped metadata readers with separate captured App/installation
+  credentials, exact fixed GitHub HTTPS GET endpoints, identity coding and
+  explicit Bearer headers never passed to subprocess arguments. Reused strict
+  positive time/body bound capture with the existing source/artifact native reader.
+  Routes, HTTP/address/coding, actual/declared lengths and deadlines fail explicitly;
+  native requests abort and streams cancel/release, with sanitized failures.
+  Inherited owner credentials are not used. Private keys/mint/revocation remain
+  owning gates; injected/synthetic response success is not provider authentication.
+- First strict build caught Node's RequestInit lacking browser cache options.
+  Retained the existing owning no-cache/no-store header pattern instead of casts
+  or a browser-only option. Fresh build and the initial scoped reader/install/
+  artifact batch passed39/39 before adding default-path/TLS-bypass child coverage.
+- Final focused batch passed40/40; first full build/all336 tests/source/verse/
+  hygiene979/strict YAML11/workflow/whitespace checks passed. A final exact-address
+  correctness check found the synthetic empty-response-URL concession contradicted
+  the strict transport contract. Removed it, made synthetic responses explicitly
+  carry the requested address and added empty-address rejection without bypassing
+  status/address assertions. Full final-code validation was rerun below.
+- Superseded guide wording said there was no native credential reader for these
+  separate endpoints. The observer still has no default credential context; the
+  new opt-in adapter changes transport availability only, not live authentication,
+  key provisioning, installation selection proof or automation/state permission.
+- Final `npm run check` passed strict types/all336 tests (296 top-level),
+  `sources:validate`871 imported/125 held and `verses:validate` unchanged870
+  sources/5108 provisional verses. `python tools\check_repository.py` passed979
+  tracked files; locked `yaml` strict/unique-key parsing passed11 files;
+  actionlint1.7.12 with ShellCheck0.11.0 and staged/unstaged diff checks passed.
+  Fresh main matched origin before publication, with owner admin permission and
+  unchanged active no-bypass force/delete and approved role5 main routing rules.
+  No source, Shared pin, state branch or live publisher behavior changed.
+
 ## 2026-11-08: isolated effective writer token metadata admission
 
 - Prior bounded observer1b27810919ebf1dd1ac3ca9d48d378e941e5f543 passed exact

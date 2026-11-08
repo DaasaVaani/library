@@ -8,10 +8,17 @@ export interface GitHubApiReadLimits {
 export type GitHubApiReader = (endpoint: string, limits: Readonly<GitHubApiReadLimits>) => Promise<Uint8Array>;
 const bounded = (value: number) => Number.isSafeInteger(value) && value >= 1 && value <= 2147483647;
 
-export const readGitHubApi: GitHubApiReader = async (endpoint, limits) => {
+export function captureGitHubApiReadLimits(limits: Readonly<GitHubApiReadLimits>): Readonly<GitHubApiReadLimits> {
   const { requestTimeoutMs, maxResponseBytes } = limits;
-  if (!/^repos\/[A-Za-z0-9][A-Za-z0-9-]*\/[A-Za-z0-9_][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_][A-Za-z0-9._-]*)*$/.test(endpoint) ||
-      !bounded(requestTimeoutMs) || !bounded(maxResponseBytes)) throw new Error("Invalid GitHub API read options");
+  if (!bounded(requestTimeoutMs) || !bounded(maxResponseBytes)) throw new Error("Invalid GitHub API read options");
+  return Object.freeze({ requestTimeoutMs, maxResponseBytes });
+}
+
+export const readGitHubApi: GitHubApiReader = async (endpoint, limits) => {
+  const { requestTimeoutMs, maxResponseBytes } = captureGitHubApiReadLimits(limits);
+  if (!/^repos\/[A-Za-z0-9][A-Za-z0-9-]*\/[A-Za-z0-9_][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_][A-Za-z0-9._-]*)*$/.test(endpoint)) {
+    throw new Error("Invalid GitHub API read options");
+  }
   return new Promise((accept, reject) => {
     const env: NodeJS.ProcessEnv = { ...process.env, GH_HOST: "github.com", GH_PROMPT_DISABLED: "1",
       GH_PAGER: "", GH_NO_UPDATE_NOTIFIER: "1", GH_NO_EXTENSION_UPDATE_NOTIFIER: "1" };

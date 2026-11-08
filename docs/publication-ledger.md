@@ -373,7 +373,7 @@ infer it solely from an intentionally narrowed token response.
 This does not prove App ownership/private-key possession, webhook
 configuration, environment eligibility, current state protections, or write/
 deployment permission. Observe those independently at the owning boundary;
-there is no cached success, native credential reader or live workflow integration.
+there is no cached success or live workflow integration.
 
 `observeGitHubAppInstallation(options, readApp, readInstallation)` additionally
 captures exact identity/positive safe byte/time bounds before awaits and requires
@@ -395,11 +395,66 @@ a streaming or global heap claim. Reobservation detects supplied scope changes
 but is not an atomic permission lease: revocation/change after observation remains
 possible and real write errors must propagate.
 
-There is no default/native reader for these credential-separated endpoints;
-the existing source/artifact `readGitHubApi` does not silently acquire App/token
-authority. Supplying the same user-token reader twice or forged injected bytes
-does not establish authentication. Token mint/revocation, environment/actual
-identity proof, App provisioning and state permission/activation remain gates.
+The observer has no default reader. The separately opt-in
+[native scoped reader](#native-credential-separated-metadata-readers) requires
+explicit App/installation credentials; the existing source/artifact
+`readGitHubApi` does not silently acquire that authority. Supplying a user-token
+reader or forged injected bytes does not establish App authentication. Token
+mint/revocation, environment/actual identity proof, App provisioning and state
+permission/activation remain gates.
+
+### Native credential-separated metadata readers
+
+`createGitHubAppInstallationReaders(credentials, fetcher?)` in
+[the native reader](../tools/github-app-reader.ts) connects the bounded observer
+to Node's native Fetch, mapping to ALG-07/GEN-02/05/QUAL-06. The caller must supply
+the expected positive safe installation ID and separate nonempty App JWT/
+installation token. Capture them once; reject unknown fields, equal contexts and
+header-unsafe whitespace/control/non-ASCII values. This is header safety, not
+authentication or validation of a credential prefix, length, signature or expiry.
+Private keys and minting are not inputs. Tests use only synthetic markers.
+
+Returned readers are fixed to exactly
+`https://api.github.com/app/installations/<captured-id>` with the App JWT and
+`https://api.github.com/installation/repositories` with the installation token.
+Other IDs, route crossing, full caller URLs, queries/fragments, mutation/token
+routes and arbitrary repositories fail before a request. Readers never infer
+credentials from owner `gh` login, `GH_TOKEN`, `GITHUB_TOKEN` or a fallback context.
+Explicit Bearer headers are held in the owning process only, not subprocess
+arguments, returned metadata or logs. The factory retains credential strings for
+its lifetime; callers must scope/release it deliberately. JavaScript strings have
+no secure erase guarantee. Do not persist readers or use them in untrusted code.
+
+Each GET uses captured positive time/body bounds from the shared native limit
+validator, TLS certificate verification, `redirect:error`, omitted ambient
+credentials, identity content negotiation and no-cache/no-store headers. Reject
+explicit TLS verification bypass. HTTP200, nonredirected exact response address,
+identity coding and valid declared content length are required. Streaming counts
+actual chunks before copying them into bounded owned buffers; empty, declared/
+actual over-limit or length-mismatched bodies fail. Deadlines cover headers and
+body, abort native requests, and clear timers; streams are cancelled/released.
+Transport/stream/cleanup failures omit raw response/credential diagnostics.
+No retry, refresh, token mint/revoke, state write or deployment is performed.
+
+Returned bytes are independent originals for the observer's existing strict JSON
+admission. Caller/trusted Node runtime owns actual authentication and installed
+App/token scope; an injected fetcher is not live provider proof. Native response
+chunks/parser allocations and transport buffering are additional to the copied
+bounded bytes, not a physical peak-memory/wire-accounting promise. Abort is a
+native transport deadline, not an atomic credential validity lease.
+
+```powershell
+npm run build
+node --import tsx --test tools\github-app-reader.test.ts tools\github-app-installation.test.ts tools\github-artifact.test.ts
+```
+
+Synthetic tests cover exact routes/Bearer contexts, captured identity/limits,
+rejected unsafe inputs, streamed/declared equality/+1, truncation/empty bodies,
+wrong HTTP/address/coding, deadlines/abort/cancellation, sanitized failures and
+connection to all four bounded observer reads. An isolated child verifies default
+native reader wiring, no inherited owner-token fallback and TLS-bypass refusal
+without contacting GitHub. Provisioned App authentication and least-privilege
+writer/handoff/activation remain open; passing these tests grants no live access.
 
 ### Isolated writer token metadata admission
 

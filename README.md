@@ -103,6 +103,10 @@ Its bounded observer now reads and rechecks App metadata and installation-token
 repository evidence through separately injected authenticated readers. Strict
 JSON/byte limits and scope failures are explicit; there is no default credential
 reader, minted token or atomic permission lease.
+An opt-in [native metadata reader](docs/publication-ledger.md#native-credential-separated-metadata-readers)
+now requires separate explicit App JWT/installation credentials, restricts each
+to its exact HTTPS GET route and enforces streamed body/deadline bounds with no
+owner-token fallback or TLS bypass. It creates no credentials or live writer.
 Separate [writer token metadata admission](docs/publication-ledger.md#isolated-writer-token-metadata-admission)
 now checks actual non-secret grant permissions, selected Library scope and explicit
 remaining-lifetime bounds. It rejects raw credential fields and never infers token
