@@ -456,6 +456,65 @@ native reader wiring, no inherited owner-token fallback and TLS-bypass refusal
 without contacting GitHub. Provisioned App authentication and least-privilege
 writer/handoff/activation remain open; passing these tests grants no live access.
 
+### Local explicit-key App JWT signing
+
+`createGitHubAppJwt(options, privateKey)` in
+[the local signer](../tools/github-app-jwt.ts) supplies the native reader's
+explicit App-JWT input, mapping to ALG-07/GEN-02/05/QUAL-06. It performs only local
+RS256 signing. The caller must supply an already loaded RSA private `KeyObject`,
+the approved positive safe numeric App ID, a trusted canonical UTC-millisecond
+`observedAt`, explicit `clockSkewSeconds`0..60 and `validForSeconds`1..600. Unknown
+fields, public/symmetric/EC/RSA-PSS keys and RSA moduli below2048 bits fail before
+signing. No key, credential or identity is inferred from an owner account.
+
+These bounds follow the [GitHub JWT claim contract](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app):
+RS256, integer `iat`, integer `exp` no more than10 minutes into the future and
+`iss` identifying the registered App. The selected secure environment already
+uses the numeric App-ID profile; its string representation is used for `iss`.
+GitHub also supports and recommends the client ID; changing the selected
+registration/identity profile requires consistent observer/setup changes, not
+an inferred client-ID or owner-token fallback.
+
+Capture options once and floor the trusted instant to Unix seconds.
+`iat = seconds - clockSkewSeconds`; `exp = seconds + validForSeconds`.
+The selected60-second skew follows the provider recommendation, but is not an
+automatic default. Reject negative issued-at or an expiry outside supported
+canonical UTC bounds. The600-second ceiling applies to future expiry, not the
+possibly660-second issued-at/expiry span when allowing60 seconds of past skew.
+Fractional milliseconds are deliberately truncated, never rounded forward.
+No wall-clock fallback, automatic renewal or twelve-hour credential is created.
+Future workflow callers must obtain their explicit product values from owning
+settings and trustworthy synchronized time; this helper loads neither.
+
+Header `{alg:"RS256",typ:"JWT"}` and exact `iat`/`exp`/`iss` claims use canonical
+unpadded base64url segments and SHA256/RSA PKCS#1 v1.5 signatures. The returned
+string is a **secret credential**, not a nonsecret audit report. Pass it only to
+the scoped native App context; never print, persist, expose in subprocess
+arguments or combine it with the metadata-only token audit. The API reads no
+private-key file/environment/CLI argument, exports no key, performs no network
+or token mint/revoke and logs nothing. Caller owns secret loading, lifetime,
+cleanup and real key/App correspondence; local cryptographic success does not
+authenticate an installed App or grant permission. Native signing errors expose
+only a fixed diagnostic, not underlying key/provider detail.
+
+Signing is synchronous and uses native cryptographic allocations/work proportional
+to the supplied key. It has no Fetch deadline, secure string erase or physical
+peak-memory guarantee. Key objects remain caller-owned. Deterministic signatures
+for identical inputs do not imply a cached lease or automatic refresh.
+
+```powershell
+npm run build
+node --import tsx --test tools\github-app-jwt.test.ts tools\github-app-reader.test.ts tools\github-app-installation.test.ts
+```
+
+Tests generate ephemeral keys only in memory: independent public-key verification,
+signature/payload corruption, exact claims/base64url, lifetime/skew equality/+1,
+invalid/overflowing UTC, refused key families/weak RSA, raw-extra getter refusal,
+determinism, explicit native-reader integration and isolated native-signing
+failure sanitization. No provisioned App key, valid provider credential or provider
+request is used. Actual secure key provisioning/loading, JWT/App authentication, installation
+token mint/revoke, least-privilege job wiring and real state/activation remain open.
+
 ### Isolated writer token metadata admission
 
 `auditGitHubAppWriterTokenMetadata(options, metadata)` in

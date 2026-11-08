@@ -107,6 +107,10 @@ An opt-in [native metadata reader](docs/publication-ledger.md#native-credential-
 now requires separate explicit App JWT/installation credentials, restricts each
 to its exact HTTPS GET route and enforces streamed body/deadline bounds with no
 owner-token fallback or TLS bypass. It creates no credentials or live writer.
+An explicit-key [local RS256 signer](docs/publication-ledger.md#local-explicit-key-app-jwt-signing)
+now produces short-lived App JWTs from a caller-owned RSA private `KeyObject`,
+trusted UTC and explicit bounded claim settings. It reads no key file/environment,
+logs no credential and performs no provider/token/state operation.
 Separate [writer token metadata admission](docs/publication-ledger.md#isolated-writer-token-metadata-admission)
 now checks actual non-secret grant permissions, selected Library scope and explicit
 remaining-lifetime bounds. It rejects raw credential fields and never infers token

@@ -1,5 +1,41 @@
 # Documentation history
 
+## 2026-11-08: explicit-key local App JWT signing
+
+- Native reader160e1c5bb7fc893471915c03421db1e10c9456dd passed exact hosted
+  hygiene42488166511 and publisher/deployment42488229713, each with336 actual
+  tests. Complete live comparison matched873 files/1198465 bytes against
+  artifact13620785995, original descriptor SHA256
+  2dd6fd40448d97356e348924115fecb68bfb6609270001e6c4b48b67cb47682c.
+  Named download/empty owned directory were cleaned; main clean/exact.
+- Immediately continued under owner continuous-work authorization with local
+  explicit-key JWT signing. Rechecked actual organization installations0,
+  protected environment secrets0 and state refs0. No real key/App provisioning,
+  secure environment loading, token mint/revoke, state write or activation occurred.
+- Reverified the provider's RS256/integer-claim/Bearer and ten-minute-future-expiry
+  contract before implementation. Selected environment/observer already pins the
+  numeric App-ID profile; retained it instead of inventing a client ID. Caller
+  explicitly supplies trusted UTC,0..60 seconds past skew and1..600 seconds future
+  lifetime. Configuring a real job/time/key boundary remains open.
+- Added native SHA256/RSA PKCS#1 v1.5 signing with only caller-owned private RSA
+  KeyObject≥2048 bits, exact known claims/unpadded base64url, option capture and
+  explicit invalid/derived-time/key-family failures. Return is a secret string,
+  not metadata; no logs, key export/file/env/argv lookup, network or auto-renewal.
+  Existing native reader consumes the explicit JWT without credential fallback.
+- Tests use ephemeral in-memory RSA/EC/PSS keys, independently verify signatures
+  and corruption and exercise exact/+1 time bounds and native failure sanitization.
+  First strict build rejected unchecked first-byte access in the new corruption
+  fixture; added an explicit presence assertion before altering that byte.
+  Fresh build and combined JWT/reader/installation batch passed39/39.
+- Final `npm run check` passed strict TypeScript/all345 tests (305 top-level),
+  `sources:validate`871 imported/125 held and `verses:validate` unchanged870
+  sources/5108 provisional verses. `python tools\check_repository.py` passed981
+  tracked files. Locked `yaml` strict/unique-key parsing passed11 files;
+  actionlint1.7.12 with ShellCheck0.11.0 and staged/unstaged diff checks passed.
+  Fresh main matched origin; admin authorization and unchanged active no-bypass
+  force/delete and approved role5 main routing protections were reverified.
+  No dependencies, Shared pins, source content or live publishing behavior changed.
+
 ## 2026-11-08: native credential-separated App metadata transport
 
 - Writer metadata4319abac4a24b82d2e722e72ed050846e4e4e977 passed exact hosted
