@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { auditGitHubAppInstallation, observeGitHubAppInstallation, type GitHubAppInstallationOptions } from "./github-app-installation.js";
+import { auditGitHubAppInstallation, auditGitHubAppWriterTokenMetadata, observeGitHubAppInstallation, type GitHubAppInstallationOptions } from "./github-app-installation.js";
 import type { GitHubApiReader } from "./github-api.js";
 
 const options: GitHubAppInstallationOptions = {
@@ -203,4 +203,87 @@ test("reader failures at each step are explicit sanitized errors rather than cre
     });
     assert.equal(calls, step);
   }
+});
+
+const tokenOptions = { ...options, observedAt: "2026-11-08T05:00:00.000Z", minRemainingMs: 60000, maxRemainingMs: 3600000 };
+function tokenFixture() {
+  const f = fixture();
+  return { permissions: { contents: "write", metadata: "read" }, repository_selection: "selected",
+    repositories: f.repositories.repositories, expires_at: "2026-11-08T06:00:00Z" };
+}
+test("writer token metadata projects only exact identity and bounded normalized expiry without touching credentials", () => {
+  const metadata = tokenFixture(), before = structuredClone(metadata), input = { ...tokenOptions };
+  const report = auditGitHubAppWriterTokenMetadata(input, metadata);
+  assert.deepEqual(report, { stage: "github-app-writer-token-metadata", ...options,
+    observedAt: tokenOptions.observedAt, expiresAt: "2026-11-08T06:00:00.000Z", remainingMs: 3600000 });
+  assert.deepEqual(metadata, before);
+  assert.deepEqual(input, tokenOptions);
+  assert(!Object.hasOwn(report, "permissions"));
+  assert(!Object.hasOwn(report, "repositories"));
+  report.expiresAt = "2026-11-08T07:00:00.000Z";
+  assert.equal(metadata.expires_at, "2026-11-08T06:00:00Z");
+});
+test("token effective permissions cannot be inferred from correct installed App permissions", () => {
+  const f = fixture();
+  assert.deepEqual(auditGitHubAppInstallation(options, f.installation, f.repositories), { stage: "github-app-installation", ...options });
+  for (const permissions of [
+    {}, { contents: "read", metadata: "read" }, { contents: "write" }, { contents: "write", metadata: "write" },
+    { contents: "write", metadata: "read", administration: "read" },
+    { contents: "write", metadata: "read", workflows: "write" }
+  ]) assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...tokenFixture(), permissions }), /permissions/);
+});
+test("token scope must independently bind exactly one selected repository and numeric organization identity", () => {
+  const metadata = tokenFixture();
+  for (const repositories of [
+    [], [...metadata.repositories, ...metadata.repositories],
+    [{ ...metadata.repositories[0], id: 102 }],
+    [{ ...metadata.repositories[0], full_name: "SyntheticOwner/other" }],
+    [{ ...metadata.repositories[0], owner: { id: 203, login: "SyntheticOwner", type: "Organization" } }],
+    [{ ...metadata.repositories[0], owner: { id: 202, login: "SyntheticOwner", type: "User" } }]
+  ]) assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, repositories }), /scope|repository/);
+  assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, repository_selection: "all" }), /scope/);
+});
+test("exact minimum and maximum remaining lifetimes pass and one millisecond beyond either bound fails", () => {
+  const metadata = tokenFixture();
+  for (const expires_at of ["2026-11-08T05:01:00.000Z", "2026-11-08T06:00:00.000Z"]) {
+    assert(auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, expires_at }).remainingMs >= 60000);
+  }
+  for (const expires_at of [
+    "2026-11-08T05:00:59.999Z", "2026-11-08T06:00:00.001Z", tokenOptions.observedAt,
+    "2026-11-08T04:59:59.999Z", "2026-11-08T17:00:00.000Z"
+  ]) assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, expires_at }), /remaining lifetime/);
+});
+test("invalid noncanonical local clocks impossible expiry dates and coerced or twelve-hour bounds are refused", () => {
+  const metadata = tokenFixture();
+  for (const [field, values] of Object.entries({
+    observedAt: ["2026-11-08T05:00:00Z", "2026-02-30T05:00:00.000Z", "2026-11-08T05:00:00.000+00:00", ""],
+    minRemainingMs: [0, -1, 1.5, "60000", NaN, Infinity],
+    maxRemainingMs: [0, 3600001, 43200000], installationId: [0], appSlug: ["../app"]
+  })) for (const value of values) {
+    assert.throws(() => auditGitHubAppWriterTokenMetadata({ ...tokenOptions, [field]: value }, metadata), /options/);
+  }
+  assert.throws(() => auditGitHubAppWriterTokenMetadata({ ...tokenOptions, minRemainingMs: 3600000, maxRemainingMs: 60000 }, metadata), /options/);
+  for (const expires_at of [
+    "", "2026-02-30T05:00:00Z", "2026-11-08T25:00:00Z", "2026-11-08T06:00:00+00:00",
+    "2026-11-08T06:00:00.1Z", "2026-11-08T06:00:00.0000Z", "2026-11-08T06:00:60Z"
+  ]) assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, expires_at }), /metadata|expiry/);
+});
+test("raw token responses unknown fields and missing metadata are refused without reading or exposing secret values", () => {
+  const metadata = tokenFixture(), raw: Record<string, unknown> = { ...metadata };
+  Object.defineProperty(raw, "token", { enumerable: true, get() { throw new Error("Credential must not be read"); } });
+  assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, raw), /Invalid GitHub App writer token/);
+  for (const field of Object.keys(metadata)) {
+    const incomplete: Record<string, unknown> = { ...metadata };
+    delete incomplete[field];
+    assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, incomplete), /metadata/);
+  }
+  for (const extra of ["token", "private_key", "unexpected"]) {
+    assert.throws(() => auditGitHubAppWriterTokenMetadata(tokenOptions, { ...metadata, [extra]: "Synthetic secret marker" }), error => {
+      assert(error instanceof Error);
+      assert(!error.message.includes("Synthetic secret"));
+      return true;
+    });
+  }
+  const extraOption = { ...tokenOptions, extra: true };
+  assert.throws(() => auditGitHubAppWriterTokenMetadata(extraOption, metadata), /options/);
 });

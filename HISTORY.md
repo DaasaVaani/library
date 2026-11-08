@@ -1,5 +1,39 @@
 # Documentation history
 
+## 2026-11-08: isolated effective writer token metadata admission
+
+- Prior bounded observer1b27810919ebf1dd1ac3ca9d48d378e941e5f543 passed exact
+  hosted hygiene42450359110 and publisher/deployment42450413791, each with320
+  actual tests. Initial complete live comparison failed explicitly on HTTP503.
+  Repeated the entire873-file comparison serially with a100ms scratch-reader pause;
+  all1198465 HTTP200 live bytes matched artifact13606010138, unchanged original
+  descriptor SHA2562dd6fd40448d97356e348924115fecb68bfb6609270001e6c4b48b67cb47682c.
+  Cleaned only named downloaded tar/empty owned directory; both worktrees were
+  clean and Library main exact. No real state branch or sequenced feed activated.
+- Continued with non-secret effective token-grant metadata admission, reusing
+  exact writer permissions/repository binding and strict UTC instant validation.
+  A correctly installed App may issue a narrower token without Contents write;
+  that grant must not be mistaken for usable writer authentication. Only explicit
+  selected Library metadata and ordered positive inclusive remaining-lifetime
+  bounds can pass. GitHub's one-hour provider limit is retained; twelve-hour
+  automation cannot be achieved by inventing a twelve-hour installation token.
+  No token/key/native credential reader/mint/revoke/network/state mutation added.
+- Raw token responses and credential fields are rejected before their values are
+  accessed; the caller extracts only safe metadata from genuine issuance. Returned
+  evidence contains known identities/time observations, never permissions objects,
+  repository payloads or credentials. Actual App/installation issuance authentication
+  and use-time validity remain owning gates, not shape-derived claims.
+- First focused run caught six new tests nested inside an existing async failure
+  test, causing cancelled subtests rather than independent validation. Moved them
+  to top level and normalized only their indentation. Fresh `npm run build` and
+  `node --import tsx --test tools\github-app-installation.test.ts` passed20/20.
+  No test assertions/timeouts or existing production behavior were weakened.
+- Final `npm run check` passed strict TypeScript/all326 tests (286 top-level,
+  225.8s) and unchanged source/import/verse validation.
+  `python tools\check_repository.py` passed977 tracked files; strict YAML11,
+  actionlint/ShellCheck and staged/unstaged whitespace passed. No dependency,
+  Shared pin, Website runtime or Android change was required.
+
 ## 2026-11-08: bounded credential-separated installation observation
 
 - Prior admission180e4e2b7e43c5216c7ea7c513e56e4d00d506af passed exact hosted

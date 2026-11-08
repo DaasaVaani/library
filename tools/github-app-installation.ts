@@ -1,5 +1,6 @@
 import Ajv2020 from "ajv/dist/2020.js";
 import { decodeGitHubApiJson, type GitHubApiReader } from "./github-api.js";
+import { isUtcMillisecondInstant } from "./publisher.js";
 
 export interface GitHubAppInstallationOptions {
   repository: string;
@@ -16,6 +17,22 @@ export interface GitHubAppInstallationReadOptions extends GitHubAppInstallationO
   requestTimeoutMs: number;
   maxResponseBytes: number;
 }
+export interface GitHubAppWriterTokenMetadataOptions extends GitHubAppInstallationOptions {
+  observedAt: string;
+  minRemainingMs: number;
+  maxRemainingMs: number;
+}
+export interface GitHubAppWriterTokenMetadataObservation extends GitHubAppInstallationOptions {
+  stage: "github-app-writer-token-metadata";
+  observedAt: string;
+  expiresAt: string;
+  remainingMs: number;
+}
+interface RepositoryIdentity {
+  id: number;
+  full_name: string;
+  owner: { id: number; login: string; type: "Organization" };
+}
 interface Installation {
   id: number;
   app_id: number;
@@ -30,12 +47,28 @@ interface Installation {
 }
 interface Repositories {
   total_count: 1;
-  repositories: [{ id: number; full_name: string; owner: { id: number; login: string; type: "Organization" } }];
+  repositories: [RepositoryIdentity];
+}
+interface WriterTokenMetadata {
+  permissions: Installation["permissions"];
+  repository_selection: "selected";
+  repositories: [RepositoryIdentity];
+  expires_at: string;
 }
 const positive = { type: "integer", minimum: 1, maximum: Number.MAX_SAFE_INTEGER };
 const organization = {
   type: "object", required: ["id", "login", "type"],
   properties: { id: positive, login: { type: "string" }, type: { const: "Organization" } }
+};
+const writerPermissions = {
+  type: "object", additionalProperties: false, required: ["contents", "metadata"],
+  properties: { contents: { const: "write" }, metadata: { const: "read" } }
+};
+const repositoryArray = {
+  type: "array", minItems: 1, maxItems: 1, items: {
+    type: "object", required: ["id", "full_name", "owner"],
+    properties: { id: positive, full_name: { type: "string" }, owner: organization }
+  }
 };
 const optionProperties = {
   repository: { type: "string", pattern: "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_][A-Za-z0-9._-]*$" },
@@ -60,19 +93,29 @@ const validateInstallation = ajv.compile<Installation>({
   properties: {
     id: positive, app_id: positive, app_slug: { type: "string" }, target_id: positive,
     target_type: { const: "Organization" }, account: organization, repository_selection: { const: "selected" },
-    permissions: { type: "object", additionalProperties: false, required: ["contents", "metadata"],
-      properties: { contents: { const: "write" }, metadata: { const: "read" } } },
+    permissions: writerPermissions,
     events: { type: "array", maxItems: 0 }, suspended_at: { type: "null" }
   }
 });
 const validateRepositories = ajv.compile<Repositories>({
   type: "object", required: ["total_count", "repositories"], properties: {
-    total_count: { const: 1 }, repositories: {
-      type: "array", minItems: 1, maxItems: 1, items: {
-        type: "object", required: ["id", "full_name", "owner"],
-        properties: { id: positive, full_name: { type: "string" }, owner: organization }
-      }
-    }
+    total_count: { const: 1 }, repositories: repositoryArray
+  }
+});
+const tokenOptionProperties = {
+  ...optionProperties, observedAt: { type: "string" },
+  minRemainingMs: { type: "integer", minimum: 1, maximum: 3600000 },
+  maxRemainingMs: { type: "integer", minimum: 1, maximum: 3600000 }
+};
+const validateTokenOptions = ajv.compile<GitHubAppWriterTokenMetadataOptions>({
+  type: "object", additionalProperties: false, required: Object.keys(tokenOptionProperties), properties: tokenOptionProperties
+});
+const validateTokenMetadata = ajv.compile<WriterTokenMetadata>({
+  type: "object", additionalProperties: false,
+  required: ["permissions", "repository_selection", "repositories", "expires_at"],
+  properties: {
+    permissions: writerPermissions, repository_selection: { const: "selected" }, repositories: repositoryArray,
+    expires_at: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?Z$" }
   }
 });
 
@@ -90,19 +133,42 @@ export function auditGitHubAppInstallation(requested: GitHubAppInstallationOptio
   installation: unknown, accessibleRepositories: unknown): GitHubAppInstallationObservation {
   const options = { ...requested };
   if (!validateOptions(options)) throw new Error("Invalid GitHub App installation options");
-  const owner = options.repository.split("/")[0];
   assertInstallation(options, installation);
   if (!validateRepositories(accessibleRepositories)) {
     throw new Error("GitHub App repository evidence must contain exactly one accessible repository");
   }
-  const repository = accessibleRepositories.repositories[0];
+  assertRepository(options, accessibleRepositories.repositories[0]);
+  return { stage: "github-app-installation", repository: options.repository, repositoryId: options.repositoryId,
+    organizationId: options.organizationId, appId: options.appId, appSlug: options.appSlug,
+    installationId: options.installationId };
+}
+
+function assertRepository(options: GitHubAppInstallationOptions, repository: RepositoryIdentity): void {
+  const owner = options.repository.split("/")[0];
   if (repository.id !== options.repositoryId || repository.full_name !== options.repository ||
       repository.owner.id !== options.organizationId || repository.owner.login !== owner) {
     throw new Error("GitHub App accessible repository does not match the expected Library identity");
   }
-  return { stage: "github-app-installation", repository: options.repository, repositoryId: options.repositoryId,
+}
+
+export function auditGitHubAppWriterTokenMetadata(requested: GitHubAppWriterTokenMetadataOptions,
+  metadata: unknown): GitHubAppWriterTokenMetadataObservation {
+  const options = { ...requested };
+  if (!validateTokenOptions(options) || !isUtcMillisecondInstant(options.observedAt) ||
+      options.minRemainingMs > options.maxRemainingMs) {
+    throw new Error("Invalid GitHub App writer token metadata options");
+  }
+  if (!validateTokenMetadata(metadata)) throw new Error("Invalid GitHub App writer token permissions, scope or metadata");
+  const expiresAt = metadata.expires_at.includes(".") ? metadata.expires_at : metadata.expires_at.replace("Z", ".000Z");
+  if (!isUtcMillisecondInstant(expiresAt)) throw new Error("Invalid GitHub App writer token expiry");
+  assertRepository(options, metadata.repositories[0]);
+  const remainingMs = Date.parse(expiresAt) - Date.parse(options.observedAt);
+  if (remainingMs < options.minRemainingMs || remainingMs > options.maxRemainingMs) {
+    throw new Error("GitHub App writer token remaining lifetime is outside the explicit bounds");
+  }
+  return { stage: "github-app-writer-token-metadata", repository: options.repository, repositoryId: options.repositoryId,
     organizationId: options.organizationId, appId: options.appId, appSlug: options.appSlug,
-    installationId: options.installationId };
+    installationId: options.installationId, observedAt: options.observedAt, expiresAt, remainingMs };
 }
 
 export async function observeGitHubAppInstallation(requested: GitHubAppInstallationReadOptions,

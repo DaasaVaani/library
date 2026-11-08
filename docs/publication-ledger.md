@@ -401,6 +401,48 @@ authority. Supplying the same user-token reader twice or forged injected bytes
 does not establish authentication. Token mint/revocation, environment/actual
 identity proof, App provisioning and state permission/activation remain gates.
 
+### Isolated writer token metadata admission
+
+`auditGitHubAppWriterTokenMetadata(options, metadata)` in
+[the installation adapter](../tools/github-app-installation.ts) separately admits
+the non-secret grant metadata from an authenticated installation-token creation
+response. Coverage remains ALG-07/GEN-02/05/QUAL-06. A correct App installation's
+configured permissions are not proof that a subsequently narrowed token can write.
+
+The caller must explicitly select only `permissions`, `repository_selection`,
+`repositories` and `expires_at`; raw token responses, private-key fields and other
+top-level fields are rejected. No token is read, matched by prefix/length, copied,
+hashed, returned or logged. GitHub token formats can change; this API never uses
+credential formatting to infer identity. Nested optional repository metadata is
+inert and does not enter output. The caller still owns authenticated issuance,
+bounded strict JSON admission, HTTP status, secret handling and token revocation.
+
+Exact shared identity/permission/repository checks require only Contents:write/
+Metadata:read, selected mode and exactly one matching Library repository owned by
+the expected organization. Identity options remain explicitly trusted inputs:
+the issuance endpoint/App authentication must independently bind App/installation
+identity, and actual token repository observation remains necessary. Grant-shaped
+metadata alone authenticates neither the caller nor a token.
+
+`observedAt` must be a canonical UTC-millisecond instant. Explicit inclusive
+`minRemainingMs`/`maxRemainingMs` are positive safe integers, ordered and no greater
+than GitHub's one-hour installation-token lifetime. They are not production
+defaults. Expiry accepts strict UTC seconds or exactly three fractional digits,
+rejects impossible dates/leap seconds/offsets, and is projected to UTC milliseconds.
+Exact lower/upper remaining-lifetime bounds pass; expired/not-yet-affordable or
+too-long-lived grants fail explicitly. The owning operation must recheck its clock/
+budget at use; this admission neither renews a token nor reserves validity for a
+long-running publication. Twelve-hour automation needs fresh short-lived tokens,
+not an invented twelve-hour installation-token lifetime.
+
+Output contains only known trusted identities, stage, observed/expiry instants
+and measured remaining milliseconds; input metadata is unchanged. Work is fixed
+identity/date validation plus bounded metadata schema traversal, with no network,
+credential allocation, writer permission or publication side effect. Secure App/
+key provisioning and the actual authenticated mint/use/revoke boundary stay open.
+Tests use synthetic credential markers only and explicitly prove raw credential
+fields are rejected without accessing their values.
+
 Incremental validation:
 
 ```powershell
@@ -416,6 +458,10 @@ four-reader routing, captured configuration, malformed/duplicate/UTF8 bodies at
 each read, exact ceiling/+1, final scope changes and sanitized failures with no
 retry. Full finalization still uses all configured
 [checks](../README.md#validation).
+The same suite covers token effective-permission narrowing, raw-secret refusal,
+exact lifetime bounds/+1, UTC normalization/impossible dates, expired/twelve-hour
+grants, single selected repository identity, copied known output and unchanged
+caller inputs.
 
 ## Serialization and checks
 

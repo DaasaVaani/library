@@ -103,6 +103,10 @@ Its bounded observer now reads and rechecks App metadata and installation-token
 repository evidence through separately injected authenticated readers. Strict
 JSON/byte limits and scope failures are explicit; there is no default credential
 reader, minted token or atomic permission lease.
+Separate [writer token metadata admission](docs/publication-ledger.md#isolated-writer-token-metadata-admission)
+now checks actual non-secret grant permissions, selected Library scope and explicit
+remaining-lifetime bounds. It rejects raw credential fields and never infers token
+write permission from installation configuration or a twelve-hour lifetime.
 
 The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
 the published Shared descriptor/manifest/transfer-policy contract to real logical
