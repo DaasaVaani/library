@@ -340,6 +340,49 @@ publication must not continue exposing untracked semantic changes after ledger
 activation. Keep existing readers usable; do not disable the current publisher or
 enable a new feed without the separately authorized handoff/deployment boundary.
 
+### Isolated installation evidence admission
+
+`auditGitHubAppInstallation(options, installation, accessibleRepositories)` in
+[the installation adapter](../tools/github-app-installation.ts) is a pure,
+non-writing prerequisite for ALG-07/GEN-02/05 and QUAL-06. It takes explicitly
+trusted repository/full numeric organization/App/installation identities and App
+slug, plus unknown original API observations. Options are exact, without defaults
+or coercion. The installation must bind the expected organization account/target,
+selected-repository mode, unsuspended state, no subscribed events and **exactly**
+Contents:write/Metadata:read. Extra permissions are errors, not inert metadata.
+The repository response must have total_count1 and exactly one matching numeric/
+named Library identity owned by that organization; incomplete pagination,
+additional entries or owner/type mismatches fail.
+
+Returned evidence projects only stage and trusted identities, never account/
+repository descriptions, URLs, credentials or payloads. Other non-authority API
+fields remain inert. Input objects are unchanged and output is independent.
+Cost is bounded by the owning input schema traversal; selected scope is exactly
+one repository. The caller owns original response byte/time ceilings, strict JSON
+admission and authentication. This helper performs no network call, accepts no
+token/key, and supplies no authentication or authorization from shape alone.
+
+Authenticate the installation record with appropriate GitHub authority and the
+accessible-repositories observation with the actual restricted installation token.
+An owner user's repository list or a manually assembled response cannot prove
+token scope. This does not prove App ownership/private-key possession, webhook
+configuration, environment eligibility, current state protections, or write/
+deployment permission. Observe those independently at the owning boundary;
+there is no cached success, native credential reader or live workflow integration.
+
+Incremental validation:
+
+```powershell
+npm run build
+node --import tsx --test tools\github-app-installation.test.ts
+```
+
+Synthetic tests cover independent payload-free output, exact trusted options,
+wrong/missing/unsafe App/account/target IDs, suspension/all-repository selection,
+subscribed events, extra/weaker permissions, incomplete/multiple repositories
+and wrong repository owner/type. Full finalization still uses all configured
+[checks](../README.md#validation).
+
 ## Serialization and checks
 
 Encoding is canonical safe-integer JSON plus one LF, hashed over those exact

@@ -1,5 +1,38 @@
 # Documentation history
 
+## 2026-11-08: isolated dedicated App installation evidence admission
+
+- Secure setup guide f00264fba01fca7496a7bcda5139e76e25e6229b passed exact
+  source hygiene42448824458 and existing canonical publisher/deployment42448875308.
+  Live verification initially failed explicitly on HTTP503, not a byte mismatch
+  or successful fallback. Lowered only scratch verifier concurrency from8 to2
+  and reran the entire873-file comparison; all1198465 live bytes matched exact
+  artifact13604712827, original descriptor SHA256
+  2dd6fd40448d97356e348924115fecb68bfb6609270001e6c4b48b67cb47682c.
+  Cleaned named downloaded tar/empty owned directory. No feed sequence changed.
+- Owner authorized independent continuation and recommended choices without
+  routine prompts. Actual App/key provisioning cannot be manufactured; continued
+  safe prerequisites without granting automated state access or initializing
+  a real ledger from missing credentials.
+- Added pure exact installation/repository evidence admission. Trusted options
+  bind numeric organization/repository/App/installation identities and slug.
+  Unsuspended selected organization installation requires only Contents:write/
+  Metadata:read and no events; repository evidence must be complete and exactly
+  one matching Library identity. Inert metadata never enters returned output.
+  Caller owns bounded original API authentication/strict JSON and actual token
+  observation; shape alone proves no key possession, App ownership or permission.
+  No network reader, credential access, workflow, state mutation or activation.
+- Initial strict build caught a deliberately extra option passed as an excess
+  object literal in a test. Used the existing structural fixture pattern (typed
+  variable with extra property) rather than casts or weakening option validation.
+  `npm run build` then passed; focused
+  `node --import tsx --test tools\github-app-installation.test.ts` passed7/7.
+- Final `npm run check` passed strict TypeScript/all313 tests (273 top-level,
+  228.9s), unchanged source/import/verse validation.
+  `python tools\check_repository.py` passed977 tracked files; strict YAML11,
+  actionlint/ShellCheck and staged/unstaged whitespace passed. No dependency or
+  consumer pin was added or changed; the new suite is registered in the full runner.
+
 ## 2026-11-07: initial trust approved and dedicated App environment prepared
 
 - Owner explicitly approved the final ten-publication baseline pin

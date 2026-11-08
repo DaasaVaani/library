@@ -94,6 +94,11 @@ inputs, not remote state or activation. The selected dedicated App uses a main-o
 credential environment; actual App/key provisioning, identity/scope proof,
 bounded initialization and safe publisher handoff remain open. Never send keys
 in chat, grant a main bypass or leave independent semantic publications untracked.
+The [isolated installation evidence admission](docs/publication-ledger.md#isolated-installation-evidence-admission)
+now validates exact organization/App/installation identities, unsuspended selected
+scope, only Contents:write/Metadata:read and exactly one matching Library
+repository. Its payload-free projection does not authenticate credentials,
+grant state access or activate a publisher; actual secure provisioning remains open.
 
 The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
 the published Shared descriptor/manifest/transfer-policy contract to real logical
