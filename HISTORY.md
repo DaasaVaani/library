@@ -1,5 +1,40 @@
 # Documentation history
 
+## 2026-11-08: bounded credential-separated installation observation
+
+- Prior admission180e4e2b7e43c5216c7ea7c513e56e4d00d506af passed exact hosted
+  hygiene42449598398 and publisher/deployment42449662074, each with313 actual
+  tests. Complete live HTTP200 verification matched all873 files/1198465 bytes
+  against artifact13605157051; descriptor identity remained unchanged.
+  Named downloaded tar/owned empty directory were cleaned; no sequence activated.
+- Continued the dedicated-App prerequisite with a serial four-read observer,
+  explicit separately supplied App/installation authenticated readers, captured
+  exact identities and immutable byte/time bounds. Reused strict bounded API JSON
+  decoder; added only its installation context label. Each installation is admitted
+  before the next repository request; both repository observations independently
+  bind exactly one expected Library identity. Revoked/changed scope, malformed or
+  oversized data and reader errors fail explicitly without retries or partial proof.
+  There is no native credential reader, token mint/revocation, environment bypass,
+  installed App, state writer permission or live pipeline integration.
+- Documented the distinction between observed installation-token accessible scope
+  and full installation selection: a deliberately Library-restricted token can
+  report one repository even when the underlying selected installation is broader.
+  Operator/administrative Library-only installation proof remains separate; the
+  helper does not certify that missing authority or fabricate App authentication.
+- Added seven observer cases alongside the original seven admission cases.
+  Strict build initially identified a deliberately wrong-type value in a fixture
+  union; changed fixture metadata to the existing Record<string,unknown> mutation
+  pattern, without production casts or relaxed types. Fresh `npm run build`
+  passed; `node --import tsx --test tools\github-app-installation.test.ts
+  tools\github-source-run.test.ts tools\github-artifact.test.ts
+  tools\github-publisher-run.test.ts tools\github-deployment.test.ts` passed48/48,
+  exercising both new observations and every existing strict JSON decoder consumer.
+- Final `npm run check` passed strict TypeScript/all320 tests (280 top-level,
+  242.5s) and unchanged source/import/verse validation.
+  `python tools\check_repository.py` passed977 tracked files; strict YAML11,
+  actionlint/ShellCheck and staged/unstaged whitespace passed. No new dependency,
+  source mutation or consumer pin change was needed.
+
 ## 2026-11-08: isolated dedicated App installation evidence admission
 
 - Secure setup guide f00264fba01fca7496a7bcda5139e76e25e6229b passed exact

@@ -365,10 +365,41 @@ token/key, and supplies no authentication or authorization from shape alone.
 Authenticate the installation record with appropriate GitHub authority and the
 accessible-repositories observation with the actual restricted installation token.
 An owner user's repository list or a manually assembled response cannot prove
-token scope. This does not prove App ownership/private-key possession, webhook
+token scope. A repository-restricted token's one-repository response proves only
+that observed token's accessible scope, not that the underlying installation
+has no additional selected repositories. Verify the Library-only installation
+selection separately through trusted operator/administrative evidence; never
+infer it solely from an intentionally narrowed token response.
+This does not prove App ownership/private-key possession, webhook
 configuration, environment eligibility, current state protections, or write/
 deployment permission. Observe those independently at the owning boundary;
 there is no cached success, native credential reader or live workflow integration.
+
+`observeGitHubAppInstallation(options, readApp, readInstallation)` additionally
+captures exact identity/positive safe byte/time bounds before awaits and requires
+two explicitly supplied authenticated reader contexts. With immutable read
+limits it reads `app/installations/<expected-id>` through the App context, then
+`installation/repositories` through the installation context, and repeats both
+observations. Each decoded installation is admitted before the next repository
+request; a wrong App/target/scope stops immediately. Each repository response
+must independently pass the pure exact admission. Unknown optional fields do not
+become authority or require byte-identical response bodies across observations.
+
+The shared strict bounded API JSON decoder rejects empty/over-limit bodies,
+malformed JSON, duplicate keys and invalid UTF8. Explicit reader failures are
+sanitized without returning partial evidence, defaulting readers to user credentials
+or retrying. Four awaited reads is the maximum; caller-enforced deadlines and
+actual byte ceilings remain reader responsibilities. Memory includes bounded
+encoded/decoded original observations and strict-parser/schema allocations, not
+a streaming or global heap claim. Reobservation detects supplied scope changes
+but is not an atomic permission lease: revocation/change after observation remains
+possible and real write errors must propagate.
+
+There is no default/native reader for these credential-separated endpoints;
+the existing source/artifact `readGitHubApi` does not silently acquire App/token
+authority. Supplying the same user-token reader twice or forged injected bytes
+does not establish authentication. Token mint/revocation, environment/actual
+identity proof, App provisioning and state permission/activation remain gates.
 
 Incremental validation:
 
@@ -380,7 +411,10 @@ node --import tsx --test tools\github-app-installation.test.ts
 Synthetic tests cover independent payload-free output, exact trusted options,
 wrong/missing/unsafe App/account/target IDs, suspension/all-repository selection,
 subscribed events, extra/weaker permissions, incomplete/multiple repositories
-and wrong repository owner/type. Full finalization still uses all configured
+and wrong repository owner/type. Bounded observer cases additionally cover exact
+four-reader routing, captured configuration, malformed/duplicate/UTF8 bodies at
+each read, exact ceiling/+1, final scope changes and sanitized failures with no
+retry. Full finalization still uses all configured
 [checks](../README.md#validation).
 
 ## Serialization and checks

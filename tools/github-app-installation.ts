@@ -1,4 +1,5 @@
 import Ajv2020 from "ajv/dist/2020.js";
+import { decodeGitHubApiJson, type GitHubApiReader } from "./github-api.js";
 
 export interface GitHubAppInstallationOptions {
   repository: string;
@@ -10,6 +11,10 @@ export interface GitHubAppInstallationOptions {
 }
 export interface GitHubAppInstallationObservation extends GitHubAppInstallationOptions {
   stage: "github-app-installation";
+}
+export interface GitHubAppInstallationReadOptions extends GitHubAppInstallationOptions {
+  requestTimeoutMs: number;
+  maxResponseBytes: number;
 }
 interface Installation {
   id: number;
@@ -41,6 +46,14 @@ const ajv = new Ajv2020.default({ strict: true });
 const validateOptions = ajv.compile<GitHubAppInstallationOptions>({
   type: "object", additionalProperties: false, required: Object.keys(optionProperties), properties: optionProperties
 });
+const readProperties = {
+  ...optionProperties,
+  requestTimeoutMs: { type: "integer", minimum: 1, maximum: 2147483647 },
+  maxResponseBytes: { type: "integer", minimum: 1, maximum: 2147483647 }
+};
+const validateReadOptions = ajv.compile<GitHubAppInstallationReadOptions>({
+  type: "object", additionalProperties: false, required: Object.keys(readProperties), properties: readProperties
+});
 const validateInstallation = ajv.compile<Installation>({
   type: "object", required: ["id", "app_id", "app_slug", "target_id", "target_type", "account",
     "repository_selection", "permissions", "events", "suspended_at"],
@@ -63,10 +76,7 @@ const validateRepositories = ajv.compile<Repositories>({
   }
 });
 
-export function auditGitHubAppInstallation(requested: GitHubAppInstallationOptions,
-  installation: unknown, accessibleRepositories: unknown): GitHubAppInstallationObservation {
-  const options = { ...requested };
-  if (!validateOptions(options)) throw new Error("Invalid GitHub App installation options");
+function assertInstallation(options: GitHubAppInstallationOptions, installation: unknown): asserts installation is Installation {
   const owner = options.repository.split("/")[0];
   if (!validateInstallation(installation) || installation.id !== options.installationId ||
       installation.app_id !== options.appId || installation.app_slug !== options.appSlug ||
@@ -74,6 +84,14 @@ export function auditGitHubAppInstallation(requested: GitHubAppInstallationOptio
       installation.account.login !== owner) {
     throw new Error("GitHub App installation identity, scope or permissions do not match the expected writer");
   }
+}
+
+export function auditGitHubAppInstallation(requested: GitHubAppInstallationOptions,
+  installation: unknown, accessibleRepositories: unknown): GitHubAppInstallationObservation {
+  const options = { ...requested };
+  if (!validateOptions(options)) throw new Error("Invalid GitHub App installation options");
+  const owner = options.repository.split("/")[0];
+  assertInstallation(options, installation);
   if (!validateRepositories(accessibleRepositories)) {
     throw new Error("GitHub App repository evidence must contain exactly one accessible repository");
   }
@@ -85,4 +103,29 @@ export function auditGitHubAppInstallation(requested: GitHubAppInstallationOptio
   return { stage: "github-app-installation", repository: options.repository, repositoryId: options.repositoryId,
     organizationId: options.organizationId, appId: options.appId, appSlug: options.appSlug,
     installationId: options.installationId };
+}
+
+export async function observeGitHubAppInstallation(requested: GitHubAppInstallationReadOptions,
+  readApp: GitHubApiReader, readInstallation: GitHubApiReader): Promise<GitHubAppInstallationObservation> {
+  const captured = { ...requested };
+  if (!validateReadOptions(captured) || typeof readApp !== "function" || typeof readInstallation !== "function") {
+    throw new Error("Invalid GitHub App installation read options or authenticated readers");
+  }
+  const { requestTimeoutMs, maxResponseBytes, ...identity } = captured;
+  const limits = Object.freeze({ requestTimeoutMs, maxResponseBytes });
+  const installationEndpoint = `app/installations/${identity.installationId}`;
+  const load = async (read: GitHubApiReader, endpoint: string): Promise<unknown> => {
+    let bytes: Uint8Array;
+    try { bytes = await read(endpoint, limits); }
+    catch { throw new Error("GitHub App installation API read failed; verify authentication, availability and explicit limits"); }
+    return decodeGitHubApiJson(bytes, maxResponseBytes, "app-installation");
+  };
+  const installation = await load(readApp, installationEndpoint);
+  assertInstallation(identity, installation);
+  const repositories = await load(readInstallation, "installation/repositories");
+  auditGitHubAppInstallation(identity, installation, repositories);
+  const finalInstallation = await load(readApp, installationEndpoint);
+  assertInstallation(identity, finalInstallation);
+  const finalRepositories = await load(readInstallation, "installation/repositories");
+  return auditGitHubAppInstallation(identity, finalInstallation, finalRepositories);
 }

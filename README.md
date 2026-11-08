@@ -99,6 +99,10 @@ now validates exact organization/App/installation identities, unsuspended select
 scope, only Contents:write/Metadata:read and exactly one matching Library
 repository. Its payload-free projection does not authenticate credentials,
 grant state access or activate a publisher; actual secure provisioning remains open.
+Its bounded observer now reads and rechecks App metadata and installation-token
+repository evidence through separately injected authenticated readers. Strict
+JSON/byte limits and scope failures are explicit; there is no default credential
+reader, minted token or atomic permission lease.
 
 The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
 the published Shared descriptor/manifest/transfer-policy contract to real logical

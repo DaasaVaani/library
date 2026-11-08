@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { auditGitHubAppInstallation, type GitHubAppInstallationOptions } from "./github-app-installation.js";
+import { auditGitHubAppInstallation, observeGitHubAppInstallation, type GitHubAppInstallationOptions } from "./github-app-installation.js";
+import type { GitHubApiReader } from "./github-api.js";
 
 const options: GitHubAppInstallationOptions = {
   repository: "SyntheticOwner/synthetic-library", repositoryId: 101, organizationId: 202,
@@ -97,5 +98,109 @@ test("repository name numeric identity owner and organization type must all bind
     assert.throws(() => auditGitHubAppInstallation(options, f.installation, {
       total_count: 1, repositories: [{ ...f.repositories.repositories[0], ...mutation }]
     }), /repository/);
+  }
+});
+
+const readOptions = { ...options, requestTimeoutMs: 10000, maxResponseBytes: 65536 };
+const encode = (value: unknown) => Buffer.from(JSON.stringify(value));
+test("bounded observations use distinct App and installation readers twice with immutable explicit limits", async () => {
+  const f = fixture(), calls: string[] = [];
+  const makeReader = (role: string, value: unknown): GitHubApiReader => async (endpoint, limits) => {
+    calls.push(`${role}:${endpoint}`);
+    assert.equal(Object.isFrozen(limits), true);
+    assert.deepEqual(limits, { requestTimeoutMs: 10000, maxResponseBytes: 65536 });
+    return encode(value);
+  };
+  const report = await observeGitHubAppInstallation(readOptions,
+    makeReader("app", f.installation), makeReader("installation", f.repositories));
+  assert.deepEqual(report, { stage: "github-app-installation", ...options });
+  assert.deepEqual(calls, ["app:app/installations/404", "installation:installation/repositories",
+    "app:app/installations/404", "installation:installation/repositories"]);
+});
+test("captured identities and bounds cannot be replaced during asynchronous API observation", async () => {
+  const f = fixture(), input = { ...readOptions };
+  const readApp: GitHubApiReader = async (endpoint, limits) => {
+    assert.equal(endpoint, "app/installations/404");
+    assert.equal(limits.maxResponseBytes, 65536);
+    input.installationId = 999;
+    input.repository = "OtherOwner/other";
+    input.maxResponseBytes = 1;
+    return encode(f.installation);
+  };
+  assert.deepEqual(await observeGitHubAppInstallation(input, readApp, async () => encode(f.repositories)),
+    { stage: "github-app-installation", ...options });
+});
+test("invalid reader options fail before authenticated readers are invoked", async () => {
+  const f = fixture();
+  let calls = 0;
+  const read: GitHubApiReader = async () => { calls++; return encode(f); };
+  const mutations: Record<string, unknown>[] = [
+    { installationId: 0 }, { appSlug: "../other" }, { requestTimeoutMs: 0 }, { requestTimeoutMs: 2147483648 },
+    { maxResponseBytes: 0 }, { maxResponseBytes: Infinity }, { maxResponseBytes: "65536" }, { extra: true }
+  ];
+  for (const mutation of mutations) {
+    await assert.rejects(observeGitHubAppInstallation({ ...readOptions, ...mutation }, read, read), /read options/);
+  }
+  assert.equal(calls, 0);
+});
+test("each observation refuses empty over-limit malformed duplicate-key and invalid UTF8 bytes", async () => {
+  for (const step of [1, 2, 3, 4]) for (const bytes of [
+    Buffer.alloc(0), Buffer.alloc(65537, 32), Buffer.from("{"), Buffer.from('{"id":1,"id":2}'),
+    Buffer.from([0xc3, 0x28])
+  ]) {
+    const f = fixture();
+    let calls = 0;
+    const makeReader = (value: unknown): GitHubApiReader => async () => {
+      calls++;
+      return calls === step ? bytes : encode(value);
+    };
+    await assert.rejects(observeGitHubAppInstallation(readOptions,
+      makeReader(f.installation), makeReader(f.repositories)), /byte bounds|API JSON/);
+    assert.equal(calls, step);
+  }
+});
+test("exact API response ceiling passes while one byte less fails explicitly", async () => {
+  const f = fixture(), installation = encode(f.installation), repositories = encode(f.repositories);
+  const ceiling = Math.max(installation.length, repositories.length);
+  const readApp: GitHubApiReader = async () => installation;
+  const readInstallation: GitHubApiReader = async () => repositories;
+  assert.deepEqual(await observeGitHubAppInstallation({ ...readOptions, maxResponseBytes: ceiling }, readApp, readInstallation),
+    { stage: "github-app-installation", ...options });
+  await assert.rejects(observeGitHubAppInstallation({ ...readOptions, maxResponseBytes: ceiling - 1 },
+    readApp, readInstallation), /byte bounds/);
+});
+test("installation or repository scope changes on final observation fail without switching or retrying", async () => {
+  for (const step of [1, 2, 3, 4]) {
+    const f = fixture();
+    let calls = 0;
+    const readApp: GitHubApiReader = async () => {
+      calls++;
+      return encode(calls === step ? { ...f.installation, repository_selection: "all" } : f.installation);
+    };
+    const readInstallation: GitHubApiReader = async () => {
+      calls++;
+      return encode(calls === step ? { total_count: 2, repositories: f.repositories.repositories } : f.repositories);
+    };
+    await assert.rejects(observeGitHubAppInstallation(readOptions, readApp, readInstallation), /identity|exactly one/);
+    assert.equal(calls, step);
+  }
+});
+test("reader failures at each step are explicit sanitized errors rather than credential-bearing diagnostics or fallback", async () => {
+  for (const step of [1, 2, 3, 4]) {
+    const f = fixture();
+    let calls = 0;
+    const makeReader = (value: unknown): GitHubApiReader => async () => {
+      calls++;
+      if (calls === step) throw new Error("Synthetic private diagnostic");
+      return encode(value);
+    };
+    await assert.rejects(observeGitHubAppInstallation(readOptions,
+      makeReader(f.installation), makeReader(f.repositories)), error => {
+      assert(error instanceof Error);
+      assert.match(error.message, /API read failed/);
+      assert(!error.message.includes("Synthetic private"));
+      return true;
+    });
+    assert.equal(calls, step);
   }
 });
