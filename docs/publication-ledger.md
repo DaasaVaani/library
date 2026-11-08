@@ -265,6 +265,24 @@ Verify actual rule applicability to the chosen root/nested ref before any write.
 Current configuration does not create a state branch, initialize a ledger,
 select production Git bounds/ref/remote or activate either publisher.
 
+The owner-approved initial trust inputs are:
+
+| Input | Approved identity |
+| --- | --- |
+| Closed-window baseline review SHA256 | `dc82248fdccfa4142b205e8ea2d89af78be5304bdafe1661e37ef71409cb61ac` |
+| Independently prepared initial root Git commit | `13abbdf05569050c6a3953bd8e85aaf0a3d6ffd9` |
+| Inactive initial ledger canonical-byte SHA256 | `14fcec667b39519b9e468b910076dbedc6896b44769179271011d5f9eda8f533` |
+
+These are independently approved authorization inputs, not a fetched-tip default
+or permission to expose a new feed. Retain the exact closed historical evidence
+scope in the immutable baseline. Later byte-identical legacy republications are
+not instructions to replace the approved review, advance its dates or invent a
+sequence. Before first real initialization, independently verify that the served
+legacy catalog and logical item table still match the approved baseline, as well
+as the actual source/hosting evidence. A semantic/catalog change or changed
+approved historical evidence requires renewed baseline/anchor review; never
+silently import a replacement into an existing active ledger.
+
 Before actual initialization, the owner must separately approve the refreshed
 complete pinned baseline review and independently trusted initial commit anchor.
 Authenticate the available successful publication history, retained original
@@ -276,6 +294,51 @@ scope, receipt, date, projection or item invalidates the review pin. Recheck the
 approved evidence at the initialization boundary and stop on changes, rather than
 silently regenerate or approve a replacement. Hosted deployment/job wiring,
 whole-publication validation and genuine confirmation remain separate gates.
+
+### Selected App writer and credential setup
+
+The selected ongoing writer is a dedicated GitHub App owned by DaasaVaani,
+installed only on Library. It needs repository **Contents: read and write** and
+the mandatory **Metadata: read-only**, with no other permissions, OAuth user
+authorization, callbacks or webhook delivery. State operations must stay in the
+admitted namespace; the App receives no main-protection bypass. Metadata/run/
+artifact observation should use the separately bounded read-only job token rather
+than add unnecessary App permissions.
+
+The dedicated `library-snapshot-publisher` GitHub environment allows exactly the
+`main` **branch** (not tags or other refs), with administrative protection bypass
+disabled. Existing `github-pages` and main rules remain unchanged. An empty
+credential environment does not install an App, mint a token, authorize a state
+writer or activate publication.
+
+Secure operator setup:
+
+1. [Register an organization-owned App](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app).
+   Suggested name: `DaasaVaani Library Publisher`; use this repository URL as its
+   homepage, disable active webhooks, select only the permissions above, and choose
+   **Only on this account**. Install it with **Only select repositories: library**.
+2. [Generate/manage its private key](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps).
+   Keep the PEM outside Git and logs. Add it directly as the environment secret
+   `LIBRARY_PUBLISHER_APP_PRIVATE_KEY`; never send it in chat or commit it.
+   Record the non-secret App ID as environment variable `LIBRARY_PUBLISHER_APP_ID`.
+   Private keys do not expire: rotate/revoke deliberately after verifying a new
+   key, without assuming short-lived installation tokens expire the key.
+3. Supply the non-secret App ID/slug and installation identity for verification.
+   Job wiring must prove the actual identity, Contents permission and Library-only
+   scope, mint short-lived repository-restricted tokens only in that main
+   environment, and revoke them on completion. Credential presence is not successful
+   authentication or permission proof.
+4. Before authorizing the verified App's state updates, keep branch creation
+   restricted to the approved setup operator separately from App updates. Preserve
+   the independent no-bypass force/delete guard; missing state is never an App
+   instruction to recreate it. No actor is currently granted automated state access.
+
+Actual App provisioning/authentication, owning producer/client configuration,
+bounded initialization and a safe publication handoff remain open. Prepare and
+validate the complete handoff before real initialization: independent legacy
+publication must not continue exposing untracked semantic changes after ledger
+activation. Keep existing readers usable; do not disable the current publisher or
+enable a new feed without the separately authorized handoff/deployment boundary.
 
 ## Serialization and checks
 

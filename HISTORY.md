@@ -1,5 +1,51 @@
 # Documentation history
 
+## 2026-11-07: initial trust approved and dedicated App environment prepared
+
+- Owner explicitly approved the final ten-publication baseline pin
+  dc82248fdccfa4142b205e8ea2d89af78be5304bdafe1661e37ef71409cb61ac.
+  All871 current identities/logical hashes/date candidates remain unchanged,
+  with no tombstones/missing/unresolved evidence. Approval was external, not
+  inferred from a successful pin match or by changing `review-required` data.
+- Prepared a local inactive v2 candidate with the existing strict bootstrap/codec:
+  408561 canonical bytes, SHA256
+  14fcec667b39519b9e468b910076dbedc6896b44769179271011d5f9eda8f533;
+  counter0, null legacy sequence/pending/confirmed and the complete immutable review.
+  Exact-size decode/re-encode passed; one byte below was explicitly rejected.
+  Constructed only local bare SHA1 Git objects with no refs/remote, one regular
+  ledger.json blob and no parents. Independently recomputed blob/tree/commit SHA1s;
+  object round-trip and strict Git fsck passed. Root
+  13abbdf05569050c6a3953bd8e85aaf0a3d6ffd9, tree
+  f033cb7c5298133538ce82c305b66a7b3c471a30, blob
+  043c1560fe8bac9f26162e9179ccacfafab747d9. Retained metadata-only state/commit/
+  summary for inspection; no push, real branch, initialized remote ledger or live
+  sequenced deployment was made.
+- Owner separately approved that exact independently derived initial root anchor,
+  then selected the dedicated Library-only GitHub App writer rather than ongoing
+  owner-operated manual publication. Initial trust approval did not grant a bot
+  a main exemption, add an App actor to state guards or authorize feed activation.
+- Authenticated installation metadata reported0 installed organization Apps.
+  Existing environment inventory contained only github-pages; repository secret
+  metadata was empty. Read names/metadata only, never secret values.
+  Prepared library-snapshot-publisher environment26573593403 with exactly one
+  allowed main branch policy65860546, no tags/other refs, and administrative bypass
+  disabled. API read-back confirmed an empty secret inventory, unchanged existing
+  github-pages configuration and no publication-state branch. No App key/token,
+  actual App installation or automated state-update permission was supplied.
+- Current operating guide records the independently approved closed-window trust
+  identities, dedicated App minimum permissions, secure main-environment/key
+  setup and the remaining authentication/handoff/activation gates. Identical
+  later legacy republications are no-ops for immutable approved baseline dates;
+  actual semantic/catalog changes before initialization still require renewed
+  review. No source text, holds, line/lyric IDs, consumer pin or product scope changed.
+- Final `npm run check` passed strict TypeScript/all306 tests (237.4s) and unchanged
+  source/import/verse validation. After the interrupted setup form, recovered the
+  complete retained check log rather than assuming process status. Fresh
+  `python tools\check_repository.py` passed975 tracked files; strict YAML11,
+  actionlint/ShellCheck and staged/unstaged whitespace passed.
+  Rechecked actual installation/environment-secret metadata: no App or key was
+  provisioned. Main-only environment and disabled admin bypass remain verified.
+
 ## 2026-11-07: authorized ledger namespace protections and renewed baseline review
 
 - Owner explicitly authorized dedicated ledger infrastructure setup, keeping

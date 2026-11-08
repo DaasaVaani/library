@@ -83,13 +83,17 @@ evidence and pin a complete candidate review without inventing a legacy sequence
 The explicit [unsequenced bootstrap](docs/publication-ledger.md#explicit-unsequenced-bootstrap)
 now constructs an inactive private version2 ledger with the complete pinned
 baseline and projection identity. Legacy content stays unsequenced; new
-reservations start at1, preserving cancellation gaps. Actual review approval,
-protected state-branch creation/anchor and hosted activation remain gates.
+reservations start at1, preserving cancellation gaps. Real protected state-branch
+initialization, job wiring and hosted activation remain gates.
 The separately [approved ledger infrastructure setup](docs/publication-ledger.md#approved-infrastructure-setup)
 protects the root/nested state namespace against force/deletion with no bypass
 and restricts creation/update to setup administrators. Main protection is
 unchanged; no state branch, initialized ledger or automation permission is
-created. Actual pinned baseline/independent anchor approval remains separate.
+created. The initial baseline/independent local root are now approved trust
+inputs, not remote state or activation. The selected dedicated App uses a main-only protected
+credential environment; actual App/key provisioning, identity/scope proof,
+bounded initialization and safe publisher handoff remain open. Never send keys
+in chat, grant a main bypass or leave independent semantic publications untracked.
 
 The pure [staged canonical snapshot producer](docs/snapshot-producer.md) connects
 the published Shared descriptor/manifest/transfer-policy contract to real logical
