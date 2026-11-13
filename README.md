@@ -111,6 +111,12 @@ An explicit-key [local RS256 signer](docs/publication-ledger.md#local-explicit-k
 now produces short-lived App JWTs from a caller-owned RSA private `KeyObject`,
 trusted UTC and explicit bounded claim settings. It reads no key file/environment,
 logs no credential and performs no provider/token/state operation.
+The opt-in [writer-token lifecycle](docs/publication-ledger.md#isolated-scoped-writer-token-lifecycle)
+now narrows an explicit App token request to one repository and the selected
+permissions, audits expiry and bracketed App/token identities, awaits the trusted
+operation and requires confirmed revocation before returning. Synthetic tests
+do not mint real credentials; no live workflow, writer authority or state/feed
+activation is enabled.
 Separate [writer token metadata admission](docs/publication-ledger.md#isolated-writer-token-metadata-admission)
 now checks actual non-secret grant permissions, selected Library scope and explicit
 remaining-lifetime bounds. It rejects raw credential fields and never infers token

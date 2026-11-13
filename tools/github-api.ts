@@ -38,7 +38,7 @@ export const readGitHubApi: GitHubApiReader = async (endpoint, limits) => {
   });
 };
 
-export function decodeGitHubApiJson(bytes: Uint8Array, limit: number, label: "source-run" | "artifact" | "publisher-run" | "deployment" | "app-installation"): unknown {
+export function decodeGitHubApiJson(bytes: Uint8Array, limit: number, label: "source-run" | "artifact" | "publisher-run" | "deployment" | "app-installation" | "app-token"): unknown {
   if (!bounded(limit) || !(bytes instanceof Uint8Array) || bytes.length < 1 || bytes.length > limit) {
     throw new Error(`GitHub ${label} API response exceeds byte bounds`);
   }

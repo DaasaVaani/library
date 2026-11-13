@@ -11,8 +11,31 @@ export interface GitHubAppInstallationReaders {
 }
 class AppReadError extends Error {}
 
-async function readMetadata(endpoint: string, credential: string, limits: Readonly<GitHubApiReadLimits>,
+export const isGitHubAppCredential = (value: unknown): value is string =>
+  typeof value === "string" && value.length > 0 && !/[\x00-\x20\x7f-\uffff]/.test(value);
+export type GitHubAppRequest =
+  | { kind: "installation"; installationId: number; credential: string }
+  | { kind: "repositories" | "revoke"; credential: string }
+  | { kind: "mint"; installationId: number; repositoryId: number; credential: string };
+
+export async function requestGitHubApp(requested: GitHubAppRequest, requestedLimits: Readonly<GitHubApiReadLimits>,
   fetcher: typeof fetch): Promise<Uint8Array> {
+  const request = { ...requested }, limits = captureGitHubApiReadLimits(requestedLimits);
+  const expectedKeys = request.kind === "mint" ? ["kind", "installationId", "repositoryId", "credential"] :
+    request.kind === "installation" ? ["kind", "installationId", "credential"] : ["kind", "credential"];
+  if (!["installation", "repositories", "mint", "revoke"].includes(request.kind) ||
+      Reflect.ownKeys(request).length !== expectedKeys.length ||
+      !expectedKeys.every(key => Object.hasOwn(request, key)) || !isGitHubAppCredential(request.credential) ||
+      typeof fetcher !== "function" ||
+      ("installationId" in request && (!Number.isSafeInteger(request.installationId) || request.installationId < 1)) ||
+      ("repositoryId" in request && (!Number.isSafeInteger(request.repositoryId) || request.repositoryId < 1))) {
+    throw new AppReadError("Invalid scoped GitHub App request");
+  }
+  const endpoint = request.kind === "installation" ? `app/installations/${request.installationId}` :
+    request.kind === "mint" ? `app/installations/${request.installationId}/access_tokens` :
+      request.kind === "revoke" ? "installation/token" : "installation/repositories";
+  const method = request.kind === "mint" ? "POST" : request.kind === "revoke" ? "DELETE" : "GET";
+  const expectedStatus = request.kind === "mint" ? 201 : request.kind === "revoke" ? 204 : 200;
   if (process.env.NODE_TLS_REJECT_UNAUTHORIZED === "0") throw new AppReadError("GitHub App API requires TLS certificate verification");
   const url = `https://api.github.com/${endpoint}`, controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -24,14 +47,17 @@ async function readMetadata(endpoint: string, credential: string, limits: Readon
   });
   const read = async () => {
     const response = await fetcher(url, {
-      method: "GET", redirect: "error", credentials: "omit", signal: controller.signal,
-      headers: { Authorization: `Bearer ${credential}`, Accept: "application/vnd.github+json",
+      method, redirect: "error", credentials: "omit", signal: controller.signal,
+      headers: { Authorization: `Bearer ${request.credential}`, Accept: "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28", "Accept-Encoding": "identity",
-        "Cache-Control": "no-cache, no-store" }
+        "Cache-Control": "no-cache, no-store",
+        ...(request.kind === "mint" ? { "Content-Type": "application/json" } : {}) },
+      ...(request.kind === "mint" ? { body: JSON.stringify({ repository_ids: [request.repositoryId],
+        permissions: { contents: "write", metadata: "read" } }) } : {})
     });
     const reader = response.body?.getReader();
     try {
-      if (response.status !== 200 || response.redirected || response.url !== url) {
+      if (response.status !== expectedStatus || response.redirected || response.url !== url) {
         throw new AppReadError("GitHub App API response status or URL mismatch");
       }
       const encoding = response.headers.get("content-encoding"), length = response.headers.get("content-length");
@@ -39,17 +65,17 @@ async function readMetadata(endpoint: string, credential: string, limits: Readon
       if (length !== null && (!/^(0|[1-9][0-9]*)$/.test(length) || BigInt(length) > BigInt(limits.maxResponseBytes))) {
         throw new AppReadError("GitHub App API response exceeds byte bounds");
       }
-      if (!reader) throw new AppReadError("GitHub App API response body is missing");
+      if (!reader && expectedStatus !== 204) throw new AppReadError("GitHub App API response body is missing");
       const chunks: Buffer[] = [];
       let size = 0;
-      while (true) {
+      while (reader) {
         const { done, value } = await reader.read();
         if (done) break;
         if (value.length > limits.maxResponseBytes - size) throw new AppReadError("GitHub App API response exceeds byte bounds");
         size += value.length;
         chunks.push(Buffer.from(value));
       }
-      if (!size || (length !== null && BigInt(length) !== BigInt(size))) {
+      if ((expectedStatus === 204 ? size !== 0 : size === 0) || (length !== null && BigInt(length) !== BigInt(size))) {
         throw new AppReadError("GitHub App API response is empty or truncated");
       }
       return Buffer.concat(chunks, size);
@@ -73,10 +99,8 @@ async function readMetadata(endpoint: string, credential: string, limits: Readon
 export function createGitHubAppInstallationReaders(requested: GitHubAppInstallationCredentials,
   fetcher: typeof fetch = fetch): GitHubAppInstallationReaders {
   const options = { ...requested };
-  const credential = (value: unknown): value is string =>
-    typeof value === "string" && value.length > 0 && !/[\x00-\x20\x7f-\uffff]/.test(value);
   if (Object.keys(options).length !== 3 || !Number.isSafeInteger(options.installationId) || options.installationId < 1 ||
-      !credential(options.appJwt) || !credential(options.installationToken) ||
+      !isGitHubAppCredential(options.appJwt) || !isGitHubAppCredential(options.installationToken) ||
       options.appJwt === options.installationToken || typeof fetcher !== "function") {
     throw new AppReadError("Invalid GitHub App installation reader credentials or options");
   }
@@ -84,7 +108,8 @@ export function createGitHubAppInstallationReaders(requested: GitHubAppInstallat
   const reader = (allowed: string, token: string): GitHubApiReader => async (endpoint, requestedLimits) => {
     const limits = captureGitHubApiReadLimits(requestedLimits);
     if (endpoint !== allowed) throw new AppReadError("GitHub App API endpoint is outside the captured credential scope");
-    return readMetadata(endpoint, token, limits, fetcher);
+    return requestGitHubApp(allowed === appEndpoint ? { kind: "installation", installationId: options.installationId,
+      credential: token } : { kind: "repositories", credential: token }, limits, fetcher);
   };
   return Object.freeze({ readApp: reader(appEndpoint, options.appJwt),
     readInstallation: reader("installation/repositories", options.installationToken) });

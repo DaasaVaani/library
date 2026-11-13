@@ -1,5 +1,47 @@
 # Documentation history
 
+## 2026-11-13: isolated narrowed writer-token lifecycle
+
+- Owner again requested commit/push and next work. Website/Library mains were
+  freshly fetched and matched local commits; Website and native settings tasks
+  were already committed/published with clean worktrees. Continued the unblocked
+  job-scoped writer credential prerequisite, without provisioning or using any
+  real App/key/token, changing source/consumer pins or activating a ledger/feed.
+- The previous signer e19723508faa7eb5ac42226919d48c8be22a403f passed exact hosted
+  hygiene42489691721 and publisher42489771290, each345 tests. Complete live873
+  files/1198465 bytes matched artifact13621446339; descriptor SHA256 remained
+  2dd6fd40448d97356e348924115fecb68bfb6609270001e6c4b48b67cb47682c.
+- Verified public provider mint/revocation documentation. Reused the bounded native
+  Fetch transport for four closed action shapes; GET factories remain read-only.
+  Added exact one-repository Contents:write/Metadata:read minting, safe distinct
+  token capture, existing metadata/expiry admission, four independent bracketed
+  identity reads, final expiry recheck, awaited callback and mandatory exact204
+  revocation before returning. All credentials/tests are synthetic; no provider
+  write endpoint was contacted. Unknown issuance never retries or guesses a token.
+- Extracted the existing strict token-option capture for pre-mint validation.
+  Closed lifecycle input fields, rejected a remembered observedAt override and
+  sanitized mandatory clock/callback/provider diagnostics. Metadata failure still
+  revokes a captured token; cleanup failure never fabricates operation success.
+  Callback operation and expiry are not an atomic permission lease or crash-proof
+  cleanup guarantee. Operator/environment/state-writer integration remains open.
+- Registered the new suite in the complete runner without dependency changes.
+  Initial build and focused batch passed59; after strict clock/input coverage,
+  fresh build and complete focused token/reader/metadata/JWT/native-artifact batch
+  passed60/60. No timeout, schema, permission, lifetime or assertion was relaxed.
+- Superseded guide wording left actual mint/use/revoke implementation wholly open.
+  The new isolated adapter supplies that sequence, but actual authenticated App
+  provisioning, independently proven installation selection, protected job wiring,
+  writer authority and safe publisher handoff/activation remain open.
+- Final `npm run check` passed strict build/all356 tests (316 top-level),
+  source validation871 imported/125 held and unchanged verse validation870
+  sources/5108 provisional candidates. `python tools\check_repository.py` passed983
+  tracked files; locked `yaml` strict/unique-key parsing passed11 files;
+  actionlint1.7.12 with ShellCheck0.11.0 and staged/unstaged whitespace passed.
+  Fresh main matched origin, owner admin and unchanged active no-bypass force/
+  delete and approved role5 routing were verified. Actual App installations,
+  publisher-environment secrets and state refs each remained0. No live token
+  issuance/revocation, environment mutation, source change or consumer repin occurred.
+
 ## 2026-11-08: explicit-key local App JWT signing
 
 - Native reader160e1c5bb7fc893471915c03421db1e10c9456dd passed exact hosted

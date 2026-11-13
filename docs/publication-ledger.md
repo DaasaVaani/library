@@ -553,7 +553,98 @@ Output contains only known trusted identities, stage, observed/expiry instants
 and measured remaining milliseconds; input metadata is unchanged. Work is fixed
 identity/date validation plus bounded metadata schema traversal, with no network,
 credential allocation, writer permission or publication side effect. Secure App/
-key provisioning and the actual authenticated mint/use/revoke boundary stay open.
+key provisioning and actual job authentication/wiring stay open.
+
+### Isolated scoped writer-token lifecycle
+
+`withGitHubAppWriterToken(options, appJwt, operation, now, fetcher?)` in
+[the writer-token adapter](../tools/github-app-token.ts) connects explicit
+mint/admission/use/revocation, mapping to ALG-07/GEN-02/05/QUAL-06. It is not
+called by a live workflow or either publisher. Input credentials are explicit,
+not inferred from an owner login, environment, key file or subprocess argument.
+Real App provisioning, trusted environment loading, independently proven
+installation selection, writer rules and safe publisher handoff remain gates.
+
+The strict captured options contain the existing expected repository/organization/
+App/installation identity, positive per-response `requestTimeoutMs` and
+`maxResponseBytes`, and inclusive `minRemainingMs`/`maxRemainingMs` within one
+hour. There are no defaults: owning production settings/job integration must
+supply them. A mandatory trusted `now()` returns canonical UTC-millisecond time
+before mint, after mint and immediately before the callback. A remembered
+`observedAt` option is rejected rather than substituted for current clock evidence.
+Clock failures are explicit and credential-free.
+
+The shared native `requestGitHubApp` transport accepts only four known action
+shapes, not caller URLs, method/status overrides or arbitrary JSON bodies:
+
+| Action | Exact address under `https://api.github.com/` | Method/status | Credential/body |
+| --- | --- | --- | --- |
+| Installation metadata | `app/installations/<captured-id>` | GET/200 | Explicit App JWT; no body |
+| Token repository scope | `installation/repositories` | GET/200 | Explicit installation token; no body |
+| Mint | `app/installations/<captured-id>/access_tokens` | POST/201 | App JWT; exactly one `repository_ids` ID and Contents:write/Metadata:read |
+| Revoke | `installation/token` | DELETE/204 | Only the returned safe distinct installation token; no body |
+
+This reuses the existing native metadata transport's exact-response-address,
+TLS/no-bypass, Bearer, redirect refusal, identity coding, streamed actual/declared
+byte checks, cancellation and header/body deadline. GET readers remain read-only.
+Mint/revoke do not use `gh`, owner-token fallback or token output in argv/logs.
+DELETE must return the exact204 and an empty body; other statuses, response
+addresses or nonempty results cannot be treated as confirmed revocation.
+API version2022-11-28 remains pinned consistently with the owning readers.
+See the provider's [token creation](https://docs.github.com/en/rest/apps/apps#create-an-installation-access-token-for-an-app)
+and [revocation](https://docs.github.com/en/rest/apps/installations#revoke-an-installation-access-token)
+contracts; local synthetic tests do not constitute authenticated provider proof.
+
+Mint bytes pass the same strict bounded UTF8/unique-key JSON decoder.
+The response must contain a header-safe credential distinct from the App JWT.
+Its known four metadata fields alone enter the existing strict token audit;
+extra provider fields are inert, never copied into returned metadata. Require the
+expected single repository/organization, only the selected permissions, selected
+scope, valid expiry and remaining-lifetime bounds. Then perform all four existing
+bracketed App/token metadata reads and check expiry again before allowing work.
+A narrowed token's repository list still does not establish that the underlying
+installation was administratively selected only for Library.
+
+The trusted callback receives a frozen `{token, metadata}` lease after successful
+admission. Metadata is the known nonsecret projection; `token` remains a secret.
+The callback must not log, persist, export or return that credential, detach work,
+or assume the lease is an atomic permission/expiry guarantee. This adapter does
+not implement a Git writer, grant state access or permit writes to main. It awaits
+the operation and exactly one revocation request before returning its result.
+Metadata, identity, clock and callback failures after safe token capture still
+require revocation; callback exception details are replaced with a fixed error.
+Failed or unconfirmed revocation always fails the operation, including when work
+itself succeeded. Combined operation/revocation failure is reported explicitly.
+No retry, token refresh, privilege widening or success-shaped cleanup fallback exists.
+
+If mint transport/response/JSON is uncertain, or the response supplies no safe
+distinct token, no credential is guessed and no callback runs. The error requires
+operator reconciliation and explicitly forbids automatic re-minting where issuance
+is unconfirmed. Revocation cannot be attempted without the actual safe credential.
+A process/job crash, unbounded caller work or forced termination can prevent
+cleanup; future job wiring needs its own failure/reconciliation policy. Expiry is
+provider-owned, not a local revocation receipt. JavaScript has no secure-string
+erase guarantee; native buffering/JSON/key allocations remain additional memory.
+
+Normal success performs at most six serial requests (one mint, four independent
+identity/scope reads, one revoke), plus the explicitly awaited caller operation.
+Each response has its captured independent byte/time ceiling, not a whole-job
+deadline, network-wire accounting promise or permission lease. Validation remains
+linear in bounded response bytes and supplied repository metadata. No other state,
+content, ledger/feed, main protection or environment is changed by constructing it.
+
+```powershell
+npm run build
+node --import tsx --test tools\github-app-token.test.ts tools\github-app-reader.test.ts tools\github-app-installation.test.ts tools\github-app-jwt.test.ts tools\github-artifact.test.ts
+```
+
+Synthetic tests cover exact narrowed bodies/routes/Bearer contexts, all six ordered
+steps, frozen known metadata, captured options, expiry rechecks, changed bracketed
+identity, invalid scopes/permissions, callback failures, failed revocation, uncertain
+issuance/no retry, strict duplicate-key refusal, return-after-revoke ordering,
+clock errors and shared native equality/+1/deadline/address/status refusal.
+No real token is minted or revoked by these tests. Actual App credentials,
+installation-only scope, state writer permission and live activation stay open.
 Tests use synthetic credential markers only and explicitly prove raw credential
 fields are rejected without accessing their values.
 

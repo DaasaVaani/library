@@ -151,13 +151,18 @@ function assertRepository(options: GitHubAppInstallationOptions, repository: Rep
   }
 }
 
-export function auditGitHubAppWriterTokenMetadata(requested: GitHubAppWriterTokenMetadataOptions,
-  metadata: unknown): GitHubAppWriterTokenMetadataObservation {
+export function captureGitHubAppWriterTokenOptions(requested: GitHubAppWriterTokenMetadataOptions): Readonly<GitHubAppWriterTokenMetadataOptions> {
   const options = { ...requested };
   if (!validateTokenOptions(options) || !isUtcMillisecondInstant(options.observedAt) ||
       options.minRemainingMs > options.maxRemainingMs) {
     throw new Error("Invalid GitHub App writer token metadata options");
   }
+  return Object.freeze(options);
+}
+
+export function auditGitHubAppWriterTokenMetadata(requested: GitHubAppWriterTokenMetadataOptions,
+  metadata: unknown): GitHubAppWriterTokenMetadataObservation {
+  const options = captureGitHubAppWriterTokenOptions(requested);
   if (!validateTokenMetadata(metadata)) throw new Error("Invalid GitHub App writer token permissions, scope or metadata");
   const expiresAt = metadata.expires_at.includes(".") ? metadata.expires_at : metadata.expires_at.replace("Z", ".000Z");
   if (!isUtcMillisecondInstant(expiresAt)) throw new Error("Invalid GitHub App writer token expiry");
